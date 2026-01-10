@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { X, Lightbulb } from 'lucide-react';
 import { MeteorCard } from '../shared/MeteorCard';
+import { PRODUCT_FACTS } from '../../constants';
 
 interface ProductFactsModalProps {
     isOpen: boolean;
@@ -13,18 +14,27 @@ interface ProductFactsModalProps {
 
 // Helper function to get translated fact
 const getProductFact = (productName: string, t: (key: string) => string) => {
-    const factKey = `fact_${productName.toLowerCase()}`;
-    const titleKey = `fact_${productName.toLowerCase()}_title`;
+    const lowerName = productName.toLowerCase();
+    const factKey = `fact_${lowerName}`;
+    const titleKey = `fact_${lowerName}_title`;
 
     const title = t(titleKey);
     const fact = t(factKey);
 
-    // If translation exists, use it
+    // If translation exists, use it (priority for multilanguage)
     if (!title.startsWith('fact_') && !fact.startsWith('fact_')) {
         return { title, fact };
     }
 
-    // Fallback
+    // Fallback to simple PRODUCT_FACTS map if available
+    if (PRODUCT_FACTS[lowerName]) {
+        return {
+            title: `${productName} - Wist je dat?`,
+            fact: PRODUCT_FACTS[lowerName]
+        };
+    }
+
+    // Default Fallback
     return {
         title: `${productName} - ${t('fact_fresh_from_land')}`,
         fact: t('fact_default_text').replace('{product}', productName)
