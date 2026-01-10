@@ -145,6 +145,16 @@ const App: React.FC = () => {
     }
   }, []);
 
+  // Fix: Clean up access_token from URL after Google Login
+  useEffect(() => {
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      const timer = setTimeout(() => {
+        window.history.replaceState(null, '', window.location.pathname);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   useEffect(() => {
     if (toast) {
       const timer = setTimeout(() => setToast(null), 3500);
