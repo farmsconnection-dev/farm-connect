@@ -107,7 +107,18 @@ const App: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [detailFarm, setDetailFarm] = useState<Farm | null>(null);
   const [factModalProduct, setFactModalProduct] = useState<string | null>(null);
-  const [pendingRole, setPendingRole] = useState<'discoverer' | 'farmer' | null>(null);
+  const [pendingRole, setPendingRole] = useState<'discoverer' | 'farmer' | null>(() => {
+    const saved = localStorage.getItem('pendingRole');
+    return (saved === 'farmer' || saved === 'discoverer') ? saved : null;
+  });
+
+  useEffect(() => {
+    if (pendingRole) {
+      localStorage.setItem('pendingRole', pendingRole);
+    } else {
+      localStorage.removeItem('pendingRole');
+    }
+  }, [pendingRole]);
   const [searchQuery, setSearchQuery] = useState('');
 
   // --- Header & Logo State ---

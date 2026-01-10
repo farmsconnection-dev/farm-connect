@@ -5,6 +5,12 @@ import { Heart, ShieldCheck, Leaf } from 'lucide-react';
 import { ViewState } from '../types';
 import ScrollExpandMedia from '../components/ui/scroll-expansion-hero';
 
+// Images
+import barnImg from '../assets/farm-barn-v2.jpg';
+import harvestImg from '../assets/farm-harvest-v2.jpg';
+import sheepImg from '../assets/farm-sheep-new.jpg';
+import carrotsImg from '../assets/farm-carrots-close.jpg';
+
 interface AboutPageProps {
     t: (key: string) => string;
     setView: (view: ViewState) => void;
@@ -15,8 +21,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
         <motion.div key="about" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full relative">
             <ScrollExpandMedia
                 mediaType="image"
-                mediaSrc="/src/assets/farm-barn-v2.jpg"
-                bgImageSrc="/src/assets/farm-harvest-v2.jpg"
+                mediaSrc={barnImg}
+                bgImageSrc={harvestImg}
                 title={t('about_banner_title')}
                 date="Sinds 2024"
                 scrollToExpand="Scrol om te ontdekken"
@@ -34,7 +40,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
                         <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="relative overflow-hidden p-8 rounded-apple shadow-xl border border-white/10 group">
                             <div className="absolute inset-0 z-0">
-                                <img src="/src/assets/farm-sheep-new.jpg" alt="Eerlijke Handel" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-125" />
+                                <img src={sheepImg} alt="Eerlijke Handel" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-125" />
                                 <div className="absolute inset-0 bg-black/40" />
                             </div>
                             <div className="relative z-10">
@@ -47,7 +53,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
                         </motion.div>
                         <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="relative overflow-hidden p-8 rounded-apple shadow-xl border border-white/10 group">
                             <div className="absolute inset-0 z-0">
-                                <img src="/src/assets/farm-carrots-close.jpg" alt="Eerlijke Prijs" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-125" />
+                                <img src={carrotsImg} alt="Eerlijke Prijs" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-125" />
                                 <div className="absolute inset-0 bg-black/40" />
                             </div>
                             <div className="relative z-10">

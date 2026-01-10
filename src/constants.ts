@@ -1,4 +1,5 @@
 import { TranslationDictionary, Farm, DaySchedule } from './types';
+import aardbeienImg from './assets/aardbeien.jpg';
 
 const MOCK_SCHEDULE_1: DaySchedule[] = [
   { day: 'mon', isOpen: true, openTime: '08:00', closeTime: '18:00' },
@@ -1026,7 +1027,7 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "melk": "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400",
   "eieren": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&q=80&w=400",
   "aardappelen": "/products/aardappelen.jpg",
-  "aardbeien": "/src/assets/aardbeien.jpg",
+  "aardbeien": aardbeienImg,
   "kersen": "https://images.unsplash.com/photo-1528821128474-27f963b062bf?auto=format&fit=crop&q=80&w=400",
   "tomaten": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=400",
   "komkommer": "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?auto=format&fit=crop&q=80&w=400",
