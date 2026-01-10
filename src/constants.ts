@@ -1044,7 +1044,7 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "bessen": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&q=80&w=400",
   "frambozen": "https://images.unsplash.com/photo-1577069861033-55d04cec4ef5?auto=format&fit=crop&q=80&w=400",
   "kool": "https://images.unsplash.com/photo-1550951334-118836ec904f?auto=format&fit=crop&q=80&w=400",
-  "sla": "https://images.unsplash.com/photo-1622206151226-18ca2c958a2f?auto=format&fit=crop&q=80&w=400",
+
   "bonen": "https://images.unsplash.com/photo-1566842600175-97dca489844f?auto=format&fit=crop&q=80&w=400",
   "rundvlees": "https://images.unsplash.com/photo-1551028150-64b9f398f678?auto=format&fit=crop&q=80&w=400",
   "kip": "/products/kipfilet.jpg",
@@ -1058,5 +1058,11 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "bieten": "https://images.unsplash.com/photo-1603048297172-c92544798d5e?auto=format&fit=crop&q=80&w=400",
   "rode biet": "https://images.unsplash.com/photo-1603048297172-c92544798d5e?auto=format&fit=crop&q=80&w=400",
   "knolselder": "https://images.unsplash.com/photo-1593258693034-78ee0e10c6b0?auto=format&fit=crop&q=80&w=400",
-  "pastinaak": "https://images.unsplash.com/photo-1640726335912-5f6b8e40c01e?auto=format&fit=crop&q=80&w=400"
+  "pastinaak": "https://images.unsplash.com/photo-1640726335912-5f6b8e40c01e?auto=format&fit=crop&q=80&w=400",
+  "gehakt": "https://images.unsplash.com/photo-1594968132386-896db5efbb88?auto=format&fit=crop&q=80&w=400",
+  "honing": "https://images.unsplash.com/photo-1587049352851-8d4e8918dcb1?auto=format&fit=crop&q=80&w=400",
+  "yoghurt": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&q=80&w=400",
+  "boter": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&q=80&w=400",
+  "sla": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400",
+  "salade": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400"
 };
