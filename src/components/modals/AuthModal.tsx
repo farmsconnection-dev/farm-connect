@@ -27,7 +27,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
             options: {
                 redirectTo: window.location.hostname === 'localhost'
                     ? 'http://localhost:5173'
-                    : 'https://farmconnect.be'
+                    : window.location.origin
             }
         });
 
