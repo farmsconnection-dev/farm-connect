@@ -45,7 +45,7 @@ import { FavoritesPage } from './pages/FavoritesPage';
 import { AdminPage } from './pages/AdminPage';
 
 // --- ASSETS ---
-import logo from './assets/farm-connect-logo.png';
+import logo from './assets/logo-header.png';
 
 declare global {
   interface Window {
