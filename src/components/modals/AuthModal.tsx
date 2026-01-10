@@ -25,7 +25,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: window.location.origin
+                redirectTo: window.location.hostname === 'localhost'
+                    ? 'http://localhost:5173'
+                    : 'https://farmconnect.be'
             }
         });
 
