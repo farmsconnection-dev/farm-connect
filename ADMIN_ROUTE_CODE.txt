@@ -1,0 +1,41 @@
+// ============================================
+// ADMIN VIEW ROUTE - Voeg toe aan App.tsx
+// ============================================
+
+// STAP 1: Voeg deze code toe NA regel 433 (na de inventory view)
+// Zoek naar: {view === 'inventory' && userType === 'farmer' && (
+// En voeg dit toe NA de sluitende )}
+
+{view === 'admin' && (
+  <AdminPage
+    t={t}
+    farms={farms}
+    setFarms={setFarms}
+    userEmail={userProfile.email}
+    showToast={showToast}
+  />
+)}
+
+// Het zou er zo uit moeten zien:
+/*
+        {view === 'inventory' && userType === 'farmer' && (
+          <InventoryPage
+            t={t}
+            setView={setView}
+            farms={farms}
+            setFarms={setFarms}
+            showToast={showToast}
+            setSelectedImage={setSelectedImage}
+          />
+        )}
+        {view === 'admin' && (          // <-- NIEUW!
+          <AdminPage                     // <-- NIEUW!
+            t={t}                        // <-- NIEUW!
+            farms={farms}                // <-- NIEUW!
+            setFarms={setFarms}          // <-- NIEUW!
+            userEmail={userProfile.email}// <-- NIEUW!
+            showToast={showToast}        // <-- NIEUW!
+          />                             // <-- NIEUW!
+        )}                               // <-- NIEUW!
+      </AnimatePresence>
+*/

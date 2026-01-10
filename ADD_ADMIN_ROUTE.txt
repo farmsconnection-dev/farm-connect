@@ -1,0 +1,38 @@
+// ============================================
+// ADMIN ROUTE - Voeg toe aan App.tsx rond regel 433
+// ============================================
+
+// Zoek naar deze code in App.tsx:
+        {view === 'inventory' && userType === 'farmer' && (
+          <InventoryPage
+            t={t}
+            setView={setView}
+            farms={farms}
+            setFarms={setFarms}
+            showToast={showToast}
+            setSelectedImage={setSelectedImage}
+          />
+        )}
+      </AnimatePresence>
+
+// Vervang door:
+        {view === 'inventory' && userType === 'farmer' && (
+          <InventoryPage
+            t={t}
+            setView={setView}
+            farms={farms}
+            setFarms={setFarms}
+            showToast={showToast}
+            setSelectedImage={setSelectedImage}
+          />
+        )}
+        {view === 'admin' && (
+          <AdminPage
+            t={t}
+            farms={farms}
+            setFarms={setFarms}
+            userEmail={userProfile.email}
+            showToast={showToast}
+          />
+        )}
+      </AnimatePresence>

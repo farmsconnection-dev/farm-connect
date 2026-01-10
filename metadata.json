@@ -1,0 +1,8 @@
+{
+  "name": " farm Connect Toolkit 4/01 14;10",
+  "description": "Een premium platform dat lokale boeren en ontdekkers verbindt. Vind verse producten direct bij de bron.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ]
+}

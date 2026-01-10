@@ -1,0 +1,33 @@
+// ============================================
+// ADMIN ROUTE - Kopieer deze code in App.tsx
+// ============================================
+
+// LOCATIE: Rond regel 433, NA de inventory view
+
+// ZOEK NAAR:
+        )}
+      </AnimatePresence>
+
+// VERVANG DOOR:
+        )}
+        {view === 'admin' && (
+          <AdminPage
+            t={t}
+            farms={farms}
+            setFarms={setFarms}
+            userEmail={userProfile.email}
+            showToast={showToast}
+          />
+        )}
+      </AnimatePresence>
+
+// OF: Voeg dit toe VOOR </AnimatePresence> op regel 434:
+        {view === 'admin' && (
+          <AdminPage
+            t={t}
+            farms={farms}
+            setFarms={setFarms}
+            userEmail={userProfile.email}
+            showToast={showToast}
+          />
+        )}
