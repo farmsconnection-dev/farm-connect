@@ -24,7 +24,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
                 mediaSrc={barnImg}
                 bgImageSrc={harvestImg}
                 title={t('about_banner_title')}
-                date="Sinds 2024"
+                date="Sinds 2026"
                 scrollToExpand="Scrol om te ontdekken"
                 textBlend={true}
             >
