@@ -346,7 +346,7 @@ const App: React.FC = () => {
           >
             <div className="flex items-center gap-3">
               <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform border-2 border-white/50 overflow-hidden">
-                <img src="/src/assets/logo-header.png" alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
+                <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
               </div>
               <h1 className="text-xl font-black text-white tracking-tight drop-shadow-md">
                 Farm <span className="text-amber-300">Connect</span>
