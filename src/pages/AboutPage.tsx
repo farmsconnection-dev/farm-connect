@@ -63,7 +63,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
 
                     <div className="text-center mb-16 px-4">
                         <p className="text-2xl md:text-3xl font-serif italic text-white drop-shadow-md leading-relaxed">
-                            "Samen brengen we de boer terug in het hart van onze gemeenschap."
+                            "Wij zetten de boer terug in het hart van onze gemeenschap."
                         </p>
                     </div>
 

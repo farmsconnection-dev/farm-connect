@@ -43,6 +43,8 @@ import { FarmerDashboard } from './pages/FarmerDashboard';
 import { InventoryPage } from './pages/InventoryPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { AdminPage } from './pages/AdminPage';
+import { VerificationPendingPage } from './pages/VerificationPendingPage';
+import { RegisterFarmPage } from './pages/RegisterFarmPage';
 
 // --- ASSETS ---
 import logo from './assets/logo-header.png';
@@ -140,24 +142,42 @@ const App: React.FC = () => {
   }, [toast]);
 
   // Supabase Auth Listener - voor Google OAuth
+
+  const checkFarmerVerification = async (email: string) => {
+    // Check if farmer has a farm using email
+    const { data: farms } = await supabase
+      .from('farms')
+      .select('is_verified')
+      .eq('owner_email', email);
+
+    const myFarm = farms?.[0];
+
+    if (!myFarm) {
+      setView('register_farm');
+    } else if (!myFarm.is_verified) {
+      setView('verification_pending');
+    } else {
+      setUserType('farmer');
+      setView('farmer');
+    }
+  };
+
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.user) {
-        const email = session.user.email || '';
-        const name = session.user.user_metadata?.full_name || email.split('@')[0];
-        const photoUrl = session.user.user_metadata?.avatar_url || 'https://picsum.photos/id/1005/100/100';
+      if (event === 'SIGNED_IN' && session) {
+        const { email, user_metadata } = session.user;
+        const name = user_metadata.full_name || email?.split('@')[0] || 'Gebruiker';
+        const photoUrl = user_metadata.avatar_url;
 
         setUserProfile({
           name,
-          email,
+          email: email || '',
           photoUrl,
           isLoggedIn: true
         });
 
-        // Set user type based on pending role
         if (pendingRole === 'farmer') {
-          setUserType('farmer');
-          setView('farmer');
+          checkFarmerVerification(email || '');
         } else {
           setUserType('discoverer');
           setView('discover');
@@ -201,7 +221,12 @@ const App: React.FC = () => {
 
   const handleLogin = (email: string, name: string) => {
     setUserProfile({ name, email, photoUrl: 'https://picsum.photos/id/1005/100/100', isLoggedIn: true });
-    if (pendingRole === 'farmer') { setUserType('farmer'); setView('farmer'); } else { setUserType('discoverer'); setView('discover'); }
+    if (pendingRole === 'farmer') {
+      checkFarmerVerification(email);
+    } else {
+      setUserType('discoverer');
+      setView('discover');
+    }
     setIsAuthModalOpen(false);
     setIsLoginPromptOpen(false);
     setIsMenuOpen(false);
@@ -465,6 +490,17 @@ const App: React.FC = () => {
             setFarms={setFarms}
             showToast={showToast}
             setSelectedImage={setSelectedImage}
+          />
+        )}
+        {view === 'verification_pending' && (
+          <VerificationPendingPage onLogout={handleLogout} />
+        )}
+        {view === 'register_farm' && (
+          <RegisterFarmPage
+            email={userProfile.email}
+            onSuccess={() => checkFarmerVerification(userProfile.email)}
+            onLogout={handleLogout}
+            lang={lang}
           />
         )}
         {view === 'admin' && (
