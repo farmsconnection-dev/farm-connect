@@ -22,6 +22,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
     const [isRegistering, setIsRegistering] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [localMessage, setLocalMessage] = useState<{ type: 'error' | 'success'; text: string } | null>(null);
+    const [farmerChoice, setFarmerChoice] = useState<'existing' | 'new' | null>(null);
 
     if (!isOpen) return null;
 
@@ -164,7 +165,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
                     )}
                 </AnimatePresence>
 
-                {!showEmailLogin ? (
+                {/* Farmer Choice Screen */}
+                {pendingRole === 'farmer' && !farmerChoice ? (
+                    <div className="space-y-4">
+                        <p className="text-slate-600 font-medium mb-6">Kies wat van toepassing is:</p>
+
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => setFarmerChoice('existing')}
+                            className="w-full bg-emerald-500 text-white py-5 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-3 hover:bg-emerald-600 transition-colors"
+                        >
+                            <LogIn size={20} />
+                            Ga naar mijn boerderij
+                        </motion.button>
+
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => setFarmerChoice('new')}
+                            className="w-full bg-blue-500 text-white py-5 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-3 hover:bg-blue-600 transition-colors"
+                        >
+                            <UserPlus size={20} />
+                            Ik wil een nieuwe boerderij registreren
+                        </motion.button>
+                    </div>
+                ) : !showEmailLogin ? (
                     // Google Login View
                     <div className="space-y-4">
                         <motion.button
