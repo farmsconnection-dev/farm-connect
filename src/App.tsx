@@ -529,7 +529,7 @@ const App: React.FC = () => {
       {/* --- Persistent Header --- */}
       <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-30 pointer-events-none">
         <div className="pointer-events-auto flex items-center h-full">
-          {view === 'landing' ? (
+          {(view === 'landing' || view === 'register_farm') ? (
             <div className="flex items-center gap-3 select-none pointer-events-none">
               <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white/50 overflow-hidden">
                 <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
