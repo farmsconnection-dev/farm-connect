@@ -295,6 +295,15 @@ const App: React.FC = () => {
     } else {
       console.log('✅ Google Maps API Key loaded.');
     }
+
+    // Global Google Maps Auth Failure Handler
+    window.gm_authFailure = () => {
+      const msg = '⚠️ Google Maps Fout: API Key ongeldig of billing niet geactiveerd. Controleer Google Cloud Console.';
+      console.error(msg);
+      // Show aggressive alert on mobile to ensure visibility
+      alert(msg);
+      showToast(msg);
+    };
   }, []);
 
   const { isLoaded, loadError } = useJsApiLoader(googleMapsOptions);
