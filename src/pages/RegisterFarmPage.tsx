@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Tractor, MapPin, Phone, Save, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -16,7 +16,37 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, onSuc
         name: '',
         address: '',
         phone: '',
+        lat: 50.8503,
+        lng: 4.3517
     });
+    const addressInputRef = useRef<HTMLInputElement>(null);
+    const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+
+    // Initialize Google Places Autocomplete
+    useEffect(() => {
+        if (window.google && window.google.maps && window.google.maps.places && addressInputRef.current) {
+            autocompleteRef.current = new window.google.maps.places.Autocomplete(addressInputRef.current, {
+                types: ['address'],
+                componentRestrictions: { country: ['be', 'nl'] }, // Belgium and Netherlands
+                fields: ['formatted_address', 'geometry']
+            });
+
+            autocompleteRef.current.addListener('place_changed', () => {
+                const place = autocompleteRef.current?.getPlace();
+                if (place && place.geometry && place.geometry.location) {
+                    const lat = place.geometry.location.lat();
+                    const lng = place.geometry.location.lng();
+                    setFormData(prev => ({
+                        ...prev,
+                        address: place.formatted_address || '',
+                        lat,
+                        lng
+                    }));
+                    console.log('📍 Address selected:', place.formatted_address, lat, lng);
+                }
+            });
+        }
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -31,8 +61,8 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, onSuc
                     name: formData.name,
                     address: formData.address,
                     phone: formData.phone, // Optional
-                    lat: 50.8503, // Default fallback
-                    lng: 4.3517,  // Default fallback
+                    lat: formData.lat,
+                    lng: formData.lng,
                     owner_email: email,
                     is_verified: false, // Default false, needs approval
                     products: [],
@@ -89,14 +119,16 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, onSuc
                         <div className="relative">
                             <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                             <input
+                                ref={addressInputRef}
                                 type="text"
                                 required
                                 value={formData.address}
                                 onChange={e => setFormData({ ...formData, address: e.target.value })}
                                 className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-emerald-500 focus:outline-none font-bold text-slate-700"
-                                placeholder="Straat en gemeente"
+                                placeholder="Begin met typen voor suggesties..."
                             />
                         </div>
+                        <p className="text-xs text-slate-400 mt-1">📍 Selecteer je adres uit de suggesties voor nauwkeurige locatie</p>
                     </div>
 
                     <div>
