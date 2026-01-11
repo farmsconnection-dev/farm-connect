@@ -206,28 +206,43 @@ const App: React.FC = () => {
   // Supabase Auth Listener - voor Google OAuth
 
   const checkFarmerVerification = async (email: string) => {
-    // Check if farmer has a farm using email
-    const { data: farmData } = await supabase
-      .from('farms')
-      .select('is_verified')
-      .eq('owner_email', email);
+    console.log('🔍 Checking farmer verification for:', email);
+    try {
+      // Check if farmer has a farm using email
+      const { data: farmData, error } = await supabase
+        .from('farms')
+        .select('is_verified')
+        .eq('owner_email', email);
 
-    const myFarm = farmData?.[0];
+      if (error) {
+        console.error('❌ Error fetching farm:', error);
+        showToast('Fout bij ophalen boerderij gegevens');
+        return;
+      }
 
-    if (!myFarm) {
-      // No farm found - redirect to registration
-      setView('register_farm');
-    } else {
-      // Farm found - allow access to dashboard regardless of verification status
-      // The dashboard will show a banner if not verified
-      setIsFarmerVerified(myFarm.is_verified ?? false);
-      setUserType('farmer');
-      setView('farmer');
+      const myFarm = farmData?.[0];
+      console.log('🌾 Farm found:', myFarm);
+
+      if (!myFarm) {
+        // No farm found - redirect to registration
+        console.log('⚠️ No farm found, redirecting to register');
+        setView('register_farm');
+      } else {
+        // Farm found - allow access to dashboard regardless of verification status
+        // The dashboard will show a banner if not verified
+        console.log('✅ Farm found, verifying status:', myFarm.is_verified);
+        setIsFarmerVerified(myFarm.is_verified ?? false);
+        setUserType('farmer');
+        setView('farmer');
+      }
+    } catch (err) {
+      console.error('❌ Unexpected error in checkFarmerVerification:', err);
     }
   };
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('🔐 Auth State Change:', event, session?.user?.email);
       if (event === 'SIGNED_IN' && session) {
         const { email, user_metadata } = session.user;
         const name = user_metadata.full_name || email?.split('@')[0] || 'Gebruiker';
@@ -240,7 +255,10 @@ const App: React.FC = () => {
           isLoggedIn: true
         });
 
-        if (pendingRole === 'farmer') {
+        const currentPendingRole = localStorage.getItem('pendingRole') || pendingRole;
+        console.log('🎯 Pending Role:', currentPendingRole);
+
+        if (currentPendingRole === 'farmer') {
           checkFarmerVerification(email || '');
         } else {
           setUserType('discoverer');
@@ -463,7 +481,7 @@ const App: React.FC = () => {
             </motion.button>
             <AnimatePresence>
               {isLangOpen && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute right-0 mt-2 w-20 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-1 z-[200]">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute right-0 mt-2 w-20 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-1 z-[9999]">
                   {(['nl', 'fr', 'en', 'de'] as Language[]).map((l) => (
                     <motion.button key={l} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => { setLang(l); setIsLangOpen(false); }} className={`w-full text-center py-2 rounded-xl text-xs font-bold ${lang === l ? 'bg-forest text-mint' : 'text-slate-600 hover:bg-slate-50'}`}>{l.toUpperCase()}</motion.button>
                   ))}
