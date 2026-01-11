@@ -120,6 +120,7 @@ const App: React.FC = () => {
     }
   }, [pendingRole]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isFarmerVerified, setIsFarmerVerified] = useState<boolean>(true); // Default true for existing users
 
   // --- Header & Logo State ---
   const [headerLogoError, setHeaderLogoError] = useState(false);
@@ -162,22 +163,61 @@ const App: React.FC = () => {
     }
   }, [toast]);
 
+  // Browser back button handling - prevent going to login when already logged in
+  useEffect(() => {
+    // Push initial state when logged in
+    if (userProfile.isLoggedIn && view !== 'landing') {
+      window.history.pushState({ view, loggedIn: true }, '', window.location.pathname);
+    }
+
+    const handlePopState = (event: PopStateEvent) => {
+      // If user is logged in and tries to go back, prevent going to landing
+      if (userProfile.isLoggedIn) {
+        if (view === 'discover') {
+          // Already at discover, stay here
+          window.history.pushState({ view: 'discover', loggedIn: true }, '', window.location.pathname);
+        } else if (isSeasonCalendarOpen) {
+          // Close calendar instead of navigating back
+          setIsSeasonCalendarOpen(false);
+          window.history.pushState({ view, loggedIn: true }, '', window.location.pathname);
+        } else if (detailFarm) {
+          // Close farm detail instead of navigating back
+          setDetailFarm(null);
+          window.history.pushState({ view, loggedIn: true }, '', window.location.pathname);
+        } else if (isMenuOpen) {
+          // Close menu instead of navigating back
+          setIsMenuOpen(false);
+          window.history.pushState({ view, loggedIn: true }, '', window.location.pathname);
+        } else {
+          // Navigate to discover instead of landing
+          setView('discover');
+          window.history.pushState({ view: 'discover', loggedIn: true }, '', window.location.pathname);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [userProfile.isLoggedIn, view, isSeasonCalendarOpen, detailFarm, isMenuOpen]);
+
   // Supabase Auth Listener - voor Google OAuth
 
   const checkFarmerVerification = async (email: string) => {
     // Check if farmer has a farm using email
-    const { data: farms } = await supabase
+    const { data: farmData } = await supabase
       .from('farms')
       .select('is_verified')
       .eq('owner_email', email);
 
-    const myFarm = farms?.[0];
+    const myFarm = farmData?.[0];
 
     if (!myFarm) {
+      // No farm found - redirect to registration
       setView('register_farm');
-    } else if (!myFarm.is_verified) {
-      setView('verification_pending');
     } else {
+      // Farm found - allow access to dashboard regardless of verification status
+      // The dashboard will show a banner if not verified
+      setIsFarmerVerified(myFarm.is_verified ?? false);
       setUserType('farmer');
       setView('farmer');
     }
@@ -501,6 +541,7 @@ const App: React.FC = () => {
             setIsAddFarmOpen={setIsAddFarmOpen}
             setIsReferralModalOpen={setIsReferralModalOpen}
             showToast={showToast}
+            isVerified={isFarmerVerified}
           />
         )}
         {view === 'inventory' && userType === 'farmer' && (

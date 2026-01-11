@@ -28,10 +28,21 @@ export const PRODUCT_TRANSLATIONS: Record<string, { nl: string; fr: string; en: 
     'Witte kool': { nl: 'Witte kool', fr: 'Chou blanc', en: 'White Cabbage', de: 'Weißkohl' },
     'Bloemkool': { nl: 'Bloemkool', fr: 'Chou-fleur', en: 'Cauliflower', de: 'Blumenkohl' },
     'Knolselder': { nl: 'Knolselder', fr: 'Céleri-rave', en: 'Celeriac', de: 'Knollensellerie' },
+    'Knolselderij': { nl: 'Knolselderij', fr: 'Céleri-rave', en: 'Celeriac', de: 'Knollensellerie' },
     'Pastinaak': { nl: 'Pastinaak', fr: 'Panais', en: 'Parsnip', de: 'Pastinake' },
     'Raapjes': { nl: 'Raapjes', fr: 'Navets', en: 'Turnips', de: 'Rüben' },
     'Knoflook': { nl: 'Knoflook', fr: 'Ail', en: 'Garlic', de: 'Knoblauch' },
-    'Sjalotten': { nl: 'Sjalotten', fr: 'Échalotes', en: 'Shallots', de: 'Schalotten' }
+    'Sjalotten': { nl: 'Sjalotten', fr: 'Échalotes', en: 'Shallots', de: 'Schalotten' },
+    'Grondwitloof': { nl: 'Grondwitloof', fr: 'Chicon de pleine terre', en: 'Ground Chicory', de: 'Boden-Chicorée' },
+    'Schorseneren': { nl: 'Schorseneren', fr: 'Salsifis', en: 'Salsify', de: 'Schwarzwurzeln' },
+    'Rammenas': { nl: 'Rammenas', fr: 'Radis noir', en: 'Black Radish', de: 'Schwarzer Rettich' },
+    'Warmoes': { nl: 'Warmoes', fr: 'Bette à cardes', en: 'Swiss Chard', de: 'Mangold' },
+    'Honing': { nl: 'Honing', fr: 'Miel', en: 'Honey', de: 'Honig' },
+    'Honingraat': { nl: 'Honingraat', fr: 'Rayon de miel', en: 'Honeycomb', de: 'Honigwabe' },
+    'Veldsla': { nl: 'Veldsla', fr: 'Mâche', en: "Lamb's Lettuce", de: 'Feldsalat' },
+    'Eikenbladsla': { nl: 'Eikenbladsla', fr: 'Feuille de chêne', en: 'Oak Leaf Lettuce', de: 'Eichblattsalat' },
+    'Bramen': { nl: 'Bramen', fr: 'Mûres', en: 'Blackberries', de: 'Brombeeren' },
+    'Blauwbessen': { nl: 'Blauwbessen', fr: 'Myrtilles', en: 'Blueberries', de: 'Heidelbeeren' }
 };
 
 // Month translations

@@ -97,6 +97,16 @@ export const SeasonCalendarModal: React.FC<SeasonCalendarModalProps> = ({ isOpen
                     );
                 })}
             </div>
+            {/* Mobile floating close button */}
+            <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onClose}
+                className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[210] bg-white text-emerald-900 px-8 py-4 rounded-full font-black text-sm uppercase tracking-wider shadow-2xl flex items-center gap-2 border-2 border-emerald-500"
+            >
+                <X size={20} />
+                {t('cancel')}
+            </motion.button>
         </div>
     );
 };

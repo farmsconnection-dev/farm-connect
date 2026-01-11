@@ -71,7 +71,11 @@ export const MeteorCard: React.FC<MeteorCardProps> = ({ title, description, clas
             {/* Content */}
             <div className="relative z-10">
                 <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
-                <p className="text-emerald-100/80 text-base leading-relaxed">{description}</p>
+                <div className="text-emerald-100/80 text-base leading-relaxed space-y-4">
+                    {description.split('\n\n').map((paragraph, idx) => (
+                        <p key={idx} className="whitespace-pre-line">{paragraph}</p>
+                    ))}
+                </div>
             </div>
         </div>
     );

@@ -100,6 +100,7 @@ export const DICTIONARY: TranslationDictionary = {
   filter_dairy: { nl: "Zuivel", fr: "Laiterie", en: "Dairy", de: "Molkerei" },
   filter_meat: { nl: "Vlees", fr: "Viande", en: "Meat", de: "Fleisch" },
   filter_eggs: { nl: "Eieren", fr: "Œufs", en: "Eggs", de: "Eier" },
+  filter_honey: { nl: "Honing", fr: "Miel", en: "Honey", de: "Honig" },
   filter_route: { nl: "Route", fr: "Itinéraire", en: "Route", de: "Route" },
   filter_open_now: { nl: "Nu Open", fr: "Ouvert", en: "Open Now", de: "Jetzt offen" },
   start_route: { nl: "Start Route", fr: "Démarrer", en: "Start Route", de: "Route starten" },
@@ -407,9 +408,232 @@ export const DICTIONARY: TranslationDictionary = {
     de: "Lauch gehört zur Familie der Zwiebeln und des Knoblauchs und ist voll von Vitamin K, Folsäure und Ballaststoffen. Der grüne Teil ist ebenfalls essbar und gesund. Lauch wächst gut im Winter und ist ein vielseitiges Gemüse für Suppen und Eintöpfe.\n\n🏴󠁧󠁢󠁷󠁬󠁳󠁿 Historisch: In Wales ist Lauch ein nationales Symbol; Soldaten trugen ihn früher, um sich im Kampf zu erkennen."
   },
 
+  // Landing page translations
+  tagline_caps: {
+    nl: "RECHTSTREEKS VAN DE BRON",
+    fr: "DIRECTEMENT DE LA SOURCE",
+    en: "STRAIGHT FROM THE SOURCE",
+    de: "DIREKT VON DER QUELLE"
+  },
+  landing_intro: {
+    nl: "Vind de lekkerste verse producten, rechtstreeks van de boer.",
+    fr: "Trouvez les produits les plus frais, directement du fermier.",
+    en: "Find the freshest products, straight from the farmer.",
+    de: "Finden Sie die frischesten Produkte, direkt vom Bauern."
+  },
 
+  // Product facts - Appels
+  fact_appels_title: {
+    nl: "Appels - Belgische Trots",
+    fr: "Pommes - Fierté Belge",
+    en: "Apples - Belgian Pride",
+    de: "Äpfel - Belgischer Stolz"
+  },
+  fact_appels: {
+    nl: "België telt meer dan 100 appelrassen! De Jonagold, een kruising tussen Golden Delicious en Jonathan, werd ontwikkeld in New York maar groeide uit tot de populairste Belgische appel. Appels bevatten pectine, wat helpt bij de spijsvertering.\n\n🍎 Wist je dat? Een appelboom kan wel 400 appels per seizoen produceren en tot 100 jaar oud worden!",
+    fr: "La Belgique compte plus de 100 variétés de pommes ! La Jonagold, un croisement entre Golden Delicious et Jonathan, a été développée à New York mais est devenue la pomme la plus populaire en Belgique. Les pommes contiennent de la pectine, qui aide à la digestion.\n\n🍎 Le saviez-vous ? Un pommier peut produire jusqu'à 400 pommes par saison et vivre jusqu'à 100 ans !",
+    en: "Belgium has over 100 apple varieties! The Jonagold, a cross between Golden Delicious and Jonathan, was developed in New York but became the most popular Belgian apple. Apples contain pectin, which aids digestion.\n\n🍎 Did you know? An apple tree can produce up to 400 apples per season and live up to 100 years!",
+    de: "Belgien hat über 100 Apfelsorten! Der Jonagold, eine Kreuzung zwischen Golden Delicious und Jonathan, wurde in New York entwickelt, ist aber zum beliebtesten belgischen Apfel geworden. Äpfel enthalten Pektin, das die Verdauung fördert.\n\n🍎 Wussten Sie? Ein Apfelbaum kann bis zu 400 Äpfel pro Saison produzieren und bis zu 100 Jahre alt werden!"
+  },
+
+  // Product facts - Wortelen
+  fact_wortelen_title: {
+    nl: "Wortelen - Oranje Wonder",
+    fr: "Carottes - Merveille Orange",
+    en: "Carrots - Orange Wonder",
+    de: "Karotten - Oranges Wunder"
+  },
+  fact_wortelen: {
+    nl: "Wortelen waren oorspronkelijk paars of wit! De oranje kleur is een eerbetoon aan Willem van Oranje uit de 17e eeuw door Nederlandse telers. Wortelen zijn super rijk aan bètacaroteen, wat je lichaam omzet in vitamine A. Goed voor je ogen!\n\n🥕 Fun fact: Het eten van te veel wortelen kan je huid tijdelijk oranje kleuren - dit heet 'carotenemie'!",
+    fr: "Les carottes étaient à l'origine violettes ou blanches ! La couleur orange est un hommage à Guillaume d'Orange au 17e siècle par les cultivateurs néerlandais. Les carottes sont très riches en bêta-carotène, que votre corps transforme en vitamine A. Bon pour vos yeux !\n\n🥕 Fait amusant : Manger trop de carottes peut temporairement colorer votre peau en orange - cela s'appelle la 'caroténémie' !",
+    en: "Carrots were originally purple or white! The orange color is a tribute to William of Orange from the 17th century by Dutch growers. Carrots are super rich in beta-carotene, which your body converts to vitamin A. Good for your eyes!\n\n🥕 Fun fact: Eating too many carrots can temporarily turn your skin orange - this is called 'carotenemie'!",
+    de: "Karotten waren ursprünglich lila oder weiß! Die orange Farbe ist eine Hommage an Wilhelm von Oranien aus dem 17. Jahrhundert durch niederländische Züchter. Karotten sind sehr reich an Beta-Carotin, das Ihr Körper in Vitamin A umwandelt. Gut für Ihre Augen!\n\n🥕 Fun Fact: Zu viele Karotten zu essen kann Ihre Haut vorübergehend orange färben - das nennt man 'Karotinämie'!"
+  },
+
+  // Product facts - Aardbeien
+  fact_aardbeien_title: {
+    nl: "Aardbeien - Belgische Zomerklassiker",
+    fr: "Fraises - Classique d'Été Belge",
+    en: "Strawberries - Belgian Summer Classic",
+    de: "Erdbeeren - Belgischer Sommerklassiker"
+  },
+  fact_aardbeien: {
+    nl: "De aardbei is technisch gezien geen bes maar een 'schijnvrucht' - de echte vruchten zijn de kleine pitjes aan de buitenkant! Belgische aardbeien zijn wereldberoemd om hun intense smaak. Een aardbei bevat meer vitamine C dan een sinaasappel!\n\n🍓 Historisch: De moderne tuinaardbei ontstond in Frankrijk in de 18e eeuw door kruising van Amerikaanse en Chileense soorten.",
+    fr: "La fraise n'est techniquement pas une baie mais un 'faux fruit' - les vrais fruits sont les petites graines à l'extérieur ! Les fraises belges sont mondialement célèbres pour leur goût intense. Une fraise contient plus de vitamine C qu'une orange !\n\n🍓 Historique : La fraise de jardin moderne est née en France au 18e siècle par croisement d'espèces américaines et chiliennes.",
+    en: "The strawberry is technically not a berry but an 'accessory fruit' - the real fruits are the tiny seeds on the outside! Belgian strawberries are world-famous for their intense flavor. A strawberry contains more vitamin C than an orange!\n\n🍓 Historical: The modern garden strawberry originated in France in the 18th century through crossing American and Chilean species.",
+    de: "Die Erdbeere ist technisch gesehen keine Beere, sondern eine 'Scheinfrucht' - die echten Früchte sind die kleinen Samen an der Außenseite! Belgische Erdbeeren sind weltberühmt für ihren intensiven Geschmack. Eine Erdbeere enthält mehr Vitamin C als eine Orange!\n\n🍓 Historisch: Die moderne Gartenerdbeere entstand im 18. Jahrhundert in Frankreich durch Kreuzung amerikanischer und chilenischer Arten."
+  },
+
+  // Product facts - Uien
+  fact_uien_title: {
+    nl: "Uien - Keukenessentieel",
+    fr: "Oignons - Essentiel de Cuisine",
+    en: "Onions - Kitchen Essential",
+    de: "Zwiebeln - Küchenessentiell"
+  },
+  fact_uien: {
+    nl: "Uien worden al meer dan 5000 jaar geteeld en waren in het oude Egypte zelfs betaalmiddel! Ze bevatten krachtige antioxidanten en hebben ontstekingsremmende eigenschappen. De scherpe stoffen die je laten huilen zijn eigenlijk een verdedigingsmechanisme van de plant.\n\n🧅 Tip: Snijd uien onder stromend water of met een natte mes om minder te huilen. De zwavel-verbindingen lossen op in water!",
+    fr: "Les oignons sont cultivés depuis plus de 5000 ans et servaient même de monnaie d'échange dans l'Égypte ancienne ! Ils contiennent de puissants antioxydants et ont des propriétés anti-inflammatoires. Les substances piquantes qui font pleurer sont en fait un mécanisme de défense de la plante.\n\n🧅 Astuce : Coupez les oignons sous l'eau courante ou avec un couteau humide pour moins pleurer. Les composés soufrés se dissolvent dans l'eau !",
+    en: "Onions have been cultivated for over 5000 years and were even used as currency in ancient Egypt! They contain powerful antioxidants and have anti-inflammatory properties. The sharp substances that make you cry are actually a defense mechanism of the plant.\n\n🧅 Tip: Cut onions under running water or with a wet knife to cry less. The sulfur compounds dissolve in water!",
+    de: "Zwiebeln werden seit über 5000 Jahren angebaut und dienten im alten Ägypten sogar als Zahlungsmittel! Sie enthalten starke Antioxidantien und haben entzündungshemmende Eigenschaften. Die scharfen Stoffe, die zum Weinen bringen, sind eigentlich ein Abwehrmechanismus der Pflanze.\n\n🧅 Tipp: Schneiden Sie Zwiebeln unter fließendem Wasser oder mit einem nassen Messer, um weniger zu weinen. Die Schwefelverbindungen lösen sich in Wasser!"
+  },
+
+  // Product facts - Witloof
+  fact_witloof_title: {
+    nl: "Witloof - Belgisch Wit Goud",
+    fr: "Endives - Or Blanc Belge",
+    en: "Belgian Endive - Belgian White Gold",
+    de: "Chicorée - Belgisches Weißgold"
+  },
+  fact_witloof: {
+    nl: "Witloof is een 100% Belgische uitvinding! Het werd per ongeluk ontdekt in 1830 in een kelder in Brussel. Het moet in volledige duisternis groeien, anders wordt het groen en bitter. België is 's werelds grootste producent!\n\n🥬 Culinair: De bittere smaakstoffen stimuleren de spijsvertering. Probeer het eens gegrild met honing en gorgonzola!",
+    fr: "L'endive est une invention 100% belge ! Elle a été découverte par accident en 1830 dans une cave à Bruxelles. Elle doit pousser dans l'obscurité totale, sinon elle devient verte et amère. La Belgique est le plus grand producteur mondial !\n\n🥬 Culinaire : Les substances amères stimulent la digestion. Essayez-la grillée avec du miel et du gorgonzola !",
+    en: "Belgian endive is a 100% Belgian invention! It was accidentally discovered in 1830 in a cellar in Brussels. It must grow in complete darkness, otherwise it turns green and bitter. Belgium is the world's largest producer!\n\n🥬 Culinary: The bitter substances stimulate digestion. Try it grilled with honey and gorgonzola!",
+    de: "Chicorée ist eine 100% belgische Erfindung! Er wurde 1830 zufällig in einem Keller in Brüssel entdeckt. Er muss in völliger Dunkelheit wachsen, sonst wird er grün und bitter. Belgien ist der weltweit größte Produzent!\n\n🥬 Kulinarisch: Die Bitterstoffe regen die Verdauung an. Probieren Sie ihn gegrillt mit Honig und Gorgonzola!"
+  },
+
+  // Product facts - Spruitjes
+  fact_spruitjes_title: {
+    nl: "Spruitjes - Brussels Sprouts",
+    fr: "Choux de Bruxelles - Fierté Nationale",
+    en: "Brussels Sprouts - Belgian Pride",
+    de: "Rosenkohl - Belgischer Stolz"
+  },
+  fact_spruitjes: {
+    nl: "Onze nationale trots! Spruitjes heten wereldwijd 'Brussels Sprouts' vanwege de historische teelt rondom Brussel sinds de 13e eeuw. Ze zijn bomvol vitamine C en K. Een plant kan wel 50-100 spruitjes produceren!\n\n🥦 Tip: Moderne rassen zijn veel minder bitter dan vroeger. Probeer ze eens geroosterd met spekjes en een druppel siroop!",
+    fr: "Notre fierté nationale ! Les choux de Bruxelles sont appelés 'Brussels Sprouts' dans le monde entier en raison de la culture historique autour de Bruxelles depuis le 13e siècle. Ils sont pleins de vitamines C et K. Une plante peut produire 50 à 100 choux !\n\n🥦 Astuce : Les variétés modernes sont beaucoup moins amères qu'avant. Essayez-les rôtis avec des lardons et un filet de sirop !",
+    en: "Our national pride! Brussels sprouts are called 'Brussels Sprouts' worldwide due to the historic cultivation around Brussels since the 13th century. They're packed with vitamins C and K. One plant can produce 50-100 sprouts!\n\n🥦 Tip: Modern varieties are much less bitter than before. Try them roasted with bacon and a drizzle of syrup!",
+    de: "Unser Nationalstolz! Rosenkohl wird weltweit 'Brussels Sprouts' genannt, wegen des historischen Anbaus rund um Brüssel seit dem 13. Jahrhundert. Sie sind voller Vitamine C und K. Eine Pflanze kann 50-100 Röschen produzieren!\n\n🥦 Tipp: Moderne Sorten sind viel weniger bitter als früher. Probieren Sie sie geröstet mit Speck und einem Schuss Sirup!"
+  },
+
+  // Product facts - Kersen
+  fact_kersen_title: {
+    nl: "Kersen - Limburgs Rood Goud",
+    fr: "Cerises - Or Rouge du Limbourg",
+    en: "Cherries - Limburg Red Gold",
+    de: "Kirschen - Limburger Rotes Gold"
+  },
+  fact_kersen: {
+    nl: "Belgische kersen uit de streek rond Sint-Truiden zijn wereldberoemd! De Limburgse Haspengouw is het grootste fruitproducerende gebied in de Benelux. Kersen bevatten melatonine, wat kan helpen bij slaapproblemen.\n\n🍒 Historisch: Romeinse soldaten brachten kersenbomen naar België. De naam 'kers' komt van de Turkse stad Giresun (vroeger Cerasus).",
+    fr: "Les cerises belges de la région de Saint-Trond sont mondialement célèbres ! La Hesbaye limbourgeoise est la plus grande région productrice de fruits du Benelux. Les cerises contiennent de la mélatonine, qui peut aider en cas de problèmes de sommeil.\n\n🍒 Historique : Les soldats romains ont apporté les cerisiers en Belgique. Le nom 'cerise' vient de la ville turque de Giresun (anciennement Cerasus).",
+    en: "Belgian cherries from the Sint-Truiden region are world-famous! The Limburg Haspengouw is the largest fruit-producing area in the Benelux. Cherries contain melatonin, which can help with sleep problems.\n\n🍒 Historical: Roman soldiers brought cherry trees to Belgium. The name 'cherry' comes from the Turkish city of Giresun (formerly Cerasus).",
+    de: "Belgische Kirschen aus der Region Sint-Truiden sind weltberühmt! Das Limburger Haspengouw ist das größte Obstanbaugebiet in den Benelux-Ländern. Kirschen enthalten Melatonin, das bei Schlafproblemen helfen kann.\n\n🍒 Historisch: Römische Soldaten brachten Kirschbäume nach Belgien. Der Name 'Kirsche' stammt aus der türkischen Stadt Giresun (früher Cerasus)."
+  },
+
+  // Product facts - Tomaten  
+  fact_tomaten_title: {
+    nl: "Tomaten - Rode Vitaminebon",
+    fr: "Tomates - Bombe de Vitamines Rouge",
+    en: "Tomatoes - Red Vitamin Bomb",
+    de: "Tomaten - Rote Vitaminbombe"
+  },
+  fact_tomaten: {
+    nl: "Tomaten zijn botanisch gezien fruit, geen groente! Er bestaan meer dan 10.000 soorten wereldwijd. De rode kleur komt van lycopeen, een krachtige antioxidant die beter opneembaar is als tomaten gekookt zijn.\n\n🍅 Wist je dat? Tomaten werden in Europa lang gezien als giftig omdat ze familie zijn van de nachtschade. Pas rond 1850 werden ze populair als voedsel!",
+    fr: "Les tomates sont botaniquement un fruit, pas un légume ! Il existe plus de 10 000 variétés dans le monde. La couleur rouge vient du lycopène, un puissant antioxydant qui est mieux absorbé lorsque les tomates sont cuites.\n\n🍅 Le saviez-vous ? Les tomates ont longtemps été considérées comme toxiques en Europe car elles font partie de la famille des solanacées. Ce n'est que vers 1850 qu'elles sont devenues populaires comme aliment !",
+    en: "Tomatoes are botanically a fruit, not a vegetable! There are over 10,000 varieties worldwide. The red color comes from lycopene, a powerful antioxidant that is better absorbed when tomatoes are cooked.\n\n🍅 Did you know? Tomatoes were long considered poisonous in Europe because they are related to nightshade. It wasn't until around 1850 that they became popular as food!",
+    de: "Tomaten sind botanisch gesehen Obst, kein Gemüse! Es gibt weltweit über 10.000 Sorten. Die rote Farbe kommt von Lycopin, einem starken Antioxidans, das besser aufgenommen wird, wenn Tomaten gekocht sind.\n\n🍅 Wussten Sie? Tomaten galten in Europa lange als giftig, weil sie mit dem Nachtschatten verwandt sind. Erst um 1850 wurden sie als Nahrungsmittel populär!"
+  },
+
+  // Product facts - Pompoen
+  fact_pompoen_title: {
+    nl: "Pompoen - Herfstmagie",
+    fr: "Citrouille - Magie d'Automne",
+    en: "Pumpkin - Autumn Magic",
+    de: "Kürbis - Herbstmagie"
+  },
+  fact_pompoen: {
+    nl: "De zwaarste pompoen ooit gewogen woog meer dan 1200 kg! Pompoenen zijn familie van de komkommer en meloen. De oranje kleur komt door bètacaroteen, dezelfde stof als in wortelen. De zaden zijn zeer voedzaam en rijk aan zink.\n\n🎃 Leuk weetje: Pompoenen zijn voor 90% water en bevatten meer vezels dan boerenkool!",
+    fr: "La citrouille la plus lourde jamais pesée faisait plus de 1200 kg ! Les citrouilles font partie de la famille du concombre et du melon. La couleur orange vient du bêta-carotène, la même substance que dans les carottes. Les graines sont très nutritives et riches en zinc.\n\n🎃 Fait amusant : Les citrouilles sont composées à 90% d'eau et contiennent plus de fibres que le chou frisé !",
+    en: "The heaviest pumpkin ever weighed over 1200 kg! Pumpkins are related to cucumbers and melons. The orange color comes from beta-carotene, the same substance as in carrots. The seeds are very nutritious and rich in zinc.\n\n🎃 Fun fact: Pumpkins are 90% water and contain more fiber than kale!",
+    de: "Der schwerste Kürbis, der je gewogen wurde, wog über 1200 kg! Kürbisse sind mit Gurken und Melonen verwandt. Die orange Farbe kommt von Beta-Carotin, dem gleichen Stoff wie in Karotten. Die Samen sind sehr nahrhaft und reich an Zink.\n\n🎃 Fun Fact: Kürbisse bestehen zu 90% aus Wasser und enthalten mehr Ballaststoffe als Grünkohl!"
+  },
+
+  // Product facts - Asperges
+  fact_asperges_title: {
+    nl: "Asperges - Het Witte Goud",
+    fr: "Asperges - L'Or Blanc",
+    en: "Asparagus - The White Gold",
+    de: "Spargel - Das Weiße Gold"
+  },
+  fact_asperges: {
+    nl: "Asperges kunnen bij warm weer tot 10 cm per dag groeien! Ze zijn een van de eerste groentesoorten in het voorjaar en zijn rijk aan foliumzuur en vitamine K. Witte asperges groeien onder de grond in duisternis, groene in het zonlicht.\n\n🌱 Culinair: De aspergeteelt in België concentreert zich rond de Kempen. Het seizoen duurt van half april tot 24 juni (Sint-Jan).",
+    fr: "Les asperges peuvent pousser jusqu'à 10 cm par jour par temps chaud ! Elles sont l'un des premiers légumes du printemps et sont riches en acide folique et en vitamine K. Les asperges blanches poussent sous terre dans l'obscurité, les vertes à la lumière du soleil.\n\n🌱 Culinaire : La culture des asperges en Belgique se concentre autour de la Campine. La saison dure de mi-avril au 24 juin (Saint-Jean).",
+    en: "Asparagus can grow up to 10 cm per day in warm weather! They are one of the first vegetables in spring and are rich in folic acid and vitamin K. White asparagus grows underground in darkness, green ones in sunlight.\n\n🌱 Culinary: Asparagus cultivation in Belgium is concentrated around the Kempen region. The season lasts from mid-April to June 24 (St. John's Day).",
+    de: "Spargel kann bei warmem Wetter bis zu 10 cm pro Tag wachsen! Er gehört zu den ersten Gemüsesorten im Frühling und ist reich an Folsäure und Vitamin K. Weißer Spargel wächst unter der Erde im Dunkeln, grüner im Sonnenlicht.\n\n🌱 Kulinarisch: Der Spargelanbau in Belgien konzentriert sich auf die Region Kempen. Die Saison dauert von Mitte April bis zum 24. Juni (Johannistag)."
+  },
+
+  // Product facts - Spinazie
+  fact_spinazie_title: {
+    nl: "Spinazie - Popeyes Kracht",
+    fr: "Épinards - Force de Popeye",
+    en: "Spinach - Popeye's Power",
+    de: "Spinat - Popeyes Kraft"
+  },
+  fact_spinazie: {
+    nl: "Spinazie bevat veel ijzer, maar de mythe van Popeye is gebaseerd op een rekenfout! Een onderzoeker plaatste ooit een decimaal verkeerd, waardoor spinazie 10x meer ijzer leek te bevatten. Toch blijft het een superfood vol vitaminen en mineralen.\n\n💪 Tip: Eet spinazie met iets zuurs (zoals citroen) om het ijzer beter op te nemen!",
+    fr: "Les épinards contiennent beaucoup de fer, mais le mythe de Popeye est basé sur une erreur de calcul ! Un chercheur a un jour mal placé une décimale, faisant croire que les épinards contenaient 10 fois plus de fer. Pourtant, ça reste un super-aliment plein de vitamines et minéraux.\n\n💪 Astuce : Mangez des épinards avec quelque chose d'acide (comme du citron) pour mieux absorber le fer !",
+    en: "Spinach contains lots of iron, but the Popeye myth is based on a calculation error! A researcher once misplaced a decimal, making spinach seem to contain 10x more iron. Still, it remains a superfood full of vitamins and minerals.\n\n💪 Tip: Eat spinach with something acidic (like lemon) to better absorb the iron!",
+    de: "Spinat enthält viel Eisen, aber der Popeye-Mythos basiert auf einem Rechenfehler! Ein Forscher hat einmal ein Komma falsch gesetzt, wodurch Spinat 10x mehr Eisen zu enthalten schien. Dennoch bleibt es ein Superfood voller Vitamine und Mineralstoffe.\n\n💪 Tipp: Essen Sie Spinat mit etwas Saurem (wie Zitrone), um das Eisen besser aufzunehmen!"
+  },
+
+  // Product facts - Broccoli
+  fact_broccoli_title: {
+    nl: "Broccoli - Groene Superfood",
+    fr: "Brocoli - Superaliment Vert",
+    en: "Broccoli - Green Superfood",
+    de: "Brokkoli - Grünes Superfood"
+  },
+  fact_broccoli: {
+    nl: "Broccoli bevat meer vitamine C dan een sinaasappel! Het is familie van de bloemkool en kool. De naam komt van het Italiaanse 'broccolo' wat 'kleine arm' of 'tak' betekent. Broccoli bevat sulforafaan, een stof die mogelijk beschermt tegen kanker.\n\n🥦 Kooktip: Stoom broccoli kort (3-4 minuten) om de voedingsstoffen te behouden. Overkoken vernietigt de vitaminen!",
+    fr: "Le brocoli contient plus de vitamine C qu'une orange ! Il fait partie de la famille du chou-fleur et du chou. Le nom vient de l'italien 'broccolo' qui signifie 'petit bras' ou 'branche'. Le brocoli contient du sulforaphane, une substance qui pourrait protéger contre le cancer.\n\n🥦 Conseil de cuisson : Faites cuire le brocoli à la vapeur brièvement (3-4 minutes) pour conserver les nutriments. Trop cuire détruit les vitamines !",
+    en: "Broccoli contains more vitamin C than an orange! It's related to cauliflower and cabbage. The name comes from the Italian 'broccolo' meaning 'little arm' or 'branch'. Broccoli contains sulforaphane, a substance that may protect against cancer.\n\n🥦 Cooking tip: Steam broccoli briefly (3-4 minutes) to preserve nutrients. Overcooking destroys the vitamins!",
+    de: "Brokkoli enthält mehr Vitamin C als eine Orange! Er ist mit Blumenkohl und Kohl verwandt. Der Name kommt vom italienischen 'broccolo', was 'kleiner Arm' oder 'Zweig' bedeutet. Brokkoli enthält Sulforaphan, eine Substanz, die möglicherweise vor Krebs schützt.\n\n🥦 Kochtipp: Dämpfen Sie Brokkoli kurz (3-4 Minuten), um die Nährstoffe zu erhalten. Überkochen zerstört die Vitamine!"
+  },
+
+  // Product facts - Komkommer
+  fact_komkommer_title: {
+    nl: "Komkommer - Coole Verfrissing",
+    fr: "Concombre - Rafraîchissement Cool",
+    en: "Cucumber - Cool Refreshment",
+    de: "Gurke - Kühle Erfrischung"
+  },
+  fact_komkommer: {
+    nl: "Een komkommer bestaat voor 95% uit water, waardoor het de perfecte dorstlesser is! De binnenkant van een komkommer kan tot 20 graden koeler zijn dan de buitentemperatuur. Vandaar de uitdrukking 'cool as a cucumber'!\n\n🥒 Beautytip: Leg plakjes komkommer op je ogen tegen wallen - de koelte en antioxidanten werken ontspannend!",
+    fr: "Un concombre est composé à 95% d'eau, ce qui en fait le parfait désaltérant ! L'intérieur d'un concombre peut être jusqu'à 20 degrés plus frais que la température extérieure. D'où l'expression 'cool as a cucumber' !\n\n🥒 Conseil beauté : Posez des tranches de concombre sur vos yeux contre les cernes - la fraîcheur et les antioxydants ont un effet relaxant !",
+    en: "A cucumber is 95% water, making it the perfect thirst quencher! The inside of a cucumber can be up to 20 degrees cooler than the outside temperature. Hence the expression 'cool as a cucumber'!\n\n🥒 Beauty tip: Place cucumber slices on your eyes against puffiness - the coolness and antioxidants have a relaxing effect!",
+    de: "Eine Gurke besteht zu 95% aus Wasser, was sie zum perfekten Durstlöscher macht! Das Innere einer Gurke kann bis zu 20 Grad kühler sein als die Außentemperatur. Daher der Ausdruck 'cool wie eine Gurke'!\n\n🥒 Beauty-Tipp: Legen Sie Gurkenscheiben auf die Augen gegen geschwollene Lider - die Kühle und Antioxidantien wirken entspannend!"
+  },
+
+  // Product facts - Bloemkool
+  fact_bloemkool_title: {
+    nl: "Bloemkool - Witte Wolkjes",
+    fr: "Chou-fleur - Nuages Blancs",
+    en: "Cauliflower - White Clouds",
+    de: "Blumenkohl - Weiße Wölkchen"
+  },
+  fact_bloemkool: {
+    nl: "De witte kleur van bloemkool komt doordat de bladeren de kool beschermen tegen zonlicht. Blootgesteld aan de zon zou hij geel worden! Er bestaan ook oranje, groene en paarse variëteiten. Bloemkool is laag in calorieën maar rijk aan vezels.\n\n🥗 Culinair: Bloemkool is de basis van de populaire 'bloemkoolrijst' en 'bloemkoolpizza' - gezonde alternatieven!",
+    fr: "La couleur blanche du chou-fleur vient du fait que les feuilles protègent le chou de la lumière du soleil. Exposé au soleil, il deviendrait jaune ! Il existe aussi des variétés orange, vertes et violettes. Le chou-fleur est faible en calories mais riche en fibres.\n\n🥗 Culinaire : Le chou-fleur est la base du populaire 'riz de chou-fleur' et de la 'pizza au chou-fleur' - des alternatives saines !",
+    en: "The white color of cauliflower comes from the leaves protecting the cabbage from sunlight. Exposed to the sun, it would turn yellow! There are also orange, green and purple varieties. Cauliflower is low in calories but rich in fiber.\n\n🥗 Culinary: Cauliflower is the base of the popular 'cauliflower rice' and 'cauliflower pizza' - healthy alternatives!",
+    de: "Die weiße Farbe des Blumenkohls kommt daher, dass die Blätter den Kohl vor Sonnenlicht schützen. Der Sonne ausgesetzt würde er gelb werden! Es gibt auch orange, grüne und lila Sorten. Blumenkohl ist kalorienarm aber ballaststoffreich.\n\n🥗 Kulinarisch: Blumenkohl ist die Basis des beliebten 'Blumenkohlreis' und der 'Blumenkohlpizza' - gesunde Alternativen!"
+  },
+
+  // Product facts - Peren
+  fact_peren_title: {
+    nl: "Peren - Belgische Bescheidenheid",
+    fr: "Poires - Modestie Belge",
+    en: "Pears - Belgian Modesty",
+    de: "Birnen - Belgische Bescheidenheit"
+  },
+  fact_peren: {
+    nl: "De Conférence peer, vandaag de populairste in België, werd ontwikkeld in 1885 en won een prijs op een conferentie in Londen - vandaar de naam! Peren rijpen van binnenuit, dus wanneer de buitenkant zacht is, is de kern vaak al te rijp.\n\n🍐 Tip: Bewaar peren apart van appels - appels geven ethyleengas af waardoor peren sneller rijpen!",
+    fr: "La poire Conférence, aujourd'hui la plus populaire en Belgique, a été développée en 1885 et a remporté un prix lors d'une conférence à Londres - d'où son nom ! Les poires mûrissent de l'intérieur, donc quand l'extérieur est mou, le cœur est souvent déjà trop mûr.\n\n🍐 Astuce : Conservez les poires séparément des pommes - les pommes émettent de l'éthylène qui fait mûrir les poires plus vite !",
+    en: "The Conference pear, today the most popular in Belgium, was developed in 1885 and won a prize at a conference in London - hence the name! Pears ripen from the inside out, so when the outside is soft, the core is often already overripe.\n\n🍐 Tip: Store pears separately from apples - apples release ethylene gas which causes pears to ripen faster!",
+    de: "Die Conference-Birne, heute die beliebteste in Belgien, wurde 1885 entwickelt und gewann einen Preis auf einer Konferenz in London - daher der Name! Birnen reifen von innen nach außen, wenn also die Außenseite weich ist, ist der Kern oft schon überreif.\n\n🍐 Tipp: Bewahren Sie Birnen getrennt von Äpfeln auf - Äpfel geben Ethylengas ab, das Birnen schneller reifen lässt!"
+  },
 
 };
+
 
 export const INITIAL_FARMS: Farm[] = [
   {
@@ -976,18 +1200,18 @@ export const INITIAL_FARMS: Farm[] = [
 ];
 
 export const SEASONAL_DATA = [
-  { month: 'Januari', items: ['Appels', 'Aardappelen', 'Wortelen', 'Uien', 'Witloof', 'Spruitjes'] },
-  { month: 'Februari', items: ['Appels', 'Aardappelen', 'Wortelen', 'Uien', 'Witloof', 'Spruitjes'] },
-  { month: 'Maart', items: ['Appels', 'Prei', 'Wortelen', 'Uien', 'Witloof'] },
-  { month: 'April', items: ['Aardbeien', 'Prei', 'Broccoli', 'Wortelen', 'Spinazie', 'Asperges'] },
-  { month: 'Mei', items: ['Aardbeien', 'Prei', 'Broccoli', 'Wortelen', 'Spinazie', 'Asperges'] },
-  { month: 'Juni', items: ['Aardbeien', 'Kersen', 'Tomaten', 'Komkommer', 'Asperges', 'Bloemkool'] },
-  { month: 'Juli', items: ['Aardbeien', 'Kersen', 'Tomaten', 'Komkommer'] },
-  { month: 'Augustus', items: ['Appels', 'Peren', 'Tomaten', 'Komkommer'] },
-  { month: 'September', items: ['Appels', 'Peren', 'Pompoen', 'Uien'] },
-  { month: 'Oktober', items: ['Appels', 'Peren', 'Pompoen', 'Uien', 'Prei', 'Witloof'] },
-  { month: 'November', items: ['Appels', 'Aardappelen', 'Wortelen', 'Uien', 'Prei', 'Witloof', 'Spruitjes'] },
-  { month: 'December', items: ['Appels', 'Aardappelen', 'Wortelen', 'Uien', 'Witloof', 'Spruitjes'] },
+  { month: 'Januari', items: ['Appels', 'Aardappelen', 'Wortelen', 'Uien', 'Witloof', 'Spruitjes', 'Prei', 'Veldsla', 'Honing'] },
+  { month: 'Februari', items: ['Appels', 'Aardappelen', 'Wortelen', 'Uien', 'Witloof', 'Spruitjes', 'Prei', 'Veldsla', 'Honing'] },
+  { month: 'Maart', items: ['Appels', 'Prei', 'Wortelen', 'Uien', 'Witloof', 'Sla', 'Veldsla', 'Honing'] },
+  { month: 'April', items: ['Aardbeien', 'Prei', 'Broccoli', 'Wortelen', 'Spinazie', 'Asperges', 'Sla', 'Honing'] },
+  { month: 'Mei', items: ['Aardbeien', 'Prei', 'Broccoli', 'Wortelen', 'Spinazie', 'Asperges', 'Sla', 'Komkommer', 'Honing'] },
+  { month: 'Juni', items: ['Aardbeien', 'Kersen', 'Tomaten', 'Komkommer', 'Asperges', 'Bloemkool', 'Sla', 'Paprika', 'Frambozen', 'Honing'] },
+  { month: 'Juli', items: ['Aardbeien', 'Kersen', 'Tomaten', 'Komkommer', 'Paprika', 'Sla', 'Bloemkool', 'Frambozen', 'Blauwbessen', 'Honing'] },
+  { month: 'Augustus', items: ['Appels', 'Peren', 'Tomaten', 'Komkommer', 'Paprika', 'Sla', 'Broccoli', 'Frambozen', 'Bramen', 'Blauwbessen', 'Honing'] },
+  { month: 'September', items: ['Appels', 'Peren', 'Pompoen', 'Uien', 'Paprika', 'Tomaten', 'Sla', 'Warmoes', 'Bramen', 'Honing'] },
+  { month: 'Oktober', items: ['Appels', 'Peren', 'Pompoen', 'Uien', 'Prei', 'Witloof', 'Spruitjes', 'Pastinaak', 'Knolselderij', 'Schorseneren', 'Honing'] },
+  { month: 'November', items: ['Appels', 'Aardappelen', 'Wortelen', 'Uien', 'Prei', 'Witloof', 'Spruitjes', 'Pastinaak', 'Knolselderij', 'Schorseneren', 'Rammenas', 'Veldsla', 'Honing'] },
+  { month: 'December', items: ['Appels', 'Aardappelen', 'Wortelen', 'Uien', 'Witloof', 'Spruitjes', 'Prei', 'Grondwitloof', 'Pastinaak', 'Knolselderij', 'Veldsla', 'Honing'] },
 ];
 
 export const MONTHS = [
@@ -998,24 +1222,95 @@ export const MONTHS = [
 export const FALLBACK_PRODUCT_IMAGE = "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=600&q=80";
 
 export const PRODUCT_FACTS: Record<string, string> = {
-  "wortelen": "Wortelen waren vroeger paars; de oranje kleur is een Nederlands eerbetoon uit de 17e eeuw.",
-  "aardappelen": "België is de grootste exporteur van diepgevroren frietjes ter wereld. We eten gemiddeld 80kg aardappelen per persoon!",
-  "appels": "België heeft 100+ rassen. De Jonagold is een kruising tussen de Golden Delicious en Jonathan.",
-  "aardbeien": "De aardbei is eigenlijk geen bes, maar een 'schijnvrucht'. De pitjes aan de buitenkant zijn de echte vruchtjes!",
-  "uien": "Uien worden al meer dan 5000 jaar geteeld. In het oude Egypte werden ze zelfs als betaalmiddel gebruikt.",
-  "witloof": "Ontdekt in 1830 in een Brusselse kelder. Het moet in het pikkedonker groeien, anders wordt het bitter.",
-  "spruitjes": "Onze nationale trots! Ze heten wereldwijd 'Brussels Sprouts' vanwege de historische teelt rond Brussel.",
-  "prei": "Als je prei laat bloeien, krijgt hij prachtige grote paarse bloembollen die erg geliefd zijn bij bijen.",
-  "peren": "De Conférence peer is de populairste peer in België en werd al in 1885 tentoongesteld in Londen.",
-  "asperges": "Het witte goud! Ze kunnen bij warm weer tot wel 10 centimeter per dag groeien.",
-  "spinazie": "Spinazie bevat veel ijzer, maar Popeye dankte zijn kracht eigenlijk aan een rekenfout in een oud voedingsrapport!",
-  "kersen": "Echte Belgische kersen herken je aan hun dieprode kleur en stevige beet.",
-  "broccoli": "Broccoli bevat meer vitamine C dan een sinaasappel! Het is een echte superfood van bij ons.",
-  "tomaten": "Tomaten zijn botanisch gezien fruit. Er bestaan wereldwijd meer dan 10.000 verschillende soorten!",
-  "komkommer": "Een komkommer bestaat voor 95% uit water, waardoor het de perfecte dorstlesser is op een warme dag.",
-  "bloemkool": "De witte kleur van bloemkool komt doordat de bladeren de kool beschermen tegen zonlicht, anders zou hij geel worden.",
-  "pompoen": "De zwaarste pompoen ooit gewogen woog meer dan 1000kg! Ze zijn familie van de komkommer en meloen.",
-  "default": "Vers van het land smaakt altijd beter! Door lokaal te kopen steun je niet alleen de boer, maar geniet je ook van meer vitaminen en smaak."
+  // Bladgroenten
+  "sla": "💡 Wist je dat sla familie is van de zonnebloem? In de tijd van de Egyptenaren werd sla niet gegeten voor de blaadjes, maar voor de olie in de zaden. Het werd zelfs gezien als een symbool van vruchtbaarheid.\n\n🥗 Er zijn meer dan 1000 slasoorten, van knapperige ijsbergsla tot romige botersla. Sla bevat veel water (95%) en is daardoor verfrissend én kaloriearm!",
+
+  // Paprika & Pepers
+  "paprika": "💡 Een paprika is eigenlijk een gerijpte vrucht! Een groene paprika is gewoon een onrijpe versie; als je hem langer aan de plant laat hangen, wordt hij geel, oranje en uiteindelijk rood.\n\n🌶️ Hoe rijper de paprika, hoe zoeter en rijker aan vitamine C! Een rode paprika bevat wel 3x meer vitamine C dan een groene.",
+
+  // Tomaten
+  "tomaten": "💡 De eerste tomaten die in Europa aankwamen waren geel! Daarom noemen de Italianen ze nog steeds 'Pomodoro', wat letterlijk 'Gouden Appel' betekent.\n\n🍅 Pas later werden de rode varianten populair. Er bestaan wereldwijd meer dan 10.000 verschillende soorten tomaten - van kerstomaten tot grote vleestomaten!",
+
+  // Komkommer
+  "komkommer": "💡 Een komkommer bestaat voor 95% uit water! In de oudheid gebruikten reizigers komkommers als een soort 'eetbare veldfles' om gehydrateerd te blijven tijdens lange tochten.\n\n🥒 Vandaar ook de uitdrukking 'cool as a cucumber' - de binnenkant van een komkommer kan tot 20 graden koeler zijn dan de buitentemperatuur!",
+
+  // Bloemkool
+  "bloemkool": "💡 De bladeren rondom de bloemkool zijn er niet voor niets: ze beschermen de witte roosjes tegen zonlicht. Zonder die bladeren zou de bloemkool door de zon geel of bruin verkleuren!\n\n🥬 Er bestaan ook paarse, oranje en groene bloemkoolsoorten. De basis van de populaire 'bloemkoolrijst' is dezelfde bloemkool, geraspt!",
+
+  // Asperges
+  "asperges": "💡 Asperges kunnen onder de juiste omstandigheden wel 10 tot 15 centimeter per dag groeien! In het oogstseizoen moeten boeren soms twee keer per dag hetzelfde veld oogsten.\n\n🌱 Het aspergeseizoen in België duurt van half april tot 24 juni (Sint-Jan). Witte asperges groeien onder de grond in duisternis, groene in het zonlicht.",
+
+  // Broccoli
+  "broccoli": "💡 Wist je dat je de stam van de broccoli ook kunt eten? Het is zelfs het zoetste gedeelte! Schil de harde buitenkant eraf en snijd de kern in blokjes voor in de soep of wok.\n\n🥦 Broccoli bevat meer vitamine C dan een sinaasappel en is rijk aan sulforafaan, een stof die mogelijk beschermt tegen bepaalde ziekten.",
+
+  // Uien
+  "uien": "💡 Uien zijn een van de oudste groenten ter wereld en werden door de oude Egyptenaren aanbeden! De ringen binnenin de ui stonden voor het eeuwige leven en werden zelfs meegegeven in de graven van farao's.\n\n🧅 Tip: Snijd uien onder stromend water of met een nat mes om minder te huilen - de zwavelverbindingen lossen op in water!",
+
+  // Kersen
+  "kersen": "💡 Kersen horen bij de rozenfamilie! Een kersenboom heeft gemiddeld 7.000 kersen nodig voor één liter kersensap. Het is dus echt een luxeproduct van de boomgaard!\n\n🍒 Belgische kersen uit de streek rond Sint-Truiden zijn wereldberoemd. Kersen bevatten melatonine, wat kan helpen bij slaapproblemen.",
+
+  // Witloof
+  "witloof": "💡 Witloof is het 'Witte Goud' uit Brussel! Het werd per toeval ontdekt in 1830 in een donkere kelder. Een boer had cichoreiwortel vergeten en ontdekte later de witte spruiten.\n\n🥬 Het moet in volledige duisternis groeien, anders wordt het groen en bitter. België is 's werelds grootste producent van witloof!",
+
+  // Spruitjes
+  "spruitjes": "💡 Onze nationale trots! Ze heten wereldwijd 'Brussels Sprouts' vanwege de historische teelt rondom Brussel sinds de 13e eeuw.\n\n🥦 Spruitjes bevatten meer vitamine C dan sinaasappels! Eén plant kan wel 50-100 spruitjes produceren. Moderne rassen zijn veel minder bitter dan vroeger.",
+
+  // Wortelen
+  "wortelen": "💡 Wortelen waren oorspronkelijk paars of wit! De oranje kleur is een eerbetoon aan Willem van Oranje, gekweekt door Nederlandse telers in de 17e eeuw als eerbetoon aan het Huis van Oranje.\n\n🥕 Fun fact: Het eten van te veel wortelen kan je huid tijdelijk oranje kleuren - dit heet 'carotenemie'!",
+
+  // Appels
+  "appels": "💡 België heeft meer dan 100 appelrassen! De Jonagold is koning, maar de Belgica is de lokale ster. De Jonagold werd ontwikkeld in New York maar groeide uit tot de populairste Belgische appel.\n\n🍎 Een appelboom kan wel 400 appels per seizoen produceren en tot 100 jaar oud worden!",
+
+  // Aardappelen
+  "aardappelen": "💡 België is de wereldkampioen in de export van diepvriesfrietjes! We eten gemiddeld 80kg aardappelen per persoon per jaar.\n\n🥔 Aardappelen hebben hun oorsprong in Zuid-Amerika. In de 18e eeuw hielp de aardappel hongersnood bestrijden in Europa en werd hij een basisvoedsel voor miljoenen mensen.",
+
+  // Aardbeien
+  "aardbeien": "💡 De aardbei is de enige vrucht met de zaadjes aan de buitenkant - gemiddeld 200 per bes! Technisch gezien is de aardbei geen bes maar een 'schijnvrucht'.\n\n🍓 De moderne tuinaardbei ontstond in Frankrijk in de 18e eeuw. Een aardbei bevat meer vitamine C dan een sinaasappel!",
+
+  // Prei
+  "prei": "💡 Als je prei laat doorgroeien, krijgt hij prachtige grote paarse bloembollen die erg geliefd zijn bij bijen! Het groene deel is ook eetbaar en gezond.\n\n🏴󠁧󠁢󠁷󠁬󠁳󠁿 In Wales is prei een nationaal symbool; soldaten droegen het vroeger om zichzelf te herkennen in de strijd.",
+
+  // Extra producten
+  "peren": "💡 De Conférence peer, vandaag de populairste in België, werd ontwikkeld in 1885 en won een prijs op een conferentie in Londen - vandaar de naam!\n\n🍐 Peren rijpen van binnenuit, dus wanneer de buitenkant zacht is, is de kern vaak al te rijp. Bewaar peren apart van appels!",
+
+  "spinazie": "💡 De mythe dat spinazie super veel ijzer bevat komt van een rekenfout! Een onderzoeker plaatste ooit een decimaal verkeerd. Toch blijft het een superfood vol vitaminen.\n\n💪 Tip: Eet spinazie met iets zuurs (zoals citroen) om het ijzer beter op te nemen!",
+
+  "pompoen": "💡 De zwaarste pompoen ooit gewogen woog meer dan 1200 kg! Pompoenen zijn familie van de komkommer en meloen.\n\n🎃 De zaden zijn zeer voedzaam en rijk aan zink. Pompoenen zijn voor 90% water en bevatten meer vezels dan boerenkool!",
+
+  // Belgische Klassiekers
+  "grondwitloof": "💡 Grondwitloof is het 'witte goud' dat in de volle grond groeit, in tegenstelling tot het witloof dat in bakken wordt gekweekt. Het heeft een stevigere structuur en intenser bittere smaak.\n\n🥬 In de Belgische keuken wordt grondwitloof graag gekaramelliseerd in boter met een vleugje bruine suiker - pure comfort food!",
+
+  "schorseneren": "💡 Schorseneren worden ook wel 'keukenmeidenverdriet' genoemd. Waarom? Bij het schillen komt er een plakkerig melksap vrij dat bijna niet van je handen af te krijgen is!\n\n🍳 Tip: Schil ze onder water of met handschoenen. In België worden ze klassiek geserveerd in een romige witte saus.",
+
+  "pastinaak": "💡 Pastinaak was de 'aardappel van de middeleeuwen'! Voordat de aardappel uit Amerika kwam, was dit de basis van vele Europese gerechten. Het heeft een zoete, nootachtige smaak.\n\n🥕 Pastinaak wordt zoeter na de eerste vorst - de kou zet het zetmeel om in suiker. Perfect voor een herfstige puree!",
+
+  "rammenas": "💡 Rammenas (zwarte radijs) werd vroeger gebruikt als natuurlijke hoestsiroop! Je snijdt de kop eraf, holt hem uit, vult met honing en laat een nacht staan. De siroop die eruit komt werkt verzachtend.\n\n🍯 In de Belgische volksgeneeskunde is dit nog steeds een populair huismiddeltje bij verkoudheid.",
+
+  "warmoes": "💡 Warmoes, ook bekend als snijbiet, is een kleurrijke krachtpatser uit de Belgische groentetuin. De felgekleurde stelen (rood, geel, oranje) zijn niet alleen mooi maar ook eetbaar!\n\n🌈 In de Middeleeuwen was warmoes zo populair dat 'warmoesland' de naam was voor moestuinen. Vandaar ook de Warmoesstraat in veel steden!",
+
+  "knolselderij": "💡 Knolselderij is de basis van élke goede Belgische soep en bouillon! Deze lelijke knol met zijn ruw uiterlijk verbergt een zachte, nootachtige smaak die diepte geeft aan stoofpotten.\n\n🍲 Klassiek Belgisch: knolselderijpuree met een klontje boter en nootmuskaat. Hemels naast een konijnenbout!",
+
+  // Honing & Bijenproducten
+  "honing": "💡 Wist je dat honing de enige voedingsbron is die nooit bederft? Er is honing gevonden in Egyptische graven van duizenden jaren oud die nog steeds eetbaar was!\n\n🐝 Belgische imkers produceren lindehoning, koolzaadhoning, heidehoning en bloemenhoning. Elke soort heeft een unieke smaak afhankelijk van waar de bijen foerageren.",
+
+  "honingraat": "💡 Honingraat is de puurste vorm van honing - rechtstreeks uit de bijenkorf! De wasstructuur bevat propolis en stuifmeel, waardoor het als een natuurlijke superfood wordt beschouwd.\n\n🍯 Bij lokale imkers kun je vaak honingraat en stuifmeelkorrels kopen. Perfect op toast of in een kaasplankje!",
+
+  // Bessen
+  "frambozen": "💡 Frambozen zijn technisch gezien geen bessen maar 'samengestelde vruchten' - elke bolletje is een apart vruchtje! Ze zijn extreem teer en moeten binnen 2 dagen gegeten worden.\n\n🫐 Belgische boeren verkopen frambozen vaak in kleine bakjes via hun automaat of stalletje. Vers geplukt smaken ze het best!",
+
+  "bramen": "💡 Bramen groeien wild in heel België langs bosranden en heggen. In de herfst kun je ze gratis plukken! Let op: na 1 oktober zouden ze volgens de folklore niet meer mogen geplukt worden.\n\n🍇 Bramenjam is een Belgische klassieker. Combineer bramen met appels voor een heerlijke crumble!",
+
+  "blauwbessen": "💡 Blauwbessen zijn ware superfoods vol antioxidanten! De blauwe kleur komt van anthocyanen, die je hersenen en ogen beschermen.\n\n💙 In België worden blauwbessen vooral geteeld in de Kempen. Ze zijn perfect om te bevriezen - ze verliezen nauwelijks voedingswaarde!",
+
+  // Extra bladgroenten
+  "veldsla": "💡 Veldsla, ook wel 'mâche' of 'nüssli' genoemd, is een typische wintergroente die zelfs onder de sneeuw kan groeien! Het heeft een zachte, nootachtige smaak.\n\n🥗 In België wordt veldsla traditioneel gegeten met warme spekjes en een eitje - de warmte laat de blaadjes licht slinken.",
+
+  "eikenbladsla": "💡 Eikenbladsla dankt zijn naam aan de vorm van de bladeren die lijken op eikenbladeren. Het is knapperiger dan kropsla en heeft een mildere smaak.\n\n🥬 Deze slasoort is populair in gemengde salades en houdt langer vers dan gewone kropsla.",
+
+  // Sjalotten
+  "sjalotten": "💡 Sjalotten zijn de verfijnde neefjes van de ui! Ze hebben een mildere, zoetere smaak en worden vaak gebruikt in de Franse en Belgische keuken.\n\n🧅 De echte Vlaamse stoofvlees bevat sjalotten in plaats van uien voor een subtielere smaak. Ze karamelliseren prachtig!",
+
+  "default": "🌱 Vers van het land smaakt altijd beter! Door lokaal te kopen steun je niet alleen de boer, maar geniet je ook van meer vitaminen en smaak. Ontdek de seizoensgebonden productdiversiteit van België!"
 };
 
 
@@ -1061,8 +1356,19 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "pastinaak": "https://images.unsplash.com/photo-1640726335912-5f6b8e40c01e?auto=format&fit=crop&q=80&w=400",
   "gehakt": "https://images.unsplash.com/photo-1594968132386-896db5efbb88?auto=format&fit=crop&q=80&w=400",
   "honing": "https://images.unsplash.com/photo-1587049352851-8d4e8918dcb1?auto=format&fit=crop&q=80&w=400",
+  "honingraat": "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&q=80&w=400",
   "yoghurt": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&q=80&w=400",
   "boter": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&q=80&w=400",
-  "sla": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400",
-  "salade": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400"
+  "sla": "https://images.unsplash.com/photo-1622206151226-18ca2c958a2f?auto=format&fit=crop&q=80&w=400",
+  "salade": "https://images.unsplash.com/photo-1622206151226-18ca2c958a2f?auto=format&fit=crop&q=80&w=400",
+  "veldsla": "https://images.unsplash.com/photo-1556801712-76c8eb07bbc9?auto=format&fit=crop&q=80&w=400",
+  "eikenbladsla": "https://images.unsplash.com/photo-1622206151226-18ca2c958a2f?auto=format&fit=crop&q=80&w=400",
+  "grondwitloof": "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?auto=format&fit=crop&q=80&w=400",
+  "schorseneren": "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?auto=format&fit=crop&q=80&w=400",
+  "rammenas": "https://images.unsplash.com/photo-1598030688666-f93e4d78f986?auto=format&fit=crop&q=80&w=400",
+  "warmoes": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400",
+  "snijbiet": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400",
+  "knolselderij": "https://images.unsplash.com/photo-1593258693034-78ee0e10c6b0?auto=format&fit=crop&q=80&w=400",
+  "bramen": "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=400",
+  "blauwbessen": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&q=80&w=400"
 };

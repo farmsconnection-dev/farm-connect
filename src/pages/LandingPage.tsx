@@ -37,9 +37,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ t, handleRoleSelect, l
                         </div>
                     </motion.div>
                     <h1 className="text-5xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-100 to-amber-400 mb-0 tracking-tighter drop-shadow-2xl drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">Farm Connect</h1>
-                    <p className="text-sm md:text-xl text-mint font-black tracking-[0.3em] uppercase italic drop-shadow-lg mb-2 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">RECHTSTREEKS VAN DE BRON</p>
+                    <p className="text-sm md:text-xl text-mint font-black tracking-[0.3em] uppercase italic drop-shadow-lg mb-2 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">{t('tagline_caps')}</p>
                     <p className="text-sm md:text-lg text-white font-bold max-w-lg drop-shadow-lg leading-relaxed shadow-black/50 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] px-4 opacity-90">
-                        Vind de lekkerste verse producten, rechtstreeks van de boer.
+                        {t('landing_intro')}
                     </p>
                 </motion.div>
 

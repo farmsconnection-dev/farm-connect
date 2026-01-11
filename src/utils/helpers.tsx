@@ -29,6 +29,7 @@ export const getFilterIcon = (filter: string) => {
         case 'dairy': return '🥛';
         case 'meat': return '🥩';
         case 'eggs': return '🥚';
+        case 'honey': return '🐝';
         case 'nearby': return '📍';
         case 'route': return '🚗';
         default: return '🛒';
@@ -42,6 +43,7 @@ export const getCategoryColor = (category: string) => {
         case 'dairy': return 'bg-white text-blue-400 border border-blue-400/20 shadow-sm';
         case 'meat': return 'bg-white text-orange-700 border border-orange-700/20 shadow-sm';
         case 'eggs': return 'bg-white text-yellow-500 border border-yellow-500/20 shadow-sm';
+        case 'honey': return 'bg-white text-amber-500 border border-amber-500/20 shadow-sm';
         case 'open': return 'bg-emerald-500 text-white shadow-emerald-500/20';
         case 'route': return 'bg-blue-500 text-white shadow-blue-500/20';
         default: return 'bg-amber-500 text-white shadow-amber-500/20';
@@ -108,6 +110,7 @@ export const getFarmCategoryIcon = (farm: Farm) => {
         case 'dairy': return '🥛';
         case 'meat': return '🥩';
         case 'eggs': return '🥚';
+        case 'honey': return '🐝';
         case 'no-waste': return '♻️';
         default: return '🏡';
     }

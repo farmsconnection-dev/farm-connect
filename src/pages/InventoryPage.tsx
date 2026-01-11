@@ -49,10 +49,12 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ t, setView, farms,
         setNewProductImage(matchedImage);
 
         // Auto-detect category
-        if (lower.match(/appel|peer|aardbei|kers|bes|fruit|druif|framboz/)) setNewProductCategory('fruit');
-        else if (lower.match(/aardappel|wortel|ui|prei|tomaat|komkommer|groente|pompoen|broccoli|spinazie|sla|kool|witloof|asperge|spruitje|bloemkool|paprika|courgette|aubergine|radijs|biet|bonen/)) setNewProductCategory('vegetables');
-        else if (lower.match(/melk|kaas|ei|yoghurt|zuivel|boter|room/)) setNewProductCategory('dairy');
+        if (lower.match(/appel|peer|aardbei|kers|bes|fruit|druif|framboz|braam|blauwbes/)) setNewProductCategory('fruit');
+        else if (lower.match(/aardappel|wortel|ui|prei|tomaat|komkommer|groente|pompoen|broccoli|spinazie|sla|kool|witloof|asperge|spruitje|bloemkool|paprika|courgette|aubergine|radijs|biet|bonen|pastinaak|schorseneren|rammenas|warmoes|knolselder|veldsla/)) setNewProductCategory('vegetables');
+        else if (lower.match(/melk|kaas|yoghurt|zuivel|boter|room/)) setNewProductCategory('dairy');
         else if (lower.match(/kip|vlees|rund|varken|worst|ham|spek/)) setNewProductCategory('meat');
+        else if (lower.match(/ei|eieren/)) setNewProductCategory('eggs');
+        else if (lower.match(/honing|honingraat|stuifmeel|bijenprod/)) setNewProductCategory('honey');
     };
 
     const handleProductImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,7 +165,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ t, setView, farms,
                         <div className="flex justify-between items-center mb-8">
                             <h3 className="text-xl font-bold text-forest">{t('current_stock')}</h3>
                             <div className="flex gap-2">
-                                {['all', 'fruit', 'vegetables', 'dairy'].map((category) => (
+                                {['all', 'fruit', 'vegetables', 'dairy', 'honey'].map((category) => (
                                     <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={category} onClick={() => setFarmerFilter(category as 'all' | ProductCategory)} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase transition-all ${farmerFilter === category ? 'bg-gradient-to-br from-emerald-800 to-orange-700 text-white shadow-md' : 'bg-slate-50 text-slate-400'}`}>{t(`filter_${category}`)}</motion.button>
                                 ))}
                             </div>

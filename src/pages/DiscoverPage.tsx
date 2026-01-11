@@ -44,7 +44,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [selectedFarm, setSelectedFarm] = useState<Farm | null>(null);
 
-    const filterList = ['all', 'fruit', 'vegetables', 'dairy', 'meat', 'eggs', 'nearby'];
+    const filterList = ['all', 'fruit', 'vegetables', 'dairy', 'meat', 'eggs', 'honey', 'nearby'];
 
     const searchSuggestions = useMemo(() => {
         if (!searchQuery.trim()) return [];
@@ -189,7 +189,8 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                             cat === 'vegetables' ? 'text-green-500' :
                                 cat === 'dairy' ? 'text-blue-400' :
                                     cat === 'meat' ? 'text-orange-700' :
-                                        cat === 'eggs' ? 'text-yellow-500' : 'text-white';
+                                        cat === 'eggs' ? 'text-yellow-500' :
+                                            cat === 'honey' ? 'text-amber-500' : 'text-white';
 
                         const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
                         return (
@@ -260,6 +261,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                             case 'dairy': return '#60a5fa';
                                             case 'meat': return '#c2410c';
                                             case 'eggs': return '#eab308';
+                                            case 'honey': return '#f59e0b';
                                             default: return '#f59e0b';
                                         }
                                     };
