@@ -1,8 +1,9 @@
 // @ts-nocheck
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Share2, TrendingUp, Sparkles, Heart, Eye, Store, Edit2, Upload, Phone, MapPin, Clock, ToggleRight, ToggleLeft, User, Copy, Gift, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { Farm, UserProfile, DaySchedule } from '../types';
+import { supabase } from '../lib/supabase';
 
 interface FarmerDashboardProps {
     t: (key: string) => string;
@@ -24,6 +25,36 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
     const [isEditingSchedule, setIsEditingSchedule] = useState(false);
     const profileImgInputRef = useRef<HTMLInputElement>(null);
 
+    const [stats, setStats] = useState({
+        favoritesCount: 0,
+        viewsCount: '1.2K',
+        growth: '+12%',
+        routesCount: 156,
+        visitorsCount: 89,
+        conversion: '7.2%'
+    });
+
+    const myFarm = farms.find(f => f.id === '1');
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            if (!myFarm?.id) return;
+            try {
+                const { count, error } = await supabase
+                    .from('favorites')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('farm_id', myFarm.id);
+
+                if (!error && count !== null) {
+                    setStats(prev => ({ ...prev, favoritesCount: count }));
+                }
+            } catch (err) {
+                console.error('Error fetching stats:', err);
+            }
+        };
+        fetchStats();
+    }, [myFarm?.id]);
+
     const handleProfileImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -40,8 +71,6 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
         setFarms(prev => prev.map(f => f.id === '1' ? { ...f, schedule: f.schedule?.map(s => s.day === day ? { ...s, isOpen, openTime: o, closeTime: c } : s) } : f));
         showToast(t('save'));
     };
-
-    const myFarm = farms.find(f => f.id === '1');
 
     const copyReferralCode = () => {
         if (myFarm?.referralCode) {
@@ -100,17 +129,17 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                             <div className="grid grid-cols-3 gap-4 max-w-md mx-auto md:mx-0">
                                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10">
                                     <Heart size={20} className="text-pink-300 mb-1 mx-auto md:mx-0" fill="currentColor" />
-                                    <p className="text-2xl font-black text-white">42</p>
+                                    <p className="text-2xl font-black text-white">{stats.favoritesCount}</p>
                                     <p className="text-xs text-emerald-200 uppercase font-bold">{t('stat_favorites')}</p>
                                 </div>
                                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10">
                                     <Eye size={20} className="text-blue-300 mb-1 mx-auto md:mx-0" />
-                                    <p className="text-2xl font-black text-white">1.2K</p>
+                                    <p className="text-2xl font-black text-white">{stats.viewsCount}</p>
                                     <p className="text-xs text-emerald-200 uppercase font-bold">{t('stat_views')}</p>
                                 </div>
                                 <div className="bg-emerald-500/20 backdrop-blur-md rounded-2xl p-4 border border-emerald-400/30">
                                     <TrendingUp size={20} className="text-emerald-300 mb-1 mx-auto md:mx-0" />
-                                    <p className="text-2xl font-black text-white">+12%</p>
+                                    <p className="text-2xl font-black text-white">{stats.growth}</p>
                                     <p className="text-xs text-emerald-200 uppercase font-bold">{t('stat_growth')}</p>
                                 </div>
                             </div>
@@ -271,11 +300,11 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} whileHover={{ scale: 1.02 }} className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/10">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="bg-pink-500/20 p-4 rounded-2xl"><Heart size={32} className="text-pink-300" fill="currentColor" /></div>
-                                <span className="text-sm font-bold text-emerald-300">+8%</span>
+                                <span className="text-sm font-bold text-emerald-300">Actueel</span>
                             </div>
                             <p className="text-xs font-black text-white/40 uppercase tracking-widest mb-2">{t('stat_favorites')}</p>
-                            <p className="text-5xl font-black text-white mb-1">42</p>
-                            <p className="text-xs text-white/60">{t('this_week')}: +3</p>
+                            <p className="text-5xl font-black text-white mb-1">{stats.favoritesCount}</p>
+                            <p className="text-xs text-white/60">Real-time data</p>
                         </motion.div>
 
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} whileHover={{ scale: 1.02 }} className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/10">
@@ -284,7 +313,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                 <span className="text-sm font-bold text-emerald-300">+22%</span>
                             </div>
                             <p className="text-xs font-black text-white/40 uppercase tracking-widest mb-2">{t('stat_views')}</p>
-                            <p className="text-5xl font-black text-white mb-3">1.2K</p>
+                            <p className="text-5xl font-black text-white mb-3">{stats.viewsCount}</p>
 
                             <svg className="w-full h-16" viewBox="0 0 200 40" preserveAspectRatio="none">
                                 <defs>
@@ -305,27 +334,23 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                 <span className="text-sm font-bold text-emerald-200">{t('monthly')}</span>
                             </div>
                             <p className="text-xs font-black text-emerald-100/40 uppercase tracking-widest mb-2">{t('total_growth')}</p>
-                            <p className="text-5xl font-black text-white mb-1">+12%</p>
+                            <p className="text-5xl font-black text-white mb-1">{stats.growth}</p>
                             <p className="text-xs text-emerald-200/60">{t('compared_last_month')}</p>
                         </motion.div>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/5">
                             <p className="text-[10px] font-black text-white/40 uppercase mb-1">{t('routes')}</p>
-                            <p className="text-3xl font-black text-white">156</p>
+                            <p className="text-3xl font-black text-white">{stats.routesCount}</p>
                         </div>
                         <div className="bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/5">
                             <p className="text-[10px] font-black text-white/40 uppercase mb-1">{t('visitors')}</p>
-                            <p className="text-3xl font-black text-white">89</p>
-                        </div>
-                        <div className="bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/5">
-                            <p className="text-[10px] font-black text-white/40 uppercase mb-1">{t('avg_time')}</p>
-                            <p className="text-3xl font-black text-white">2m</p>
+                            <p className="text-3xl font-black text-white">{stats.visitorsCount}</p>
                         </div>
                         <div className="bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/5">
                             <p className="text-[10px] font-black text-white/40 uppercase mb-1">{t('conversion')}</p>
-                            <p className="text-3xl font-black text-white">7.2%</p>
+                            <p className="text-3xl font-black text-white">{stats.conversion}</p>
                         </div>
                     </div>
                 </div>
