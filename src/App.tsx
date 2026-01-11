@@ -258,8 +258,13 @@ const App: React.FC = () => {
         const currentPendingRole = localStorage.getItem('pendingRole') || pendingRole;
         console.log('🎯 Pending Role:', currentPendingRole);
 
-        if (currentPendingRole === 'farmer') {
+        // Only redirect if this is a NEW sign-in, not a session restoration
+        // Check if we're currently on the landing page - if so, this is a new login
+        if (currentPendingRole === 'farmer' && view === 'landing') {
           checkFarmerVerification(email || '');
+        } else if (currentPendingRole === 'farmer') {
+          // If already past landing page, just set user type without redirecting
+          setUserType('farmer');
         } else {
           setUserType('discoverer');
           setView('discover');
