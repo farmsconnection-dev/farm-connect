@@ -259,6 +259,7 @@ const App: React.FC = () => {
           name,
           email: email || '',
           photoUrl,
+          id: session.user.id,
           isLoggedIn: true
         });
 
@@ -708,6 +709,7 @@ const App: React.FC = () => {
         {view === 'register_farm' && (
           <RegisterFarmPage
             email={userProfile.email}
+            userId={userProfile.id}
             onSuccess={() => checkFarmerVerification(userProfile.email)}
             onLogout={handleLogout}
             lang={lang}

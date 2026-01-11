@@ -58,6 +58,7 @@ export interface UserProfile {
   email: string;
   photoUrl?: string;
   isLoggedIn: boolean;
+  id?: string;
 }
 
 export interface DaySchedule {
