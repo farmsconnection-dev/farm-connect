@@ -24,13 +24,26 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, onSuc
 
     // Initialize Google Places Autocomplete
     useEffect(() => {
-        // Inject CSS to hide Google Maps error banner
+        // Inject CSS to hide Google Maps error banner and fix z-index
         const style = document.createElement('style');
         style.textContent = `
-            .pac-container { z-index: 10000 !important; }
+            .pac-container { 
+                z-index: 99999 !important; 
+                pointer-events: auto !important;
+                background-color: white !important;
+            }
+            .pac-item { 
+                cursor: pointer !important; 
+                pointer-events: auto !important;
+            }
+            .pac-item:hover {
+                background-color: #f5f5f5 !important;
+            }
             .gm-err-container, .gm-err-title, .gm-err-message, 
-            .dismissButton, div[style*="This page can't load Google Maps correctly"] { 
+            .dismissButton, div[style*="This page can't load Google Maps correctly"],
+            div[class*="gm-style"] > div:first-child { 
                 display: none !important; 
+                pointer-events: none !important;
             }
             .pac-container::after { display: none !important; }
         `;
