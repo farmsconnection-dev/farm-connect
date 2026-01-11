@@ -244,8 +244,8 @@ const App: React.FC = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       console.log('🔐 Auth State Change:', event, session?.user?.email);
 
-      // Only process user profile on sign in
-      if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
+      // Handle session (both new login and restored session)
+      if (session) {
         const { email, user_metadata } = session.user;
         const name = user_metadata.full_name || email?.split('@')[0] || 'Gebruiker';
         const photoUrl = user_metadata.avatar_url;
@@ -257,36 +257,36 @@ const App: React.FC = () => {
           isLoggedIn: true
         });
 
-        // IMPORTANT: Only redirect on actual NEW logins, not on page refresh/session restoration
-        // INITIAL_SESSION = page load with existing session (don't redirect)
-        // SIGNED_IN = actual new login (redirect based on role)
-        if (event === 'SIGNED_IN') {
-          const currentPendingRole = localStorage.getItem('pendingRole') || pendingRole;
-          console.log('🎯 New login - Pending Role:', currentPendingRole);
-
-          if (currentPendingRole === 'farmer') {
-            checkFarmerVerification(email || '');
-          } else if (currentPendingRole === 'discoverer') {
-            setUserType('discoverer');
-            setView('discover');
-          }
-          // Clear pendingRole after processing
-          localStorage.removeItem('pendingRole');
-          setPendingRole(null);
-        } else {
-          // INITIAL_SESSION - just restore user type without redirecting
-          const storedRole = localStorage.getItem('pendingRole');
-          if (storedRole === 'farmer') {
-            setUserType('farmer');
-          } else if (storedRole === 'discoverer') {
-            setUserType('discoverer');
-          }
-          console.log('📦 Session restored, staying on current page');
+        // Restore user type from localStorage without changing view
+        const storedRole = localStorage.getItem('pendingRole');
+        if (storedRole === 'farmer') {
+          setUserType('farmer');
+        } else if (storedRole === 'discoverer') {
+          setUserType('discoverer');
         }
+
+        // IMPORTANT: Do NOT auto-redirect here!
+        // The user should stay on the landing page until they explicitly:
+        // 1. Click "Ik ben boer" -> then we check their farm and redirect
+        // 2. Click "Ik ben ontdekker" -> then we redirect to discover page
+        console.log('📦 User authenticated, staying on current page');
 
         setIsAuthModalOpen(false);
         setIsLoginPromptOpen(false);
         setIsMenuOpen(false);
+      }
+
+      // Handle sign out
+      if (event === 'SIGNED_OUT') {
+        setUserProfile({
+          name: 'Gast Gebruiker',
+          email: '',
+          isLoggedIn: false
+        });
+        setUserType(null);
+        setView('landing');
+        localStorage.removeItem('pendingRole');
+        setPendingRole(null);
       }
     });
 
