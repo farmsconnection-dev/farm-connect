@@ -263,6 +263,19 @@ const App: React.FC = () => {
           isLoggedIn: true
         });
 
+        // CRITICAL FIX: Ensure user profile exists in DB to prevent FK errors when creating farm
+        try {
+          await supabase.from('user_profiles').upsert({
+            id: session.user.id,
+            email: email || '',
+            name: name || 'User',
+            photo_url: photoUrl,
+            role: 'consumer' // default, will be updated if farmer
+          });
+        } catch (err) {
+          console.error('Error syncing profile:', err);
+        }
+
         // Smart Redirect Logic
         if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
           // 1. Check if user is a farmer (has a farm)
@@ -551,7 +564,7 @@ const App: React.FC = () => {
               <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white/50 overflow-hidden">
                 <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
               </div>
-              <h1 className={`text-2xl font-black tracking-tight drop-shadow-md ${view === 'landing' ? 'text-white' : 'text-forest'}`}>
+              <h1 className={`text-2xl font-black tracking-tight drop-shadow-md ${view === 'landing' ? 'text-white' : 'text-slate-800'}`}>
                 Farm <span className="text-amber-500">Connect</span>
               </h1>
             </div>
@@ -568,11 +581,11 @@ const App: React.FC = () => {
                 <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform border-2 border-white/50 overflow-hidden">
                   <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
                 </div>
-                <h1 className="text-2xl font-black text-forest tracking-tight drop-shadow-md">
+                <h1 className="text-2xl font-black text-white tracking-tight drop-shadow-md">
                   Farm <span className="text-amber-500">Connect</span>
                 </h1>
               </div>
-              <span className="text-xs italic text-emerald-800 font-black uppercase tracking-widest ml-4 transition-all duration-300 transform self-center">
+              <span className="text-xs italic text-emerald-200 font-black uppercase tracking-widest ml-4 transition-all duration-300 transform self-center">
                 {t('tagline')}
               </span>
             </motion.button>
