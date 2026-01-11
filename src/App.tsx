@@ -529,28 +529,37 @@ const App: React.FC = () => {
       {/* --- Persistent Header --- */}
       <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-30 pointer-events-none">
         <div className="pointer-events-auto flex items-center h-full">
-          <motion.button
-            disabled={view === 'landing'}
-            onClick={() => {
-              if (view === 'landing') return;
-              setView('discover');
-              setDetailFarm(null);
-            }}
-            whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-            className={`flex items-center group transition-transform ${view !== 'landing' ? 'active:scale-95 cursor-pointer' : 'opacity-100 pointer-events-none'}`}
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform border-2 border-white/50 overflow-hidden">
+          {view === 'landing' ? (
+            <div className="flex items-center gap-3 select-none pointer-events-none">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white/50 overflow-hidden">
                 <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
               </div>
               <h1 className="text-xl font-black text-white tracking-tight drop-shadow-md">
                 Farm <span className="text-amber-300">Connect</span>
               </h1>
             </div>
-            <span className={`text-[10px] italic text-emerald-100 font-black uppercase tracking-widest ml-4 transition-all duration-300 transform self-center ${view === 'landing' ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'}`}>
-              {t('tagline')}
-            </span>
-          </motion.button>
+          ) : (
+            <motion.button
+              onClick={() => {
+                setView('discover');
+                setDetailFarm(null);
+              }}
+              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+              className="flex items-center group transition-transform active:scale-95 cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform border-2 border-white/50 overflow-hidden">
+                  <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
+                </div>
+                <h1 className="text-xl font-black text-white tracking-tight drop-shadow-md">
+                  Farm <span className="text-amber-300">Connect</span>
+                </h1>
+              </div>
+              <span className="text-[10px] italic text-emerald-100 font-black uppercase tracking-widest ml-4 transition-all duration-300 transform self-center">
+                {t('tagline')}
+              </span>
+            </motion.button>
+          )}
         </div>
         <div className="flex items-center gap-3 pointer-events-auto">
           <div className="relative">
