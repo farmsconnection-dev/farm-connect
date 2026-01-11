@@ -563,7 +563,12 @@ const App: React.FC = () => {
         </div>
         <div className="flex items-center gap-3 pointer-events-auto">
           <div className="relative">
-            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setIsLangOpen(!isLangOpen)} className="bg-white/10 backdrop-blur-xl px-4 py-2.5 rounded-full shadow-lg text-white font-black text-xs flex items-center gap-1 border border-white/10 hover:bg-white/20 transition-all">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setIsLangOpen(!isLangOpen)}
+              className={`${view === 'landing' ? 'bg-white/10 text-white border-white/10' : 'bg-forest/90 text-white border-forest/20'} backdrop-blur-xl px-4 py-2.5 rounded-full shadow-lg font-black text-xs flex items-center gap-1 border hover:bg-opacity-80 transition-all`}
+            >
               {lang.toUpperCase()} <ChevronDown size={14} className={`transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
             </motion.button>
             <AnimatePresence>
@@ -576,7 +581,16 @@ const App: React.FC = () => {
               )}
             </AnimatePresence>
           </div>
-          {view !== 'landing' && <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setIsMenuOpen(true)} className="bg-white/10 backdrop-blur-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg text-white hover:bg-white/20 transition-all border border-white/10"><Menu size={24} /></motion.button>}
+          {view !== 'landing' && (
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setIsMenuOpen(true)}
+              className={`${view === 'landing' ? 'bg-white/10 text-white border-white/10' : 'bg-forest/90 text-white border-forest/20'} backdrop-blur-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-opacity-80 transition-all border`}
+            >
+              <Menu size={24} />
+            </motion.button>
+          )}
         </div>
       </div>
 
