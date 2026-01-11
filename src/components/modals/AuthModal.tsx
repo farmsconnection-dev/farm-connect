@@ -139,9 +139,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-10 rounded-[48px] max-w-md w-full shadow-2xl relative text-center max-h-[90vh] overflow-y-auto">
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={onClose} className="absolute top-6 right-6 p-2 hover:bg-slate-100 rounded-full transition-colors"><X size={24} /></motion.button>
                 <div className="bg-emerald-100 w-20 h-20 rounded-3xl flex items-center justify-center text-emerald-600 mx-auto mb-6">
-                    {isRegistering ? <UserPlus size={40} /> : <LogIn size={40} />}
+                    {farmerChoice === 'new' || isRegistering ? <UserPlus size={40} /> : <LogIn size={40} />}
                 </div>
-                <h2 className="text-3xl font-black text-slate-800 mb-2">{isRegistering ? t('create_account') : t('login')}</h2>
+                <h2 className="text-3xl font-black text-slate-800 mb-2">
+                    {pendingRole === 'farmer' && farmerChoice === 'new'
+                        ? 'Boerderij Registreren'
+                        : pendingRole === 'farmer' && farmerChoice === 'existing'
+                            ? 'Inloggen'
+                            : isRegistering ? t('create_account') : t('login')}
+                </h2>
                 {pendingRole === 'discoverer' && <p className="text-slate-500 font-medium mb-4 leading-relaxed px-2">{t('auth_gate_text')}</p>}
 
                 {/* Local Message Display */}
