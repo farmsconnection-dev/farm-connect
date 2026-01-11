@@ -46,18 +46,49 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                     .select('*', { count: 'exact', head: true })
                     .eq('farm_id', myFarm.id);
 
-                // Fetch analytics (views & visitors)
+                // Fetch analytics (history for growth calc)
+                // We need date to split current/last month
+                const now = new Date();
+                const firstDayLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString();
+                const firstDayCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+
                 const { data: analytics } = await supabase
                     .from('farm_stats')
-                    .select('views, visitors')
-                    .eq('farm_id', myFarm.id);
+                    .select('views, visitors, date')
+                    .eq('farm_id', myFarm.id)
+                    .gte('date', firstDayLastMonth);
 
                 let totalViews = 0;
                 let totalVisitors = 0;
+                let growthString = '0%';
 
                 if (analytics) {
+                    // Totalen (Alles wat we hebben opgehaald, of alleen deze maand? Meestal totaal all-time voor de counters)
+                    // Voor de counters "Views" en "Visitors" op het dashboard willen we waarschijnlijk ALL-TIME of "Deze maand"?
+                    // Laten we ALL-TIME doen door een aparte query zonder date filter, of:
+                    // De eerdere implementatie deed ALL-TIME. 
+                    // Voor Groei hebben we maand-vs-maand nodig.
+
+                    // FIX: We halen ALLES op voor de totals, en filteren in memory voor groei.
+                    // Omdat de tabel net begint is "Alles" == "Sinds begin".
+                    // Voor performance later zou je dit splitsen, maar nu prima.
+
                     totalViews = analytics.reduce((acc, curr) => acc + (curr.views || 0), 0);
                     totalVisitors = analytics.reduce((acc, curr) => acc + (curr.visitors || 0), 0);
+
+                    // Calculate Growth
+                    const currentMonthStats = analytics.filter(r => r.date >= firstDayCurrentMonth.split('T')[0]);
+                    const lastMonthStats = analytics.filter(r => r.date >= firstDayLastMonth.split('T')[0] && r.date < firstDayCurrentMonth.split('T')[0]);
+
+                    const currentViews = currentMonthStats.reduce((sum, r) => sum + (r.views || 0), 0);
+                    const lastViews = lastMonthStats.reduce((sum, r) => sum + (r.views || 0), 0);
+
+                    if (lastViews > 0) {
+                        const growth = Math.round(((currentViews - lastViews) / lastViews) * 100);
+                        growthString = (growth > 0 ? '+' : '') + growth + '%';
+                    } else if (currentViews > 0) {
+                        growthString = '+100%'; // Start bonus
+                    }
                 }
 
                 setStats(prev => ({
@@ -65,6 +96,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                     favoritesCount: favoritesCount || 0,
                     viewsCount: totalViews > 1000 ? (totalViews / 1000).toFixed(1) + 'K' : totalViews.toString(),
                     visitorsCount: totalVisitors,
+                    growth: growthString
                 }));
 
             } catch (err) {
