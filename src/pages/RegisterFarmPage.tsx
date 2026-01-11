@@ -140,6 +140,18 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, onSuc
                     </div>
 
                     <div>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">E-mailadres (Account)</label>
+                        <div className="relative">
+                            <input
+                                type="email"
+                                value={email}
+                                disabled
+                                className="w-full px-4 py-4 bg-slate-100 rounded-xl border-2 border-slate-100 text-slate-500 font-bold cursor-not-allowed opacity-75"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Adres</label>
                         <div className="relative">
                             <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
