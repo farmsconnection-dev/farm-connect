@@ -648,6 +648,10 @@ const App: React.FC = () => {
           pendingRole={pendingRole}
           handleLogin={handleLogin}
           handleGuestContinue={handleGuestContinue}
+          onRegisterNewFarm={() => {
+            setIsAuthModalOpen(false);
+            setView('register_farm');
+          }}
           t={t}
           showToast={showToast}
         />

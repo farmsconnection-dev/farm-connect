@@ -11,11 +11,12 @@ interface AuthModalProps {
     pendingRole: 'discoverer' | 'farmer' | null;
     handleLogin: (email: string, name: string) => void;
     handleGuestContinue: () => void;
+    onRegisterNewFarm: () => void;
     t: (key: string) => string;
     showToast: (msg: string) => void;
 }
 
-export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRole, handleLogin, handleGuestContinue, t, showToast }) => {
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRole, handleLogin, handleGuestContinue, onRegisterNewFarm, t, showToast }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showEmailLogin, setShowEmailLogin] = useState(false);
@@ -189,7 +190,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
                         <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            onClick={() => setFarmerChoice('new')}
+                            onClick={onRegisterNewFarm}
                             className="w-full bg-blue-500 text-white py-5 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-3 hover:bg-blue-600 transition-colors"
                         >
                             <UserPlus size={20} />
