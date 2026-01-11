@@ -116,7 +116,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
     };
 
     return (
-        <motion.div key="discover" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="h-screen w-full flex flex-col pt-24 px-4 sm:px-8 pb-4 max-w-7xl mx-auto">
+        <motion.div key="discover" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="h-[100dvh] w-full flex flex-col pt-24 px-4 sm:px-8 pb-4 max-w-7xl mx-auto">
             <div className="sticky top-0 z-30 pt-4 pb-2 bg-gradient-to-b from-transparent to-transparent space-y-4">
                 <div className="relative group z-50">
                     <div className="absolute inset-y-0 left-3 flex items-center text-slate-400 group-focus-within:text-slate-600"><Search size={16} /></div>

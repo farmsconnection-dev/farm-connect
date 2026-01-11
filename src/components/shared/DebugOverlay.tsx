@@ -48,7 +48,9 @@ export const DebugOverlay: React.FC = () => {
                 session: data.session ? 'ACTIVE' : 'NONE',
                 user: data.session?.user?.email || 'NONE',
                 role: localStorage.getItem('pendingRole') || 'NONE',
-                localStorageUser: localStorage.getItem('user') ? 'PRESENT' : 'NONE'
+                localStorageUser: localStorage.getItem('user') ? 'PRESENT' : 'NONE',
+                origin: window.location.origin,
+                href: window.location.href
             });
         };
 
