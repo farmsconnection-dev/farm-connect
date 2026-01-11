@@ -257,19 +257,35 @@ const App: React.FC = () => {
           isLoggedIn: true
         });
 
-        // Restore user type from localStorage without changing view
         const storedRole = localStorage.getItem('pendingRole');
-        if (storedRole === 'farmer') {
-          setUserType('farmer');
-        } else if (storedRole === 'discoverer') {
-          setUserType('discoverer');
-        }
 
-        // IMPORTANT: Do NOT auto-redirect here!
-        // The user should stay on the landing page until they explicitly:
-        // 1. Click "Ik ben boer" -> then we check their farm and redirect
-        // 2. Click "Ik ben ontdekker" -> then we redirect to discover page
-        console.log('📦 User authenticated, staying on current page');
+        // SIGNED_IN = actual new login (from OAuth redirect or manual login)
+        // In this case, we SHOULD redirect based on the pending role
+        if (event === 'SIGNED_IN' && storedRole) {
+          console.log('🎯 New login detected with role:', storedRole);
+
+          if (storedRole === 'farmer') {
+            setUserType('farmer');
+            // Check if farmer has a farm, redirect accordingly
+            checkFarmerVerification(email || '');
+          } else if (storedRole === 'discoverer') {
+            setUserType('discoverer');
+            setView('discover');
+          }
+
+          // Clear the pending role after processing
+          localStorage.removeItem('pendingRole');
+          setPendingRole(null);
+        } else {
+          // INITIAL_SESSION or no pending role = page refresh, don't redirect
+          // Just restore user type without changing view
+          if (storedRole === 'farmer') {
+            setUserType('farmer');
+          } else if (storedRole === 'discoverer') {
+            setUserType('discoverer');
+          }
+          console.log('📦 Session restored, staying on current page');
+        }
 
         setIsAuthModalOpen(false);
         setIsLoginPromptOpen(false);
