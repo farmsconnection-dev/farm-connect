@@ -43,6 +43,7 @@ import { FarmerDashboard } from './pages/FarmerDashboard';
 import { InventoryPage } from './pages/InventoryPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { AdminPage } from './pages/AdminPage';
+import { DebugOverlay } from './components/shared/DebugOverlay';
 import { VerificationPendingPage } from './pages/VerificationPendingPage';
 import { RegisterFarmPage } from './pages/RegisterFarmPage';
 
@@ -709,6 +710,7 @@ const App: React.FC = () => {
           showToast={showToast}
         />
       )}</AnimatePresence>
+      <DebugOverlay />
     </div>
   );
 };
