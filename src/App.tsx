@@ -243,7 +243,9 @@ const App: React.FC = () => {
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       console.log('🔐 Auth State Change:', event, session?.user?.email);
-      if (event === 'SIGNED_IN' && session) {
+
+      // Only process user profile on sign in
+      if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
         const { email, user_metadata } = session.user;
         const name = user_metadata.full_name || email?.split('@')[0] || 'Gebruiker';
         const photoUrl = user_metadata.avatar_url;
@@ -255,19 +257,31 @@ const App: React.FC = () => {
           isLoggedIn: true
         });
 
-        const currentPendingRole = localStorage.getItem('pendingRole') || pendingRole;
-        console.log('🎯 Pending Role:', currentPendingRole);
+        // IMPORTANT: Only redirect on actual NEW logins, not on page refresh/session restoration
+        // INITIAL_SESSION = page load with existing session (don't redirect)
+        // SIGNED_IN = actual new login (redirect based on role)
+        if (event === 'SIGNED_IN') {
+          const currentPendingRole = localStorage.getItem('pendingRole') || pendingRole;
+          console.log('🎯 New login - Pending Role:', currentPendingRole);
 
-        // Only redirect if this is a NEW sign-in, not a session restoration
-        // Check if we're currently on the landing page - if so, this is a new login
-        if (currentPendingRole === 'farmer' && view === 'landing') {
-          checkFarmerVerification(email || '');
-        } else if (currentPendingRole === 'farmer') {
-          // If already past landing page, just set user type without redirecting
-          setUserType('farmer');
+          if (currentPendingRole === 'farmer') {
+            checkFarmerVerification(email || '');
+          } else if (currentPendingRole === 'discoverer') {
+            setUserType('discoverer');
+            setView('discover');
+          }
+          // Clear pendingRole after processing
+          localStorage.removeItem('pendingRole');
+          setPendingRole(null);
         } else {
-          setUserType('discoverer');
-          setView('discover');
+          // INITIAL_SESSION - just restore user type without redirecting
+          const storedRole = localStorage.getItem('pendingRole');
+          if (storedRole === 'farmer') {
+            setUserType('farmer');
+          } else if (storedRole === 'discoverer') {
+            setUserType('discoverer');
+          }
+          console.log('📦 Session restored, staying on current page');
         }
 
         setIsAuthModalOpen(false);
