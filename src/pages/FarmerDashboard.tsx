@@ -15,7 +15,7 @@ interface FarmerDashboardProps {
     setIsAddFarmOpen: (isOpen: boolean) => void;
     setIsReferralModalOpen: (isOpen: boolean) => void;
     showToast: (msg: string) => void;
-    isVerified?: boolean; // New prop for verification status
+    isVerified?: boolean;
 }
 
 export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
@@ -27,14 +27,17 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
     const [stats, setStats] = useState({
         favoritesCount: 0,
-        viewsCount: '1.2K',
-        growth: '+12%',
-        routesCount: 156,
-        visitorsCount: 89,
-        conversion: '7.2%'
+        viewsCount: '0',
+        growth: '0%', // Start neutral
+        routesCount: 156, // Simulated
+        visitorsCount: 0,
+        conversion: '7.2%' // Simulated
     });
 
-    const myFarm = farms.find(f => f.id === '1');
+    // INTELLIGENT FARM SELECTION
+    // Prioritize a farm that is NOT the demo farm '1' (assuming it's the user's new farm)
+    // Fallback to farm '1' (demo) if no other farm exists.
+    const myFarm = farms.filter(f => f.id !== '1').pop() || farms.find(f => f.id === '1');
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -47,7 +50,6 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                     .eq('farm_id', myFarm.id);
 
                 // Fetch analytics (history for growth calc)
-                // We need date to split current/last month
                 const now = new Date();
                 const firstDayLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString();
                 const firstDayCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
@@ -63,20 +65,12 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                 let growthString = '0%';
 
                 if (analytics) {
-                    // Totalen (Alles wat we hebben opgehaald, of alleen deze maand? Meestal totaal all-time voor de counters)
-                    // Voor de counters "Views" en "Visitors" op het dashboard willen we waarschijnlijk ALL-TIME of "Deze maand"?
-                    // Laten we ALL-TIME doen door een aparte query zonder date filter, of:
-                    // De eerdere implementatie deed ALL-TIME. 
-                    // Voor Groei hebben we maand-vs-maand nodig.
-
-                    // FIX: We halen ALLES op voor de totals, en filteren in memory voor groei.
-                    // Omdat de tabel net begint is "Alles" == "Sinds begin".
-                    // Voor performance later zou je dit splitsen, maar nu prima.
-
+                    // Totals (from the fetched range, which is last 2 months. 
+                    // ideally we'd fetch all-time for totals, but for now this is improved)
                     totalViews = analytics.reduce((acc, curr) => acc + (curr.views || 0), 0);
                     totalVisitors = analytics.reduce((acc, curr) => acc + (curr.visitors || 0), 0);
 
-                    // Calculate Growth
+                    // Calculate Growth (Month over Month)
                     const currentMonthStats = analytics.filter(r => r.date >= firstDayCurrentMonth.split('T')[0]);
                     const lastMonthStats = analytics.filter(r => r.date >= firstDayLastMonth.split('T')[0] && r.date < firstDayCurrentMonth.split('T')[0]);
 
@@ -87,7 +81,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         const growth = Math.round(((currentViews - lastViews) / lastViews) * 100);
                         growthString = (growth > 0 ? '+' : '') + growth + '%';
                     } else if (currentViews > 0) {
-                        growthString = '+100%'; // Start bonus
+                        growthString = '+100%';
                     }
                 }
 
@@ -115,11 +109,13 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
     };
 
     const handleUpdatePhone = (val: string) => {
-        setFarms(prev => prev.map(f => f.id === '1' ? { ...f, phone: val } : f));
+        if (!myFarm) return;
+        setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, phone: val } : f));
     };
 
     const handleUpdateSchedule = (day: string, isOpen: boolean, o: string, c: string) => {
-        setFarms(prev => prev.map(f => f.id === '1' ? { ...f, schedule: f.schedule?.map(s => s.day === day ? { ...s, isOpen, openTime: o, closeTime: c } : s) } : f));
+        if (!myFarm) return;
+        setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, schedule: f.schedule?.map(s => s.day === day ? { ...s, isOpen, openTime: o, closeTime: c } : s) } : f));
         showToast(t('save'));
     };
 
@@ -130,22 +126,16 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
         }
     };
 
-    // Social Share - Facebook
     const shareFacebookProfile = () => {
         if (!myFarm) return;
-
         const baseUrl = window.location.origin;
         const farmProfileUrl = `${baseUrl}/?farm=${myFarm.id}`;
         const shareText = `🌾 Ontdek ${myFarm.name}! Verse producten, eerlijke prijzen, rechtstreeks van de boer. Zonder de boer geen eten! 🚜🥬`;
-
-        // Facebook Share Dialog URL
         const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(farmProfileUrl)}&quote=${encodeURIComponent(shareText)}`;
-
         window.open(facebookShareUrl, '_blank', 'width=600,height=400,scrollbars=yes');
         showToast('Facebook delen geopend!');
     };
 
-    // Copy profile link
     const copyProfileLink = () => {
         if (!myFarm) return;
         const baseUrl = window.location.origin;
@@ -153,6 +143,10 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
         navigator.clipboard.writeText(farmProfileUrl);
         showToast('Profiel link gekopieerd!');
     };
+
+    // Safe access to myFarm properties
+    const phoneValue = myFarm?.phone || '';
+    const addressValue = myFarm?.address || '';
 
     return (
         <motion.div key="farmer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="h-screen w-full flex flex-col pt-24 pb-10 overflow-y-auto scrollbar-hide">
@@ -297,7 +291,6 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         </div>
 
                         <div className="flex gap-3 flex-wrap">
-                            {/* Facebook Share Button */}
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -310,7 +303,6 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                 Deel op Facebook
                             </motion.button>
 
-                            {/* Copy Link Button */}
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -323,7 +315,6 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         </div>
                     </div>
 
-                    {/* Preview of share text */}
                     <div className="mt-4 p-3 bg-white/10 backdrop-blur-md rounded-xl border border-white/20">
                         <p className="text-[10px] font-black text-white/60 uppercase tracking-widest mb-1">Preview van je bericht:</p>
                         <p className="text-sm text-white italic">
@@ -361,7 +352,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} whileHover={{ scale: 1.02 }} className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/10">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="bg-blue-500/20 p-4 rounded-2xl"><Eye size={32} className="text-blue-300" /></div>
-                                <span className="text-sm font-bold text-emerald-300">+22%</span>
+                                <span className="text-sm font-bold text-emerald-300">Totaal</span>
                             </div>
                             <p className="text-xs font-black text-white/40 uppercase tracking-widest mb-2">{t('stat_views')}</p>
                             <p className="text-5xl font-black text-white mb-3">{stats.viewsCount}</p>
@@ -452,12 +443,14 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                             const expiresAt = new Date();
                                             expiresAt.setDate(expiresAt.getDate() + days);
 
-                                            setFarms(prev => prev.map(f =>
-                                                f.id === '1'
-                                                    ? { ...f, statusUpdate: { message, expiresAt: expiresAt.toISOString() } }
-                                                    : f
-                                            ));
-                                            showToast(`Status update gepubliceerd voor ${days} dag${days > 1 ? 'en' : ''}!`);
+                                            if (myFarm) {
+                                                setFarms(prev => prev.map(f =>
+                                                    f.id === myFarm.id
+                                                        ? { ...f, statusUpdate: { message, expiresAt: expiresAt.toISOString() } }
+                                                        : f
+                                                ));
+                                                showToast(`Status update gepubliceerd voor ${days} dag${days > 1 ? 'en' : ''}!`);
+                                            }
                                         }
                                     }}
                                     className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-2xl font-black uppercase text-sm shadow-lg"
@@ -481,10 +474,12 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
                                         onClick={() => {
-                                            setFarms(prev => prev.map(f =>
-                                                f.id === '1' ? { ...f, statusUpdate: undefined } : f
-                                            ));
-                                            showToast('Status update verwijderd');
+                                            if (myFarm) {
+                                                setFarms(prev => prev.map(f =>
+                                                    f.id === myFarm.id ? { ...f, statusUpdate: undefined } : f
+                                                ));
+                                                showToast('Status update verwijderd');
+                                            }
                                         }}
                                         className="text-orange-600 hover:text-orange-800 font-black text-xs"
                                     >
@@ -510,15 +505,17 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                             <label className="text-[10px] font-black text-slate-400 uppercase ml-2">{t('phone')}</label>
                             <div className="relative">
                                 <Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
-                                <input type="text" disabled={!isEditingFarm} value={farms[0].phone || ''} onChange={(e) => handleUpdatePhone(e.target.value)} placeholder="04xx xx xx xx" className={`w-full bg-slate-50 pl-12 pr-4 py-3 rounded-2xl outline-none transition-all ${isEditingFarm ? 'ring-2 ring-forest/10 border-forest/20' : 'border-transparent'}`} />
+                                <input type="text" disabled={!isEditingFarm} value={phoneValue} onChange={(e) => handleUpdatePhone(e.target.value)} placeholder="04xx xx xx xx" className={`w-full bg-slate-50 pl-12 pr-4 py-3 rounded-2xl outline-none transition-all ${isEditingFarm ? 'ring-2 ring-forest/10 border-forest/20' : 'border-transparent'}`} />
                             </div>
                         </div>
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-slate-400 uppercase ml-2">{t('address')}</label>
                             <div className="relative">
                                 <MapPin size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
-                                <input type="text" disabled={!isEditingFarm} defaultValue={farms[0].address} className={`w-full bg-slate-50 pl-12 pr-4 py-3 rounded-2xl outline-none transition-all ${isEditingFarm ? 'ring-2 ring-forest/10 border-forest/20' : 'border-transparent'}`} />
+                                <input type="text" disabled={!isEditingFarm} value={addressValue} readOnly={true} className={`w-full bg-slate-50 pl-12 pr-4 py-3 rounded-2xl outline-none transition-all ${isEditingFarm ? 'ring-2 ring-forest/10 border-forest/20' : 'border-transparent'}`} />
                             </div>
+                            {/* Address edit hint */}
+                            {isEditingFarm && <p className="text-[10px] text-slate-400 italic mt-1 ml-2">Adres wijzigen kan via support.</p>}
                         </div>
                     </div>
 
