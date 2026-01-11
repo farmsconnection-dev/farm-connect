@@ -329,8 +329,13 @@ const App: React.FC = () => {
 
   // --- Actions ---
   const handleRoleSelect = (role: 'discoverer' | 'farmer') => {
+    console.log('🎯 Role selected:', role);
+    localStorage.setItem('pendingRole', role);
     setPendingRole(role);
-    setIsAuthModalOpen(true);
+    // Small delay to ensure state is set before opening modal
+    setTimeout(() => {
+      setIsAuthModalOpen(true);
+    }, 50);
   };
 
   const handleGuestContinue = () => {
