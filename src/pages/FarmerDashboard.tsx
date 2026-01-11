@@ -40,14 +40,33 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
         const fetchStats = async () => {
             if (!myFarm?.id) return;
             try {
-                const { count, error } = await supabase
+                // Fetch favorites
+                const { count: favoritesCount } = await supabase
                     .from('favorites')
                     .select('*', { count: 'exact', head: true })
                     .eq('farm_id', myFarm.id);
 
-                if (!error && count !== null) {
-                    setStats(prev => ({ ...prev, favoritesCount: count }));
+                // Fetch analytics (views & visitors)
+                const { data: analytics } = await supabase
+                    .from('farm_stats')
+                    .select('views, visitors')
+                    .eq('farm_id', myFarm.id);
+
+                let totalViews = 0;
+                let totalVisitors = 0;
+
+                if (analytics) {
+                    totalViews = analytics.reduce((acc, curr) => acc + (curr.views || 0), 0);
+                    totalVisitors = analytics.reduce((acc, curr) => acc + (curr.visitors || 0), 0);
                 }
+
+                setStats(prev => ({
+                    ...prev,
+                    favoritesCount: favoritesCount || 0,
+                    viewsCount: totalViews > 1000 ? (totalViews / 1000).toFixed(1) + 'K' : totalViews.toString(),
+                    visitorsCount: totalVisitors,
+                }));
+
             } catch (err) {
                 console.error('Error fetching stats:', err);
             }

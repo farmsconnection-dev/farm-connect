@@ -26,6 +26,7 @@ import { ReferralModal } from './components/modals/ReferralModal';
 import { AppleAuraModal } from './components/modals/AppleAuraModal';
 import { ProductFactModal } from './components/modals/ProductFactModal';
 import { AuthModal } from './components/modals/AuthModal';
+import { RoleSelectionModal } from './components/modals/RoleSelectionModal';
 import { LoginPromptModal } from './components/modals/LoginPromptModal';
 import { FarmerManualModal } from './components/modals/FarmerManualModal';
 import { FarmDetailModal } from './components/modals/FarmDetailModal';
@@ -103,6 +104,7 @@ const App: React.FC = () => {
   const [isAddFarmOpen, setIsAddFarmOpen] = useState(false);
   const [isAppleModalOpen, setIsAppleModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isRoleSelectionOpen, setIsRoleSelectionOpen] = useState(false);
   const [isLoginPromptOpen, setIsLoginPromptOpen] = useState(false);
   const [isProductFactsOpen, setIsProductFactsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<string>('');
@@ -245,10 +247,9 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('🔐 Auth State Change:', event, session?.user?.email);
 
-      // Handle session (both new login and restored session)
       if (session) {
         const { email, user_metadata } = session.user;
         const name = user_metadata.full_name || email?.split('@')[0] || 'Gebruiker';
@@ -261,60 +262,54 @@ const App: React.FC = () => {
           isLoggedIn: true
         });
 
-        const storedRole = localStorage.getItem('pendingRole');
+        // Smart Redirect Logic
+        if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
+          // 1. Check if user is a farmer (has a farm)
+          const { data: userFarms } = await supabase
+            .from('farms')
+            .select('id, is_verified')
+            .eq('owner_id', session.user.id);
 
-        // SIGNED_IN = actual new login (from OAuth redirect or manual login)
-        // In this case, we SHOULD redirect based on the pending role
-        if (event === 'SIGNED_IN' && storedRole) {
-          console.log('🎯 New login detected with role:', storedRole);
-
-          if (storedRole === 'farmer') {
+          if (userFarms && userFarms.length > 0) {
             setUserType('farmer');
-            // Check if farmer has a farm, redirect accordingly
-            checkFarmerVerification(email || '');
-          } else if (storedRole === 'discoverer') {
-            setUserType('discoverer');
-            setView('discover');
+            setIsFarmerVerified(userFarms[0].is_verified !== false);
+            // Optionally redirect to dashboard if not already there
+            if (view === 'landing') setView('farmer_dashboard');
+          } else {
+            // 2. User has no farm. Check pending role or user type
+            const storedRole = localStorage.getItem('pendingRole');
+
+            if (storedRole === 'farmer') {
+              setUserType('farmer');
+              setView('register_farm');
+            } else if (storedRole === 'discoverer') {
+              setUserType('discoverer');
+              setView('discover');
+            } else if (event === 'SIGNED_IN') {
+              // 3. Login without clear intend -> Show Selection Modal
+              setIsRoleSelectionOpen(true);
+            }
           }
 
-          // Clear the pending role after processing
           localStorage.removeItem('pendingRole');
-          setPendingRole(null);
-        } else {
-          // INITIAL_SESSION or no pending role = page refresh, don't redirect
-          // Just restore user type without changing view
-          if (storedRole === 'farmer') {
-            setUserType('farmer');
-          } else if (storedRole === 'discoverer') {
-            setUserType('discoverer');
-          }
-          console.log('📦 Session restored, staying on current page');
         }
 
         setIsAuthModalOpen(false);
         setIsLoginPromptOpen(false);
         setIsMenuOpen(false);
         setIsAuthLoading(false);
-      }
-
-      // Handle sign out
-      if (event === 'SIGNED_OUT') {
-        setUserProfile({
-          name: 'Gast Gebruiker',
-          email: '',
-          isLoggedIn: false
-        });
+      } else if (event === 'SIGNED_OUT') {
+        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
         setUserType(null);
         setView('landing');
         localStorage.removeItem('pendingRole');
-        setPendingRole(null);
       }
     });
 
     return () => {
       authListener?.subscription.unsubscribe();
     };
-  }, [pendingRole]);
+  }, []);
 
   // Google Maps Loader
   const googleMapsOptions = useMemo(() => ({
@@ -349,6 +344,27 @@ const App: React.FC = () => {
 
 
   // --- Actions ---
+
+  // Track farm views
+  const handleSetDetailFarm = async (farm: Farm | null) => {
+    if (farm) {
+      // Fire and forget stats update
+      supabase.rpc('increment_farm_view', { p_farm_id: farm.id })
+        .then(({ error }) => { if (error) console.error('Stats error:', error); });
+    }
+    setDetailFarm(farm);
+  };
+
+  const handlePostLoginRoleSelect = (role: 'discoverer' | 'farmer') => {
+    setUserType(role);
+    if (role === 'farmer') {
+      setView('register_farm');
+    } else {
+      setView('discover');
+    }
+    setIsRoleSelectionOpen(false);
+  };
+
   const handleRoleSelect = (role: 'discoverer' | 'farmer') => {
     console.log('🎯 Role selected:', role);
     localStorage.setItem('pendingRole', role);
@@ -633,7 +649,7 @@ const App: React.FC = () => {
             isLoaded={isLoaded}
             loadError={loadError}
             userLocation={userLocation}
-            setDetailFarm={setDetailFarm}
+            setDetailFarm={handleSetDetailFarm}
             toggleFavorite={toggleFavorite}
             favorites={favorites}
             handleRouteClick={handleRouteClick}
@@ -647,7 +663,7 @@ const App: React.FC = () => {
             setView={setView}
             favorites={favorites}
             farms={farms}
-            setDetailFarm={setDetailFarm}
+            setDetailFarm={handleSetDetailFarm}
             toggleFavorite={toggleFavorite}
             handleRouteClick={handleRouteClick}
           />
@@ -814,6 +830,12 @@ const App: React.FC = () => {
           showToast={showToast}
         />
       )}</AnimatePresence>
+
+      <RoleSelectionModal
+        isOpen={isRoleSelectionOpen}
+        onClose={() => setIsRoleSelectionOpen(false)}
+        onSelectRole={handlePostLoginRoleSelect}
+      />
     </div>
   );
 };
