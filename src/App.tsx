@@ -531,11 +531,11 @@ const App: React.FC = () => {
         <div className="pointer-events-auto flex items-center h-full">
           {(view === 'landing' || view === 'register_farm') ? (
             <div className="flex items-center gap-3 select-none pointer-events-none">
-              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white/50 overflow-hidden">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white/50 overflow-hidden">
                 <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
               </div>
-              <h1 className="text-xl font-black text-white tracking-tight drop-shadow-md">
-                Farm <span className="text-amber-300">Connect</span>
+              <h1 className={`text-2xl font-black tracking-tight drop-shadow-md ${view === 'landing' ? 'text-white' : 'text-forest'}`}>
+                Farm <span className="text-amber-500">Connect</span>
               </h1>
             </div>
           ) : (
@@ -548,14 +548,14 @@ const App: React.FC = () => {
               className="flex items-center group transition-transform active:scale-95 cursor-pointer"
             >
               <div className="flex items-center gap-3">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform border-2 border-white/50 overflow-hidden">
+                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform border-2 border-white/50 overflow-hidden">
                   <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
                 </div>
-                <h1 className="text-xl font-black text-white tracking-tight drop-shadow-md">
-                  Farm <span className="text-amber-300">Connect</span>
+                <h1 className="text-2xl font-black text-forest tracking-tight drop-shadow-md">
+                  Farm <span className="text-amber-500">Connect</span>
                 </h1>
               </div>
-              <span className="text-[10px] italic text-emerald-100 font-black uppercase tracking-widest ml-4 transition-all duration-300 transform self-center">
+              <span className="text-xs italic text-emerald-800 font-black uppercase tracking-widest ml-4 transition-all duration-300 transform self-center">
                 {t('tagline')}
               </span>
             </motion.button>
