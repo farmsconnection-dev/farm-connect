@@ -65,6 +65,10 @@ const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('landing');
   const [previousView, setPreviousView] = useState<ViewState>('discover');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Check if we're coming from OAuth redirect (has access_token in URL)
+  const [isAuthLoading, setIsAuthLoading] = useState(() =>
+    window.location.hash.includes('access_token') || window.location.hash.includes('error')
+  );
   const [userProfile, setUserProfile] = useState<UserProfile>({
     name: 'Gast Gebruiker',
     email: '',
@@ -290,6 +294,7 @@ const App: React.FC = () => {
         setIsAuthModalOpen(false);
         setIsLoginPromptOpen(false);
         setIsMenuOpen(false);
+        setIsAuthLoading(false);
       }
 
       // Handle sign out
@@ -496,6 +501,26 @@ const App: React.FC = () => {
     } catch (e) { console.error("AI Harvest Advice API error:", e); simulateAi(); } finally { setIsAiLoading(false); }
   };
 
+
+  // Show loading screen while processing OAuth callback
+  if (isAuthLoading) {
+    return (
+      <div className="min-h-screen w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/20 via-emerald-950 to-black flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl mx-auto mb-6 overflow-hidden">
+            <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
+          </div>
+          <Loader2 className="animate-spin text-white mx-auto mb-4" size={32} />
+          <p className="text-white font-bold text-lg">Even geduld...</p>
+          <p className="text-emerald-200/60 text-sm">Je wordt ingelogd</p>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/20 via-emerald-950 to-black text-slate-800 font-sans overflow-hidden relative">
