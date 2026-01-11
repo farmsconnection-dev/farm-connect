@@ -531,7 +531,11 @@ const App: React.FC = () => {
         <div className="pointer-events-auto flex items-center h-full">
           <motion.button
             disabled={view === 'landing'}
-            onClick={() => { setView('discover'); setDetailFarm(null); }}
+            onClick={() => {
+              if (view === 'landing') return;
+              setView('discover');
+              setDetailFarm(null);
+            }}
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
             className={`flex items-center group transition-transform ${view !== 'landing' ? 'active:scale-95 cursor-pointer' : 'opacity-100 pointer-events-none'}`}
           >
