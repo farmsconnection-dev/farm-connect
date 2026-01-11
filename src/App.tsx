@@ -163,7 +163,6 @@ const App: React.FC = () => {
     }
   }, [toast]);
 
-  // Browser back button handling - prevent going to login when already logged in
   useEffect(() => {
     // Push initial state when logged in
     if (userProfile.isLoggedIn && view !== 'landing') {
@@ -171,27 +170,18 @@ const App: React.FC = () => {
     }
 
     const handlePopState = (event: PopStateEvent) => {
-      // If user is logged in and tries to go back, prevent going to landing
+      // Logic for handling back button
       if (userProfile.isLoggedIn) {
-        if (view === 'discover') {
-          // Already at discover, stay here
-          window.history.pushState({ view: 'discover', loggedIn: true }, '', window.location.pathname);
-        } else if (isSeasonCalendarOpen) {
-          // Close calendar instead of navigating back
-          setIsSeasonCalendarOpen(false);
-          window.history.pushState({ view, loggedIn: true }, '', window.location.pathname);
-        } else if (detailFarm) {
-          // Close farm detail instead of navigating back
+        if (detailFarm) {
           setDetailFarm(null);
-          window.history.pushState({ view, loggedIn: true }, '', window.location.pathname);
+        } else if (isSeasonCalendarOpen) {
+          setIsSeasonCalendarOpen(false);
         } else if (isMenuOpen) {
-          // Close menu instead of navigating back
           setIsMenuOpen(false);
-          window.history.pushState({ view, loggedIn: true }, '', window.location.pathname);
-        } else {
-          // Navigate to discover instead of landing
+        } else if (view !== 'discover' && view !== 'farmer') {
           setView('discover');
-          window.history.pushState({ view: 'discover', loggedIn: true }, '', window.location.pathname);
+        } else {
+          // Default behavior (exits app or goes back in history stack if logic fails)
         }
       }
     };
@@ -199,6 +189,19 @@ const App: React.FC = () => {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, [userProfile.isLoggedIn, view, isSeasonCalendarOpen, detailFarm, isMenuOpen]);
+
+  // --- History State Management Hooks ---
+  useEffect(() => {
+    if (detailFarm) window.history.pushState({ modal: 'farmDetail' }, '');
+  }, [detailFarm]);
+
+  useEffect(() => {
+    if (isSeasonCalendarOpen) window.history.pushState({ modal: 'seasonCalendar' }, '');
+  }, [isSeasonCalendarOpen]);
+
+  useEffect(() => {
+    if (isMenuOpen) window.history.pushState({ modal: 'menu' }, '');
+  }, [isMenuOpen]);
 
   // Supabase Auth Listener - voor Google OAuth
 
@@ -264,6 +267,16 @@ const App: React.FC = () => {
     zoomControl: true,
     scrollwheel: true,
   }), []);
+
+  // Debug Maps API Key
+  useEffect(() => {
+    if (!import.meta.env.VITE_GOOGLE_MAPS_API_KEY) {
+      console.error('❌ Google Maps API Key is missing! Check your .env file.');
+      showToast('⚠️ Google Maps werkt niet: API Key ontbreekt');
+    } else {
+      console.log('✅ Google Maps API Key loaded.');
+    }
+  }, []);
 
   const { isLoaded, loadError } = useJsApiLoader(googleMapsOptions);
 
@@ -450,7 +463,7 @@ const App: React.FC = () => {
             </motion.button>
             <AnimatePresence>
               {isLangOpen && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute right-0 mt-2 w-20 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-1 z-[100]">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute right-0 mt-2 w-20 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-1 z-[200]">
                   {(['nl', 'fr', 'en', 'de'] as Language[]).map((l) => (
                     <motion.button key={l} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => { setLang(l); setIsLangOpen(false); }} className={`w-full text-center py-2 rounded-xl text-xs font-bold ${lang === l ? 'bg-forest text-mint' : 'text-slate-600 hover:bg-slate-50'}`}>{l.toUpperCase()}</motion.button>
                   ))}
