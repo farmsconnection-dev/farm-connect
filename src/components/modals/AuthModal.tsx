@@ -213,15 +213,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
                             Inloggen met Email
                         </motion.button>
 
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => { setShowEmailLogin(true); setIsRegistering(true); setLocalMessage(null); }}
-                            className="w-full bg-blue-500 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 hover:bg-blue-600 transition-colors"
-                        >
-                            <UserPlus size={16} />
-                            Nieuw Account Maken
-                        </motion.button>
+                        {pendingRole === 'discoverer' && (
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => { setShowEmailLogin(true); setIsRegistering(true); setLocalMessage(null); }}
+                                className="w-full bg-blue-500 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 hover:bg-blue-600 transition-colors"
+                            >
+                                <UserPlus size={16} />
+                                Nieuw Account Maken
+                            </motion.button>
+                        )}
 
                         {pendingRole === 'discoverer' && (
                             <motion.button
