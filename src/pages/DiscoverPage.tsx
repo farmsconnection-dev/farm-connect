@@ -23,7 +23,7 @@ interface DiscoverPageProps {
 }
 
 const mapContainerStyle = { width: '100%', height: '100%' };
-const defaultCenter = { lat: 51.2093, lng: 3.2247 }; // Brugge
+const defaultCenter = { lat: 50.8503, lng: 4.3517 }; // Brussel Centraal
 const googleMapsOptions = {
     disableDefaultUI: true,
     zoomControl: true,

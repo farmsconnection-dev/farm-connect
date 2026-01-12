@@ -639,16 +639,16 @@ export const DICTIONARY: TranslationDictionary = {
 export const INITIAL_FARMS: Farm[] = [
   {
     id: '0',
-    name: "Zuivelhoeve De Potterie",
+    name: "Ferme de la Potterie",
     image: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&q=80&w=800",
     images: [
       "https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&q=80&w=800",
       "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=800",
       "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=800"
     ],
-    lat: 51.1897,
-    lng: 3.2156,
-    address: "Legeweg 327, 8200 Brugge (Sint-Andries)",
+    lat: 50.3542,
+    lng: 5.4554,
+    address: "Route de Durbuy 5, 6940 Durbuy",
     phone: "050 38 02 02",
     schedule: MOCK_SCHEDULE_1,
     joinedDate: new Date().toISOString(),
@@ -668,16 +668,16 @@ export const INITIAL_FARMS: Farm[] = [
   },
   {
     id: '1',
-    name: "Hoeve 't Groene Veld",
+    name: "Ferme des Champs Verts",
     image: "https://picsum.photos/id/195/800/600",
     images: [
       "https://picsum.photos/id/195/800/600",
       "https://picsum.photos/id/292/800/600",
       "https://picsum.photos/id/486/800/600"
     ],
-    lat: 50.8503,
-    lng: 4.3517,
-    address: "Kerkstraat 12, 1700 Dilbeek",
+    lat: 50.4674,
+    lng: 4.8720,
+    address: "Chemin de la Citadelle 10, 5000 Namur",
     phone: "0470 12 34 56",
     schedule: MOCK_SCHEDULE_1,
     joinedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
@@ -731,10 +731,10 @@ export const INITIAL_FARMS: Farm[] = [
   },
   {
     id: '3',
-    name: 'Biohoeve De Groene Akker',
-    address: 'Akkerweg 88, 2800 Mechelen',
-    lat: 51.0259,
-    lng: 4.4777,
+    name: 'Ferme Bio Champs Verts',
+    address: 'Grand Place 50, 7000 Mons',
+    lat: 50.4542,
+    lng: 3.9567,
     image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800',
     joinedDate: '2024-02-10',
     schedule: MOCK_SCHEDULE_1,
@@ -750,10 +750,10 @@ export const INITIAL_FARMS: Farm[] = [
   },
   {
     id: '4',
-    name: 'Zuivelhof De Melkweg',
-    address: 'Melkstraat 15, 9000 Gent',
-    lat: 51.0543,
-    lng: 3.7174,
+    name: 'Laiterie de la Voie Lactée',
+    address: "Rue de l'Abbaye 1, 6530 Thuin",
+    lat: 50.3396,
+    lng: 4.2873,
     image: 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&q=80&w=800',
     joinedDate: '2024-03-15',
     schedule: [
@@ -777,10 +777,10 @@ export const INITIAL_FARMS: Farm[] = [
   },
   {
     id: '5',
-    name: 'Kippenhof Eggcellent',
-    address: 'Kippenweg 22, 2800 Mechelen',
-    lat: 51.0259,
-    lng: 4.4777,
+    name: 'Poulailler Eggcellent',
+    address: 'Place MacAuliffe 2, 6600 Bastogne',
+    lat: 50.0035,
+    lng: 5.7184,
     image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&q=80&w=800',
     joinedDate: '2024-05-20',
     schedule: [
@@ -803,10 +803,10 @@ export const INITIAL_FARMS: Farm[] = [
   },
   {
     id: '6',
-    name: 'Vleeshof De Smaakmaker',
-    address: 'Vleesstraat 8, 3000 Leuven',
-    lat: 50.8798,
-    lng: 4.7005,
+    name: 'Boucherie du Goût',
+    address: 'Rue de Diekirch 20, 6700 Arlon',
+    lat: 49.6800,
+    lng: 5.8100,
     image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&q=80&w=800',
     joinedDate: '2024-02-10',
     schedule: [
@@ -830,10 +830,10 @@ export const INITIAL_FARMS: Farm[] = [
   },
   {
     id: '7',
-    name: 'Fruithof Zoete Oogst',
-    address: 'Fruitlaan 33, 3500 Hasselt',
-    lat: 50.9307,
-    lng: 5.3378,
+    name: 'Verger Douce Récolte',
+    address: 'Avenue Reine Astrid 15, 4900 Spa',
+    lat: 50.4925,
+    lng: 5.8643,
     image: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&q=80&w=800',
     joinedDate: '2024-06-01',
     schedule: [
@@ -858,10 +858,10 @@ export const INITIAL_FARMS: Farm[] = [
   },
   {
     id: '8',
-    name: 'Groentehof Vers & Gezond',
-    address: 'Groenteweg 44, 8000 Brugge',
-    lat: 51.2093,
-    lng: 3.2247,
+    name: 'Potager Frais & Sain',
+    address: 'Rue de Behogne 5, 5580 Rochefort',
+    lat: 50.1612,
+    lng: 5.2238,
     image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
     joinedDate: '2024-04-12',
     schedule: [
@@ -886,10 +886,10 @@ export const INITIAL_FARMS: Farm[] = [
   },
   {
     id: '9',
-    name: 'Bio Boerderij De Natuurhoeve',
-    address: 'Natuurpad 12, 2000 Antwerpen',
-    lat: 51.2194,
-    lng: 4.4025,
+    name: 'Ferme Bio Nature',
+    address: 'Place Albert 1er 8, 4960 Malmedy',
+    lat: 50.4265,
+    lng: 6.0278,
     image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800',
     joinedDate: '2024-01-05',
     schedule: [
@@ -1377,11 +1377,11 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
 // Add Mock Farm with Nuts & Honey
 INITIAL_FARMS.push({
   id: 'mock-honey-nuts',
-  name: "Imkerij De Zoete Korf & Notengaard",
+  name: "Rucher Douce Ruche & Noix",
   image: "https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&q=80&w=800",
-  lat: 51.0,
-  lng: 4.5,
-  address: "Honingweg 12, 1980 Zemst",
+  lat: 50.2597,
+  lng: 4.9126,
+  address: "Rue Grande 100, 5500 Dinant",
   phone: "0499 11 22 33",
   schedule: MOCK_SCHEDULE_1,
   joinedDate: new Date().toISOString(),
