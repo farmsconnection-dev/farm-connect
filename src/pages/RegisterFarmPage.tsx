@@ -17,12 +17,14 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: initialName,
-        email: '', // User enters their own email
+        email: '',
         address: '',
         phone: '',
         lat: 50.8503,
         lng: 4.3517,
-        heeft_automaat: false
+        heeft_automaat: false,
+        automaat_locatie: 'hoeve', // 'hoeve' or 'anders'
+        automaat_adres: ''
     });
     const addressInputRef = useRef<HTMLInputElement>(null);
     const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -105,6 +107,8 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                     owner_email: formData.email,
                     owner_id: userId,
                     heeft_automaat: formData.heeft_automaat,
+                    automaat_locatie: formData.heeft_automaat ? formData.automaat_locatie : null,
+                    automaat_adres: formData.automaat_locatie === 'anders' ? formData.automaat_adres : null,
                     is_verified: false,
                     products: [],
                     status_update: { status: 'open', message: 'Welkom bij Farm Connect' }
@@ -204,14 +208,61 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4 bg-white/50 p-4 rounded-2xl border-2 border-emerald-100 cursor-pointer hover:bg-emerald-50 transition-colors" onClick={() => setFormData({ ...formData, heeft_automaat: !formData.heeft_automaat })}>
-                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${formData.heeft_automaat ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-300'}`}>
-                            {formData.heeft_automaat && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
+                    {/* Automaat Sectie */}
+                    <div className="bg-white/50 p-4 rounded-2xl border-2 border-emerald-100">
+                        <div
+                            className="flex items-center gap-4 cursor-pointer hover:bg-emerald-50 rounded-xl p-2 -m-2 transition-colors"
+                            onClick={() => setFormData({ ...formData, heeft_automaat: !formData.heeft_automaat })}
+                        >
+                            <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${formData.heeft_automaat ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-300'}`}>
+                                {formData.heeft_automaat && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
+                            </div>
+                            <div className="flex-1">
+                                <p className="text-sm font-black text-slate-700">Ik heb een automaat (24/7)</p>
+                                <p className="text-xs text-slate-400 font-medium">Klanten kunnen ook buiten openingsuren kopen</p>
+                            </div>
                         </div>
-                        <div className="flex-1">
-                            <p className="text-sm font-black text-slate-700">Ik heb een automaat (24/7)</p>
-                            <p className="text-xs text-slate-400 font-medium">Klanten kunnen ook buiten openingsuren kopen</p>
-                        </div>
+
+                        {/* Automaat Locatie (alleen zichtbaar als automaat is aangevinkt) */}
+                        {formData.heeft_automaat && (
+                            <div className="mt-4 pt-4 border-t border-emerald-100 space-y-3">
+                                <p className="text-xs font-bold text-slate-500 uppercase">Waar staat de automaat?</p>
+
+                                <label className="flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-emerald-50">
+                                    <input
+                                        type="radio"
+                                        name="automaat_locatie"
+                                        checked={formData.automaat_locatie === 'hoeve'}
+                                        onChange={() => setFormData({ ...formData, automaat_locatie: 'hoeve', automaat_adres: '' })}
+                                        className="w-4 h-4 text-emerald-500"
+                                    />
+                                    <span className="text-sm font-bold text-slate-700">Op het hoeve-adres</span>
+                                </label>
+
+                                <label className="flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-emerald-50">
+                                    <input
+                                        type="radio"
+                                        name="automaat_locatie"
+                                        checked={formData.automaat_locatie === 'anders'}
+                                        onChange={() => setFormData({ ...formData, automaat_locatie: 'anders' })}
+                                        className="w-4 h-4 text-emerald-500"
+                                    />
+                                    <span className="text-sm font-bold text-slate-700">Op een andere locatie</span>
+                                </label>
+
+                                {formData.automaat_locatie === 'anders' && (
+                                    <div className="mt-2">
+                                        <input
+                                            type="text"
+                                            value={formData.automaat_adres || ''}
+                                            onChange={e => setFormData({ ...formData, automaat_adres: e.target.value })}
+                                            className="w-full px-4 py-3 bg-slate-50 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:outline-none font-bold text-slate-700 text-sm"
+                                            placeholder="Vul het adres van de automaat in..."
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     <button
