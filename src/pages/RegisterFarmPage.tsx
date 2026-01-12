@@ -79,33 +79,48 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!formData.name || !formData.address) return;
+        if (!formData.name || !formData.address) {
+            alert('Vul alle verplichte velden in.');
+            return;
+        }
+        if (!email) {
+            alert('E-mailadres ontbreekt. Log opnieuw in.');
+            return;
+        }
 
         setLoading(true);
+
+        // Timeout after 15 seconds
+        const timeout = setTimeout(() => {
+            setLoading(false);
+            alert('Registratie duurt te lang. Probeer opnieuw of check je internetverbinding.');
+        }, 15000);
+
         try {
-            // 1. Insert new farm linked to this email AND user ID
             const { error } = await supabase
                 .from('farms')
                 .insert({
                     name: formData.name,
                     address: formData.address,
-                    phone: formData.phone, // Optional
+                    phone: formData.phone,
                     lat: formData.lat,
-                    lng: formData.lng,
                     lng: formData.lng,
                     owner_email: email,
                     owner_id: userId,
                     heeft_automaat: formData.heeft_automaat,
-                    is_verified: false, // Default false, needs approval
+                    is_verified: false,
                     products: [],
                     status_update: { status: 'open', message: 'Welkom bij Farm Connect' }
                 });
 
+            clearTimeout(timeout);
+
             if (error) throw error;
 
-            onSuccess(); // Switch view to pending
+            onSuccess();
 
         } catch (err: any) {
+            clearTimeout(timeout);
             console.error('Error registering farm:', err);
             alert(`Er ging iets mis: ${err.message || 'Onbekende fout'}`);
         } finally {
