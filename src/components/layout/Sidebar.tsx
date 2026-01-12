@@ -77,24 +77,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-y-0 right-0 z-[100] w-80 bg-emerald-900/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col text-white"
+            className="fixed inset-y-0 right-0 z-[100] w-[85vw] sm:w-80 max-w-[320px] bg-emerald-900/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col text-white rounded-l-[32px] overflow-hidden"
         >
-            <div className="p-8 flex items-center justify-end">
+            <div className="p-6 sm:p-8 flex items-center justify-end">
                 <button onClick={onClose} className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors text-amber-400"><X size={24} /></button>
             </div>
-            <div className="px-8 pb-8 flex flex-col items-center text-center border-b border-white/10 mb-4 -mt-6">
-                <div className="w-24 h-24 rounded-apple bg-white/10 border-4 border-white/20 shadow-xl overflow-hidden mb-4 p-2 flex items-center justify-center">
+            <div className="px-6 sm:px-8 pb-8 flex flex-col items-center text-center border-b border-white/10 mb-4 -mt-6">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-apple bg-white/10 border-4 border-white/20 shadow-xl overflow-hidden mb-4 p-2 flex items-center justify-center">
                     {userProfile.photoUrl ? (
                         <img src={userProfile.photoUrl} className="w-full h-full object-cover rounded-[32px]" alt="Profile" />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center bg-transparent text-mint rounded-[32px]">
-                            <User size={64} />
+                            <User size={48} className="sm:hidden" />
+                            <User size={64} className="hidden sm:block" />
                         </div>
                     )}
                 </div>
                 {userProfile.isLoggedIn ? (
                     <div>
-                        <p className="font-bold text-white text-xl mb-1">{userProfile.name}</p>
+                        <p className="font-bold text-white text-lg sm:text-xl mb-1">{userProfile.name}</p>
                         <p className="text-xs text-white/50 font-medium uppercase tracking-widest">{userType === 'farmer' ? t('btn_farmer') : t('btn_discoverer')}</p>
                     </div>
                 ) : (
@@ -103,7 +104,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
                 {menuItems.map(item => (
-                    <button key={item.id} onClick={() => { if (item.action) item.action(); else setView(item.id as ViewState); onClose(); }} className={`w-full flex items-center gap-4 p-4 rounded-xl font-bold transition-all text-white hover:bg-white/10 ${view === item.id ? 'bg-white/10 text-amber-400' : ''}`}>
+                    <button key={item.id} onClick={() => { if (item.action) item.action(); else setView(item.id as ViewState); onClose(); }} className={`w-full flex items-center gap-4 p-3 sm:p-4 rounded-xl font-bold transition-all text-white hover:bg-white/10 ${view === item.id ? 'bg-white/10 text-amber-400' : ''}`}>
                         <span className={view === item.id ? 'text-amber-400' : 'text-mint'}>{item.icon}</span> {item.label}
                     </button>
                 ))}
