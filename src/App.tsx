@@ -426,17 +426,17 @@ const App: React.FC = () => {
         setIsMenuOpen(false);
         setIsAuthLoading(false);
       } else if (event === 'SIGNED_OUT') {
-        // ONLY reset to landing if we are NOT in guest mode
-        if (!isGuestMode) {
-          setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-          setUserType(null);
-          setView('landing');
-          localStorage.removeItem('pendingRole');
-        } else {
-          // Stay as guest, but ensure profile is clean
-          setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-          setUserType('guest');
+        // Clear guest mode if we are intentionally signing out
+        if (isGuestModeRef.current) {
+          isGuestModeRef.current = false;
         }
+
+        // Always reset to landing on explicit sign out
+        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+        setUserType(null);
+        setView('landing');
+        localStorage.removeItem('pendingRole');
+        localStorage.removeItem('guest_mode');
       }
     });
 
@@ -572,16 +572,25 @@ const App: React.FC = () => {
   };
 
   const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-    } catch (e) { console.error("SignOut error:", e); }
-    // Clean up all state
+    console.log("🚪 Logging out / Returning to start...");
+
+    // 1. Reset guest flags immediately
+    isGuestModeRef.current = false;
     localStorage.removeItem('guest_mode');
+
+    // 2. Clear state
     setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
     setUserType(null);
     setView('landing');
     setFavorites(new Set());
     setIsMenuOpen(false);
+
+    // 3. Trigger Supabase signout
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {
+      console.error("SignOut error:", e);
+    }
   };
 
   const handleRouteClick = (f: Farm) => {
