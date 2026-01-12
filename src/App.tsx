@@ -90,7 +90,7 @@ const App: React.FC = () => {
   });
 
   // Ref to track if user explicitly chose Guest mode to prevent auto-login
-  const isGuestModeRef = useRef(false);
+  const isGuestModeRef = useRef(localStorage.getItem('guest_mode') === 'true');
 
   // FORCE VIEW LOGIC (Recovery from hanging registration)
   useEffect(() => {
@@ -117,12 +117,18 @@ const App: React.FC = () => {
   // BRUTE FORCE GUEST MODE ENFORCEMENT
   useEffect(() => {
     const isGuestPersistent = localStorage.getItem('guest_mode') === 'true';
-    if (isGuestPersistent && userType !== 'guest') {
-      console.log("🛡️ Guest Mode Enforcement: Reverting profile to Guest");
-      setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-      setUserType('guest');
+    if (isGuestPersistent) {
+      if (userType !== 'guest' || userProfile.name !== 'Gast Gebruiker') {
+        console.log("🛡️ Guest Mode Enforcement: Correcting state");
+        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+        setUserType('guest');
+      }
+      if (view === 'landing') {
+        console.log("🛡️ Guest Mode Enforcement: Correcting view to Discover");
+        setView('discover');
+      }
     }
-  }, [userProfile.name, userType]);
+  }, [userProfile.name, userType, view]);
 
   // Farms Data (Single Source of Truth)
   const [farms, setFarms] = useState<Farm[]>(() => {
@@ -339,6 +345,7 @@ const App: React.FC = () => {
         supabase.auth.signOut();
         setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
         setUserType('guest');
+        if (view === 'landing') setView('discover');
         return;
       }
 
@@ -430,6 +437,7 @@ const App: React.FC = () => {
         if (stillGuest) {
           setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
           setUserType('guest');
+          if (view === 'landing') setView('discover');
         } else {
           isGuestModeRef.current = false;
           setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
