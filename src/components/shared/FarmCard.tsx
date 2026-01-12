@@ -132,7 +132,8 @@ export const FarmCard: React.FC<FarmCardProps> = ({ farm, setDetailFarm, toggleF
                     {/* Top Products */}
                     <div className="flex gap-2 overflow-hidden flex-1">
                         {topProducts.map((product, idx) => (
-                            <span key={idx} className="text-[9px] font-semibold text-slate-600 whitespace-nowrap">
+                            <span key={idx} className="text-[9px] font-semibold text-slate-600 whitespace-nowrap flex items-center gap-1">
+                                {product.in_vending_machine && <span title="Beschikbaar in automaat">📦</span>}
                                 {product.name} <span className="text-emerald-600">€{product.price}</span>
                             </span>
                         ))}

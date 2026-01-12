@@ -1,7 +1,7 @@
 import { TranslationDictionary, Farm, DaySchedule } from './types';
 import aardbeienImg from './assets/aardbeien.jpg';
 
-const MOCK_SCHEDULE_1: DaySchedule[] = [
+export const MOCK_SCHEDULE_1: DaySchedule[] = [
   { day: 'mon', isOpen: true, openTime: '08:00', closeTime: '18:00' },
   { day: 'tue', isOpen: true, openTime: '08:00', closeTime: '18:00' },
   { day: 'wed', isOpen: true, openTime: '08:00', closeTime: '12:00' },
@@ -10,6 +10,7 @@ const MOCK_SCHEDULE_1: DaySchedule[] = [
   { day: 'sat', isOpen: true, openTime: '09:00', closeTime: '16:00' },
   { day: 'sun', isOpen: false, openTime: '00:00', closeTime: '00:00' },
 ];
+export const DEFAULT_SCHEDULE = MOCK_SCHEDULE_1;
 
 const MOCK_SCHEDULE_2: DaySchedule[] = [
   { day: 'mon', isOpen: true, openTime: '09:00', closeTime: '17:00' },

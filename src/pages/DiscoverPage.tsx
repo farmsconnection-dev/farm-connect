@@ -6,7 +6,7 @@ import { GoogleMap, MarkerF, InfoWindowF } from '@react-google-maps/api';
 import { ProductImage } from '../components/shared/ProductImage';
 import { FarmCard } from '../components/shared/FarmCard';
 import { getLiveStatus, isNew, getFilterIcon, getFarmCategoryIcon, calculateDistance, getCategoryColor } from '../utils/helpers';
-import { Farm, Coordinate } from '../types';
+import { Farm, Coordinate, UserProfile } from '../types';
 
 interface DiscoverPageProps {
     t: (key: string) => string;
@@ -20,6 +20,7 @@ interface DiscoverPageProps {
     handleRouteClick: (farm: Farm) => void;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
+    userProfile?: UserProfile;
 }
 
 const mapContainerStyle = { width: '100%', height: '100%' };
@@ -35,7 +36,7 @@ const googleMapsOptions = {
 
 export const DiscoverPage: React.FC<DiscoverPageProps> = ({
     t, farms, isLoaded, loadError, userLocation, setDetailFarm, toggleFavorite, favorites, handleRouteClick,
-    searchQuery, setSearchQuery
+    searchQuery, setSearchQuery, userProfile
 }) => {
     const [activeFilter, setActiveFilter] = useState<'all' | 'open' | 'fruit' | 'vegetables' | 'dairy' | 'nearby'>('all');
     const [isMapView, setIsMapView] = useState(false);
@@ -62,8 +63,8 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
     const filteredFarms = useMemo(() => {
         let result = farms;
 
-        // IMPORTANT: Only show verified farms to public
-        result = result.filter(f => f.is_verified !== false); // Show if verified or undefined (backwards compatibility)
+        // IMPORTANT: Only show verified farms to public, BUT always show user's own farm
+        result = result.filter(f => f.is_verified !== false || (userProfile?.id && f.owner_id === userProfile.id));
 
         // Filter for 24/7 automaten
         if (show24_7Only) {

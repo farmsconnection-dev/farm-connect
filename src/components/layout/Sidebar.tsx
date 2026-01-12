@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { X, HelpCircle, TrendingUp, Box, Heart, Users, Compass, Calendar, Leaf, LogIn, LogOut, User, ShieldCheck, ArrowLeftCircle, Store } from 'lucide-react';
+import { X, HelpCircle, TrendingUp, Box, Heart, Users, Compass, Calendar, Leaf, LogIn, LogOut, User, ShieldCheck, ArrowLeftCircle, Store, Tractor } from 'lucide-react';
 import { UserType, UserProfile, ViewState } from '../../types';
 
 interface MenuItem {
@@ -53,6 +53,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         if (userType === 'farmer') {
             const farmerItems = [
                 { id: 'farmer', label: 'Dashboard', icon: <TrendingUp size={20} /> },
+                { id: 'my_farm', label: 'Mijn Boerderij', icon: <Tractor size={20} /> },
                 { id: 'vending', label: 'Mijn Automaat', icon: <Store size={20} /> },
                 { id: 'inventory', label: t('menu_inventory'), icon: <Box size={20} /> },
                 { id: 'favorites', label: t('menu_favorites'), icon: <Heart size={20} /> },

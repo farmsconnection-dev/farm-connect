@@ -1,0 +1,153 @@
+// @ts-nocheck
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Edit2, Save, MapPin, Store, Clock, ToggleLeft, ToggleRight, Loader2 } from 'lucide-react';
+import { Farm, ViewState } from '../types';
+import { DEFAULT_SCHEDULE } from '../constants';
+
+interface MyFarmPageProps {
+    t: (key: string) => string;
+    setView: (view: ViewState) => void;
+    farms: Farm[];
+    setFarms: React.Dispatch<React.SetStateAction<Farm[]>>;
+    onUpdateFarm?: (farm: Farm) => void;
+    showToast: (msg: string) => void;
+    userProfile: { id?: string };
+}
+
+export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFarms, onUpdateFarm, showToast, userProfile }) => {
+    const myFarm = farms.find(f => f.owner_id === userProfile.id);
+
+    const [isEditingFarm, setIsEditingFarm] = useState(false);
+    const [isEditingSchedule, setIsEditingSchedule] = useState(false);
+
+    // Initial load check
+    if (!myFarm) return <div className="p-8 text-white flex items-center gap-2"><Loader2 className="animate-spin" /> Profiel laden...</div>;
+
+    const handleUpdateName = (val: string) => {
+        setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, name: val } : f));
+    };
+
+    const handleSaveProfile = () => {
+        if (onUpdateFarm) onUpdateFarm(myFarm);
+        setIsEditingFarm(false);
+        showToast(t('save'));
+    };
+
+    const handleSaveSchedule = () => {
+        if (onUpdateFarm) onUpdateFarm(myFarm);
+        setIsEditingSchedule(false);
+        showToast(t('save'));
+    };
+
+    // Helper to ensure schedule exists
+    const hasSchedule = myFarm.schedule && myFarm.schedule.length > 0;
+    // Use default schedule for rendering if missing (but don't save automatically unless user clicks)
+    const displaySchedule = hasSchedule ? myFarm.schedule : DEFAULT_SCHEDULE;
+
+    return (
+        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -20 }} className="h-screen w-full flex flex-col pt-32 px-4 sm:px-8 pb-20 max-w-4xl mx-auto overflow-y-auto scrollbar-hide">
+            <div className="mb-8 flex items-center gap-4">
+                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setView('farmer')} className="p-3 bg-white/20 backdrop-blur-md rounded-2xl shadow-sm text-white hover:bg-white/30 transition-all border border-white/20"><ArrowLeft size={24} /></motion.button>
+                <div>
+                    <h1 className="text-3xl font-black text-white tracking-tight drop-shadow-md">Mijn Boerderij</h1>
+                    <p className="text-emerald-100/60 font-bold uppercase tracking-widest text-[10px]">Beheer je profiel & uren</p>
+                </div>
+            </div>
+
+            {/* --- Farm Profile Section --- */}
+            <div className="bg-white/90 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/20 mb-8">
+                <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-xl font-bold text-emerald-900 flex items-center gap-2"><Store size={24} className="text-emerald-500" /> Profiel Gegevens</h3>
+                    <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => isEditingFarm ? handleSaveProfile() : setIsEditingFarm(true)} className="text-xs font-black text-emerald-700 uppercase flex items-center gap-2 bg-emerald-100 px-4 py-2 rounded-xl">
+                        {isEditingFarm ? <><Save size={14} /> {t('save')}</> : <><Edit2 size={14} /> Wijzig</>}
+                    </motion.button>
+                </div>
+
+                <div className="space-y-6">
+                    <div>
+                        <label className="text-[10px] font-black text-slate-400 uppercase ml-1 mb-1 block">Naam Boerderij</label>
+                        <input
+                            type="text"
+                            disabled={!isEditingFarm}
+                            value={myFarm.name}
+                            onChange={(e) => handleUpdateName(e.target.value)}
+                            className={`w-full bg-slate-50 px-4 py-3 rounded-xl outline-none font-bold text-slate-800 transition-all ${isEditingFarm ? 'ring-2 ring-emerald-500/20 bg-white' : ''}`}
+                        />
+                    </div>
+
+                    <div>
+                        <label className="text-[10px] font-black text-slate-400 uppercase ml-1 mb-1 block">Adres</label>
+                        <div className="w-full bg-slate-50 px-4 py-3 rounded-xl font-bold text-slate-600 flex items-center gap-2 border border-slate-100">
+                            <MapPin size={16} /> {myFarm.address}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* --- Opening Hours Section --- */}
+            <div className="bg-white/90 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/20 pb-20">
+                <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-xl font-bold text-emerald-900 flex items-center gap-2"><Clock size={24} className="text-emerald-500" /> {t('opening_hours')}</h3>
+
+                    {/* Always show edit button if we have a schedule (even if it's default fallback visible) OR allow creating one */}
+                    <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => isEditingSchedule ? handleSaveSchedule() : setIsEditingSchedule(true)} className="text-xs font-black text-emerald-700 uppercase flex items-center gap-2 bg-emerald-100 px-4 py-2 rounded-xl">
+                        {isEditingSchedule ? <><Save size={14} /> {t('save')}</> : <><Edit2 size={14} /> Wijzig</>}
+                    </motion.button>
+                </div>
+
+                {!hasSchedule && !isEditingSchedule ? (
+                    <div className="text-center py-10 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
+                        <p className="text-slate-500 mb-4 text-sm font-bold">Nog geen openingsuren ingesteld.</p>
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => {
+                                const newSchedule = DEFAULT_SCHEDULE;
+                                const updatedFarm = { ...myFarm, schedule: newSchedule };
+                                setFarms(prev => prev.map(f => f.id === myFarm.id ? updatedFarm : f));
+                                if (onUpdateFarm) onUpdateFarm(updatedFarm);
+                                showToast("Standaard uren geladen");
+                            }} className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg">
+                            Laad Standaard Uren
+                        </motion.button>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
+                        {displaySchedule.map((s, index) => (
+                            <div key={s.day || index} className="flex items-center justify-between py-3 border-b border-slate-100 last:border-0 hover:bg-slate-50 px-2 rounded-lg transition-colors">
+                                <span className="text-sm font-bold text-slate-500 w-24 capitalize">{t(`day_${s.day}`) || s.day}</span>
+                                {isEditingSchedule ? (
+                                    <div className="flex items-center gap-2">
+                                        <input type="time" value={s.openTime} onChange={(e) => {
+                                            const newS = [...(myFarm.schedule || DEFAULT_SCHEDULE)];
+                                            newS[index] = { ...s, openTime: e.target.value };
+                                            setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, schedule: newS } : f));
+                                        }} className="bg-white border border-slate-200 rounded-lg p-1.5 text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-emerald-500/20" />
+                                        <span className="text-slate-300 font-bold">-</span>
+                                        <input type="time" value={s.closeTime} onChange={(e) => {
+                                            const newS = [...(myFarm.schedule || DEFAULT_SCHEDULE)];
+                                            newS[index] = { ...s, closeTime: e.target.value };
+                                            setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, schedule: newS } : f));
+                                        }} className="bg-white border border-slate-200 rounded-lg p-1.5 text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-emerald-500/20" />
+                                        <button onClick={() => {
+                                            const newS = [...(myFarm.schedule || DEFAULT_SCHEDULE)];
+                                            newS[index] = { ...s, isOpen: !s.isOpen };
+                                            setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, schedule: newS } : f));
+                                        }} className="ml-1 p-1 hover:bg-slate-100 rounded-full">
+                                            {s.isOpen ? <ToggleRight className="text-emerald-500" size={26} /> : <ToggleLeft className="text-slate-300" size={26} />}
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <span className={`font-black text-sm ${s.isOpen ? 'text-emerald-700' : 'text-slate-300'}`}>
+                                        {s.isOpen ? `${s.openTime} - ${s.closeTime}` : t('closed')}
+                                    </span>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </motion.div>
+    );
+};

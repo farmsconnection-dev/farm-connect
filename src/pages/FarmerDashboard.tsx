@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Share2, TrendingUp, Sparkles, Heart, Eye, Store, Edit2, Upload, Phone, MapPin, Clock, ToggleRight, ToggleLeft, User, Copy, Gift, AlertTriangle, ShieldCheck, Box } from 'lucide-react';
 import { Farm, UserProfile, DaySchedule } from '../types';
 import { supabase } from '../lib/supabase';
+import { DEFAULT_SCHEDULE } from '../constants';
 
 interface FarmerDashboardProps {
     t: (key: string) => string;
@@ -16,10 +17,11 @@ interface FarmerDashboardProps {
     setIsReferralModalOpen: (isOpen: boolean) => void;
     showToast: (msg: string) => void;
     isVerified?: boolean;
+    onUpdateFarm?: (farm: Farm) => void;
 }
 
 export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
-    t, farms, setFarms, userProfile, setUserProfile, fetchHarvestAdvice, setIsAddFarmOpen, setIsReferralModalOpen, showToast, isVerified = true
+    t, farms, setFarms, userProfile, setUserProfile, fetchHarvestAdvice, setIsAddFarmOpen, setIsReferralModalOpen, showToast, isVerified = true, onUpdateFarm
 }) => {
     const [isEditingFarm, setIsEditingFarm] = useState(false);
     const [isEditingSchedule, setIsEditingSchedule] = useState(false);
@@ -28,10 +30,10 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
     const [stats, setStats] = useState({
         favoritesCount: 0,
         viewsCount: '0',
-        growth: '0%', // Start neutral
-        routesCount: 156, // Simulated
+        growth: '0%',
+        routesCount: 0,
         visitorsCount: 0,
-        conversion: '7.2%' // Simulated
+        conversion: '0%'
     });
 
     // INTELLIGENT FARM SELECTION - STRICT OWNERSHIP
@@ -119,39 +121,37 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
         setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, phone: val } : f));
     };
 
-    const handleUpdateVendingMachine = async (checked: boolean) => {
-        if (!myFarm) return;
-
-        // Optimistic UI update
-        setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, heeft_automaat: checked } : f));
-
-        // Real DB update
-        try {
-            const { error } = await supabase
-                .from('farms')
-                .update({ heeft_automaat: checked })
-                .eq('id', myFarm.id);
-
-            if (error) {
-                console.error('Error updating vending machine:', error);
-                showToast('Fout bij opslaan');
-            } else {
-                showToast(t('save'));
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
     const handleUpdateSchedule = (day: string, isOpen: boolean, o: string, c: string) => {
         if (!myFarm) return;
-        setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, schedule: f.schedule?.map(s => s.day === day ? { ...s, isOpen, openTime: o, closeTime: c } : s) } : f));
+        setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, schedule: (f.schedule || DEFAULT_SCHEDULE).map(s => s.day === day ? { ...s, isOpen, openTime: o, closeTime: c } : s) } : f));
         showToast(t('save'));
     };
 
     const handleUpdateName = (val: string) => {
         if (!myFarm) return;
         setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, name: val } : f));
+    };
+
+    const handleUpdateVendingMachine = (enabled: boolean) => {
+        if (!myFarm) return;
+        const updatedFarm = { ...myFarm, heeft_automaat: enabled };
+        if (onUpdateFarm) onUpdateFarm(updatedFarm);
+        else setFarms(prev => prev.map(f => f.id === myFarm.id ? updatedFarm : f));
+        showToast(enabled ? 'Automaat geactiveerd' : 'Automaat gedeactiveerd');
+    };
+
+    const handleSaveProfile = () => {
+        if (!myFarm) return setIsEditingFarm(false);
+        if (onUpdateFarm) onUpdateFarm(myFarm);
+        setIsEditingFarm(false);
+        showToast(t('save'));
+    };
+
+    const handleSaveSchedule = () => {
+        if (!myFarm) return setIsEditingSchedule(false);
+        if (onUpdateFarm) onUpdateFarm(myFarm);
+        setIsEditingSchedule(false);
+        showToast(t('save'));
     };
 
 
@@ -205,37 +205,25 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
                         <div className="flex-1 text-center md:text-left">
                             <h1 className="text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-lg">
-                                Dag {(!myFarm || myFarm.id === '1') ? userProfile.name.split(' ')[0] : myFarm.name}! 👋
+                                Welkom terug, {(!myFarm || myFarm.id === '1') ? userProfile.name.split(' ')[0] : myFarm.name}! 👋
                             </h1>
                             <p className="text-emerald-100 text-lg font-medium mb-6 max-w-2xl leading-relaxed">Bedankt dat je deel uitmaakt van dit initiatief. Samen maken we een vuist voor eerlijke prijzen en kortere ketens.</p>
 
-                            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto md:mx-0">
-                                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10">
-                                    <Heart size={20} className="text-pink-300 mb-1 mx-auto md:mx-0" fill="currentColor" />
-                                    <p className="text-2xl font-black text-white">{stats.favoritesCount}</p>
-                                    <p className="text-xs text-emerald-200 uppercase font-bold">{t('stat_favorites')}</p>
-                                </div>
-                                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10">
-                                    <Eye size={20} className="text-blue-300 mb-1 mx-auto md:mx-0" />
-                                    <p className="text-2xl font-black text-white">{stats.viewsCount}</p>
-                                    <p className="text-xs text-emerald-200 uppercase font-bold">{t('stat_views')}</p>
-                                </div>
-                                <div className="bg-emerald-500/20 backdrop-blur-md rounded-2xl p-4 border border-emerald-400/30">
-                                    <TrendingUp size={20} className="text-emerald-300 mb-1 mx-auto md:mx-0" />
-                                    <p className="text-2xl font-black text-white">{stats.growth}</p>
-                                    <p className="text-xs text-emerald-200 uppercase font-bold">{t('stat_growth')}</p>
-                                </div>
+                            <div className="grid grid-cols-1 gap-4 max-w-md mx-auto md:mx-0">
+                                {/* Stats moved to main content */}
                             </div>
                         </div>
 
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => setIsAddFarmOpen(true)}
-                            className="bg-white text-forest px-8 py-4 rounded-2xl font-black uppercase tracking-wide shadow-xl flex items-center gap-2 whitespace-nowrap"
-                        >
-                            <Store size={20} /> Registreer mijn boerderij
-                        </motion.button>
+                        {(!myFarm || myFarm.id === '1') && (
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => setIsAddFarmOpen(true)}
+                                className="bg-white text-forest px-8 py-4 rounded-2xl font-black uppercase tracking-wide shadow-xl flex items-center gap-2 whitespace-nowrap"
+                            >
+                                <Store size={20} /> Registreer mijn boerderij
+                            </motion.button>
+                        )}
                     </div>
                 </div>
 
@@ -291,41 +279,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                     </motion.div>
                 )}
 
-                {/* COMPACT REFERRAL */}
-                <motion.div
-                    initial={{ scale: 0.95, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                    className="relative bg-gradient-to-r from-amber-400 to-amber-500 p-6 rounded-3xl shadow-lg overflow-hidden"
-                >
-                    <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                        <div className="flex items-center gap-4 flex-wrap">
-                            <div className="bg-white/20 backdrop-blur-md px-4 py-3 rounded-xl border border-white/30 text-center min-w-[100px]">
-                                <p className="text-[8px] font-black uppercase tracking-widest text-amber-900">{t('balance')}</p>
-                                <p className="text-2xl font-black text-amber-950">€{myFarm?.referralBalance || 0}</p>
-                            </div>
-                            <div>
-                                <div className="flex items-center gap-2 mb-1">
-                                    <Gift size={16} className="text-amber-950" />
-                                    <span className="text-xs font-black text-amber-950 uppercase">€20/referral</span>
-                                </div>
-                                <p className="text-xs text-amber-900 font-medium">
-                                    Code: <code className="bg-white/40 px-2 py-0.5 rounded text-amber-950 font-bold">{myFarm?.referralCode || 'FARM-XX'}</code>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="flex gap-2">
-                            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={copyReferralCode} className="bg-amber-950 text-amber-100 p-2.5 rounded-xl">
-                                <Copy size={16} />
-                            </motion.button>
-                            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setIsReferralModalOpen(true)} className="bg-amber-950 text-amber-100 px-4 py-2.5 rounded-xl font-bold uppercase text-xs flex items-center gap-2">
-                                <Share2 size={16} /> Deel
-                            </motion.button>
-                        </div>
-                    </div>
-                    <div className="absolute -right-10 -bottom-10 text-amber-950/5 pointer-events-none"><Users size={120} /></div>
-                </motion.div>
+                {/* COMPACT REFERRAL - MOVED TO MENU */}
 
                 {/* SOCIAL SHARE SECTION */}
                 <motion.div
@@ -437,20 +391,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         </motion.div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/5">
-                            <p className="text-[10px] font-black text-white/40 uppercase mb-1">{t('routes')}</p>
-                            <p className="text-3xl font-black text-white">{stats.routesCount}</p>
-                        </div>
-                        <div className="bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/5">
-                            <p className="text-[10px] font-black text-white/40 uppercase mb-1">{t('visitors')}</p>
-                            <p className="text-3xl font-black text-white">{stats.visitorsCount}</p>
-                        </div>
-                        <div className="bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/5">
-                            <p className="text-[10px] font-black text-white/40 uppercase mb-1">{t('conversion')}</p>
-                            <p className="text-3xl font-black text-white">{stats.conversion}</p>
-                        </div>
-                    </div>
+                    {/* ROUTES & CONVERSION STATS REMOVED (Coming Soon) */}
                 </div>
 
                 {/* STATUS UPDATE SECTION */}
@@ -548,92 +489,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                 </div>
 
                 {/* FARM DETAILS */}
-                <div className="bg-white/80 backdrop-blur-xl p-8 rounded-apple shadow-xl border border-white/20">
-                    <div className="flex justify-between items-center mb-8">
-                        <h3 className="text-2xl font-bold text-forest flex items-center gap-3"><Store size={28} className="text-mint" />{t('my_farm')}</h3>
-                        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setIsEditingFarm(!isEditingFarm)} className="text-xs font-black text-forest uppercase flex items-center gap-2 bg-mint/20 px-5 py-3 rounded-xl">
-                            {isEditingFarm ? t('save') : <><Edit2 size={14} /> Wijzig Profiel</>}
-                        </motion.button>
-                    </div>
-
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase ml-2">{t('farm_name') || 'NAAM BOERDERIJ'}</label>
-                            <div className="relative">
-                                <Store size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
-                                <input type="text" disabled={!isEditingFarm} value={myFarm?.name || ''} onChange={(e) => handleUpdateName(e.target.value)} className={`w-full bg-slate-50 pl-12 pr-4 py-3 rounded-2xl outline-none transition-all font-bold text-slate-700 ${isEditingFarm ? 'ring-2 ring-forest/10 border-forest/20' : 'border-transparent'}`} />
-                            </div>
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase ml-2">{t('phone')}</label>
-                            <div className="relative">
-                                <Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
-                                <input type="text" disabled={!isEditingFarm} value={phoneValue} onChange={(e) => handleUpdatePhone(e.target.value)} placeholder="04xx xx xx xx" className={`w-full bg-slate-50 pl-12 pr-4 py-3 rounded-2xl outline-none transition-all ${isEditingFarm ? 'ring-2 ring-forest/10 border-forest/20' : 'border-transparent'}`} />
-                            </div>
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase ml-2">{t('address')}</label>
-                            <div className="relative">
-                                <MapPin size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
-                                <input type="text" disabled={!isEditingFarm} value={addressValue} readOnly={true} className={`w-full bg-slate-50 pl-12 pr-4 py-3 rounded-2xl outline-none transition-all ${isEditingFarm ? 'ring-2 ring-forest/10 border-forest/20' : 'border-transparent'}`} />
-                            </div>
-                            {/* Address edit hint */}
-                            {isEditingFarm && <p className="text-[10px] text-slate-400 italic mt-1 ml-2">Adres wijzigen kan via support.</p>}
-                        </div>
-
-                        {/* VENDING MACHINE TOGGLE */}
-                        <div className="space-y-2 flex flex-col justify-center">
-                            <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Verkoopautomaat (24/7)</label>
-                            <div className="flex items-center gap-4 bg-slate-50 p-2.5 rounded-2xl border border-transparent">
-                                <div className={`p-2 rounded-xl transition-colors ${myFarm?.heeft_automaat ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-200 text-slate-400'}`}>
-                                    <Box size={20} />
-                                </div>
-                                <div className="flex-1">
-                                    <p className={`text-sm font-bold ${myFarm?.heeft_automaat ? 'text-emerald-900' : 'text-slate-500'}`}>
-                                        {myFarm?.heeft_automaat ? 'Actief' : 'Geen automaat'}
-                                    </p>
-                                </div>
-                                {isEditingFarm && (
-                                    <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => handleUpdateVendingMachine(!myFarm?.heeft_automaat)}>
-                                        {myFarm?.heeft_automaat ? <ToggleRight className="text-forest" size={28} /> : <ToggleLeft className="text-slate-300" size={28} />}
-                                    </motion.button>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="border-t border-slate-100 pt-6">
-                        <div className="flex justify-between items-center mb-4">
-                            <h4 className="text-sm font-black uppercase text-slate-400 tracking-widest flex items-center gap-2"><Clock size={16} /> {t('opening_hours')}</h4>
-                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setIsEditingSchedule(!isEditingSchedule)} className="text-[10px] font-black text-forest uppercase flex items-center gap-1 hover:underline">
-                                {isEditingSchedule ? t('save') : <><Edit2 size={12} /> {t('edit_hours')}</>}
-                            </motion.button>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3">
-                            {myFarm?.schedule?.map(s => (
-                                <div key={s.day} className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0 sm:border-0">
-                                    <span className="text-sm font-bold text-slate-500 capitalize w-20">{t(`day_${s.day}`)}</span>
-                                    {isEditingSchedule ? (
-                                        <div className="flex items-center gap-2">
-                                            <input type="time" value={s.openTime} onChange={(e) => handleUpdateSchedule(s.day, s.isOpen, e.target.value, s.closeTime)} className="text-xs bg-slate-50 border-none rounded p-1" />
-                                            <span className="text-slate-300">-</span>
-                                            <input type="time" value={s.closeTime} onChange={(e) => handleUpdateSchedule(s.day, s.isOpen, s.openTime, e.target.value)} className="text-xs bg-slate-50 border-none rounded p-1" />
-                                            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleUpdateSchedule(s.day, !s.isOpen, s.openTime, s.closeTime)}>
-                                                {s.isOpen ? <ToggleRight className="text-forest" size={22} /> : <ToggleLeft className="text-slate-300" size={22} />}
-                                            </motion.button>
-                                        </div>
-                                    ) : (
-                                        <span className={`text-sm font-black ${s.isOpen ? 'text-forest' : 'text-slate-300'}`}>
-                                            {s.isOpen ? `${s.openTime} - ${s.closeTime}` : t('closed')}
-                                        </span>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                {/* FARM DETAILS & SCHEDULE MOVED TO 'Mijn Boerderij' PAGE */}
             </div>
         </motion.div>
     );

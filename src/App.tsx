@@ -42,6 +42,7 @@ import { AboutPage } from './pages/AboutPage';
 import { SupportPage } from './pages/SupportPage';
 import { FarmerDashboard } from './pages/FarmerDashboard';
 import { VendingPage } from './pages/VendingPage';
+import { MyFarmPage } from './pages/MyFarmPage';
 import { InventoryPage } from './pages/InventoryPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { AdminPage } from './pages/AdminPage';
@@ -450,6 +451,34 @@ const App: React.FC = () => {
   // --- Actions ---
 
   // Track farm views
+  const handleUpdateFarm = async (updatedFarm: Farm) => {
+    setFarms(prev => prev.map(f => f.id === updatedFarm.id ? updatedFarm : f));
+
+    try {
+      const rawUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms?id=eq.${updatedFarm.id}`;
+      await fetch(rawUrl, {
+        method: 'PATCH',
+        headers: {
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          name: updatedFarm.name,
+          phone: updatedFarm.phone,
+          heeft_automaat: updatedFarm.heeft_automaat,
+          automaat_adres: updatedFarm.automaat_adres,
+          schedule: updatedFarm.schedule,
+          products: updatedFarm.products,
+          statusUpdate: updatedFarm.statusUpdate
+        })
+      });
+    } catch (err) {
+      console.error('Error updating farm:', err);
+    }
+  };
+
   const handleSetDetailFarm = async (farm: Farm | null) => {
     if (farm) {
       // Fire and forget stats update
@@ -760,6 +789,7 @@ const App: React.FC = () => {
             handleRouteClick={handleRouteClick}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            userProfile={userProfile}
           />
         )}
         {view === 'favorites' && (
@@ -788,6 +818,7 @@ const App: React.FC = () => {
             t={t}
             farms={farms}
             setFarms={setFarms}
+            onUpdateFarm={handleUpdateFarm}
             userProfile={userProfile}
             setUserProfile={setUserProfile}
             fetchHarvestAdvice={fetchHarvestAdvice}
@@ -814,6 +845,18 @@ const App: React.FC = () => {
             setView={setView}
             farms={farms}
             setFarms={setFarms}
+            onUpdateFarm={handleUpdateFarm}
+            showToast={showToast}
+            userProfile={userProfile}
+          />
+        )}
+        {view === 'my_farm' && (
+          <MyFarmPage
+            t={t}
+            setView={setView}
+            farms={farms}
+            setFarms={setFarms}
+            onUpdateFarm={handleUpdateFarm}
             showToast={showToast}
             userProfile={userProfile}
           />
