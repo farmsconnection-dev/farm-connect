@@ -426,17 +426,18 @@ const App: React.FC = () => {
         setIsMenuOpen(false);
         setIsAuthLoading(false);
       } else if (event === 'SIGNED_OUT') {
-        // Clear guest mode if we are intentionally signing out
-        if (isGuestModeRef.current) {
+        const stillGuest = localStorage.getItem('guest_mode') === 'true';
+        if (stillGuest) {
+          setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+          setUserType('guest');
+        } else {
           isGuestModeRef.current = false;
+          setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+          setUserType(null);
+          setView('landing');
+          localStorage.removeItem('pendingRole');
+          localStorage.removeItem('guest_mode');
         }
-
-        // Always reset to landing on explicit sign out
-        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-        setUserType(null);
-        setView('landing');
-        localStorage.removeItem('pendingRole');
-        localStorage.removeItem('guest_mode');
       }
     });
 
