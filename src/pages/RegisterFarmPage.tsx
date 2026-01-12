@@ -19,7 +19,8 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
         address: '',
         phone: '',
         lat: 50.8503,
-        lng: 4.3517
+        lng: 4.3517,
+        heeft_automaat: false
     });
     const addressInputRef = useRef<HTMLInputElement>(null);
     const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -90,8 +91,10 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                     phone: formData.phone, // Optional
                     lat: formData.lat,
                     lng: formData.lng,
+                    lng: formData.lng,
                     owner_email: email,
-                    owner_id: userId, // Critical for RLS and consistency
+                    owner_id: userId,
+                    heeft_automaat: formData.heeft_automaat,
                     is_verified: false, // Default false, needs approval
                     products: [],
                     status_update: { status: 'open', message: 'Welkom bij Farm Connect' }
@@ -182,6 +185,16 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                 className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-emerald-500 focus:outline-none font-bold text-slate-700"
                                 placeholder="Op welk nummer kunnen we je bereiken?"
                             />
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 bg-white/50 p-4 rounded-2xl border-2 border-emerald-100 cursor-pointer hover:bg-emerald-50 transition-colors" onClick={() => setFormData({ ...formData, heeft_automaat: !formData.heeft_automaat })}>
+                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${formData.heeft_automaat ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-300'}`}>
+                            {formData.heeft_automaat && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
+                        </div>
+                        <div className="flex-1">
+                            <p className="text-sm font-black text-slate-700">Ik heb een automaat (24/7)</p>
+                            <p className="text-xs text-slate-400 font-medium">Klanten kunnen ook buiten openingsuren kopen</p>
                         </div>
                     </div>
 

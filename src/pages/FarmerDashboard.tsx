@@ -113,6 +113,30 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
         setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, phone: val } : f));
     };
 
+    const handleUpdateVendingMachine = async (checked: boolean) => {
+        if (!myFarm) return;
+
+        // Optimistic UI update
+        setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, heeft_automaat: checked } : f));
+
+        // Real DB update
+        try {
+            const { error } = await supabase
+                .from('farms')
+                .update({ heeft_automaat: checked })
+                .eq('id', myFarm.id);
+
+            if (error) {
+                console.error('Error updating vending machine:', error);
+                showToast('Fout bij opslaan');
+            } else {
+                showToast(t('save'));
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     const handleUpdateSchedule = (day: string, isOpen: boolean, o: string, c: string) => {
         if (!myFarm) return;
         setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, schedule: f.schedule?.map(s => s.day === day ? { ...s, isOpen, openTime: o, closeTime: c } : s) } : f));
@@ -516,6 +540,26 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                             </div>
                             {/* Address edit hint */}
                             {isEditingFarm && <p className="text-[10px] text-slate-400 italic mt-1 ml-2">Adres wijzigen kan via support.</p>}
+                        </div>
+
+                        {/* VENDING MACHINE TOGGLE */}
+                        <div className="space-y-2 flex flex-col justify-center">
+                            <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Verkoopautomaat (24/7)</label>
+                            <div className="flex items-center gap-4 bg-slate-50 p-2.5 rounded-2xl border border-transparent">
+                                <div className={`p-2 rounded-xl transition-colors ${myFarm?.heeft_automaat ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-200 text-slate-400'}`}>
+                                    <Box size={20} />
+                                </div>
+                                <div className="flex-1">
+                                    <p className={`text-sm font-bold ${myFarm?.heeft_automaat ? 'text-emerald-900' : 'text-slate-500'}`}>
+                                        {myFarm?.heeft_automaat ? 'Actief' : 'Geen automaat'}
+                                    </p>
+                                </div>
+                                {isEditingFarm && (
+                                    <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => handleUpdateVendingMachine(!myFarm?.heeft_automaat)}>
+                                        {myFarm?.heeft_automaat ? <ToggleRight className="text-forest" size={28} /> : <ToggleLeft className="text-slate-300" size={28} />}
+                                    </motion.button>
+                                )}
+                            </div>
                         </div>
                     </div>
 
