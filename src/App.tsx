@@ -466,12 +466,14 @@ const App: React.FC = () => {
         },
         body: JSON.stringify({
           name: updatedFarm.name,
-          phone: updatedFarm.phone,
+          phone: updatedFarm.phone || updatedFarm.telefoonnummer,
           heeft_automaat: updatedFarm.heeft_automaat,
           automaat_adres: updatedFarm.automaat_adres,
           schedule: updatedFarm.schedule,
           products: updatedFarm.products,
-          statusUpdate: updatedFarm.statusUpdate
+          statusUpdate: updatedFarm.statusUpdate,
+          image: updatedFarm.image,
+          address: updatedFarm.address
         })
       });
     } catch (err) {
