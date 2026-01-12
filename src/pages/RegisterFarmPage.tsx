@@ -127,21 +127,32 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                 insertData.automaat_adres = formData.automaat_adres;
             }
 
-            console.log('🚀 Starting Supabase insert now...', insertData);
+            console.log('🚀 Starting Supabase RAW FETCH insert...', insertData);
 
-            // REMOVED .select() to prevent hanging on RLS return checks
-            const { error } = await supabase
-                .from('farms')
-                .insert(insertData);
+            // GEBRUIK RAW FETCH OM CLIENT ISSUES TE OMZEILEN
+            // Dit is de meest robuuste manier om data op te slaan als de client hangt
+            const restUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms`;
 
-            console.log('🏁 Supabase insert finished. Error:', error);
+            const response = await fetch(restUrl, {
+                method: 'POST',
+                headers: {
+                    'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+                    'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal' // We hoeven geen data terug, alleen status 201
+                },
+                body: JSON.stringify(insertData)
+            });
 
-            if (error) {
-                console.error('❌ Supabase error object:', error);
-                throw error;
+            console.log('🏁 Raw Fetch status:', response.status);
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('❌ Raw Fetch Error Body:', errorText);
+                throw new Error(`Server reageerde met status ${response.status}: ${errorText}`);
             }
 
-            console.log('✅ Farm registered successfully (no data return needed)');
+            console.log('✅ Farm registered successfully via Raw Fetch!');
             onSuccess();
 
         } catch (err: any) {
