@@ -54,7 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             const farmerItems = [
                 { id: 'farmer', label: 'Dashboard', icon: <TrendingUp size={20} /> },
                 { id: 'my_farm', label: 'Mijn Boerderij', icon: <Tractor size={20} /> },
-                { id: 'vending', label: 'Mijn Automaat', icon: <Store size={20} /> },
+                { id: 'vending', label: 'Mijn Automaten', icon: <Store size={20} /> },
                 { id: 'inventory', label: t('menu_inventory'), icon: <Box size={20} /> },
                 { id: 'favorites', label: t('menu_favorites'), icon: <Heart size={20} /> },
                 { id: 'referral', label: 'Referral Programma', icon: <Users size={20} />, action: () => setIsReferralModalOpen(true) },

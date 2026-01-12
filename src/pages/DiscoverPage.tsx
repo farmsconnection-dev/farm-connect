@@ -123,7 +123,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                     <div className="absolute inset-y-0 left-3 flex items-center text-slate-400 group-focus-within:text-slate-600"><Search size={16} /></div>
                     <input
                         type="text"
-                        placeholder="Zoek product (bv. Appelen)..."
+                        placeholder={t('search_placeholder')}
                         value={searchQuery}
                         onChange={(e) => {
                             setSearchQuery(e.target.value);
