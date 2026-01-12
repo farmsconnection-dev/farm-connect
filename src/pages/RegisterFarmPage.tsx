@@ -98,15 +98,23 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
         }, 15000);
 
         try {
-            const { error } = await supabase
+            console.log('🚜 Submitting farm registration...', {
+                name: formData.name,
+                address: formData.address,
+                authEmail: email, // from props (logged in user)
+                formEmail: formData.email,
+                userId
+            });
+
+            const { data, error } = await supabase
                 .from('farms')
                 .insert({
                     name: formData.name,
                     address: formData.address,
-                    phone: formData.phone,
+                    phone: formData.phone || formData.email, // Use form email as contact if no phone
                     lat: formData.lat,
                     lng: formData.lng,
-                    owner_email: formData.email,
+                    owner_email: email, // CRITICAL: Use the authenticated user's email (from props), not form email!
                     owner_id: userId,
                     heeft_automaat: formData.heeft_automaat,
                     automaat_locatie: formData.heeft_automaat ? formData.automaat_locatie : null,
@@ -114,18 +122,33 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                     is_verified: false,
                     products: [],
                     status_update: { status: 'open', message: 'Welkom bij Farm Connect' }
-                });
+                })
+                .select();
 
             clearTimeout(timeout);
 
-            if (error) throw error;
+            if (error) {
+                console.error('❌ Supabase error:', error);
+                throw error;
+            }
 
+            console.log('✅ Farm registered successfully:', data);
             onSuccess();
 
         } catch (err: any) {
             clearTimeout(timeout);
-            console.error('Error registering farm:', err);
-            alert(`Er ging iets mis: ${err.message || 'Onbekende fout'}`);
+            console.error('❌ Error registering farm:', err);
+            console.error('Error details:', JSON.stringify(err, null, 2));
+
+            // More helpful error messages
+            let errorMessage = err.message || 'Onbekende fout';
+            if (err.code === '42501' || err.message?.includes('policy')) {
+                errorMessage = 'Toegang geweigerd. Zorg dat je bent ingelogd met hetzelfde e-mailadres.';
+            } else if (err.code === '23505') {
+                errorMessage = 'Deze boerderij bestaat al.';
+            }
+
+            alert(`Er ging iets mis: ${errorMessage}`);
         } finally {
             setLoading(false);
         }
