@@ -127,21 +127,21 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                 insertData.automaat_adres = formData.automaat_adres;
             }
 
-            console.log('📦 Insert data:', insertData);
+            console.log('🚀 Starting Supabase insert now...', insertData);
 
-            const { data, error } = await supabase
+            // REMOVED .select() to prevent hanging on RLS return checks
+            const { error } = await supabase
                 .from('farms')
-                .insert(insertData)
-                .select();
+                .insert(insertData);
 
-            clearTimeout(timeout);
+            console.log('🏁 Supabase insert finished. Error:', error);
 
             if (error) {
-                console.error('❌ Supabase error:', error);
+                console.error('❌ Supabase error object:', error);
                 throw error;
             }
 
-            console.log('✅ Farm registered successfully:', data);
+            console.log('✅ Farm registered successfully (no data return needed)');
             onSuccess();
 
         } catch (err: any) {
