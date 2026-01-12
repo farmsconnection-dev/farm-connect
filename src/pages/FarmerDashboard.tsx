@@ -192,8 +192,8 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         </div>
 
                         <div className="flex-1 text-center md:text-left">
-                            <h1 className="text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-lg">{userProfile.name}</h1>
-                            <p className="text-emerald-200 font-medium mb-6">{userProfile.email}</p>
+                            <h1 className="text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-lg">Welkom op Farm Connect! 👋</h1>
+                            <p className="text-emerald-100 text-lg font-medium mb-6 max-w-2xl leading-relaxed">Bedankt dat je deel uitmaakt van dit initiatief. Samen maken we een vuist voor eerlijke prijzen en kortere ketens.</p>
 
                             <div className="grid grid-cols-3 gap-4 max-w-md mx-auto md:mx-0">
                                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10">
@@ -220,7 +220,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                             onClick={() => setIsAddFarmOpen(true)}
                             className="bg-white text-forest px-8 py-4 rounded-2xl font-black uppercase tracking-wide shadow-xl flex items-center gap-2 whitespace-nowrap"
                         >
-                            <Store size={20} /> {t('btn_register_farm')}
+                            <Store size={20} /> Registreer mijn boerderij
                         </motion.button>
                     </div>
                 </div>
@@ -231,6 +231,24 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
             {/* MAIN CONTENT */}
             <div className="max-w-6xl mx-auto px-4 sm:px-8 w-full space-y-8">
+
+                {/* NO FARM BANNER */}
+                {myFarm?.id === '1' && (
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative bg-gradient-to-r from-emerald-600 to-emerald-800 p-8 rounded-3xl shadow-xl overflow-hidden border border-emerald-500/30">
+                        <div className="relative z-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+                            <div className="bg-white/20 p-4 rounded-full backdrop-blur-sm">
+                                <MapPin size={32} className="text-emerald-100" />
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-xl font-black text-white mb-2">Je hebt nog geen boerderij geregistreerd</h3>
+                                <p className="text-emerald-100/90 text-lg">Zet jezelf vandaag nog op de kaart en laat de buurt zien waar hun eten vandaan komt!</p>
+                            </div>
+                            <button onClick={() => setIsAddFarmOpen(true)} className="bg-white text-emerald-800 px-6 py-3 rounded-xl font-black uppercase text-sm shadow-lg hover:bg-emerald-50 transition-colors">
+                                Registreer Nu
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
 
                 {/* VERIFICATION PENDING BANNER */}
                 {!isVerified && (
