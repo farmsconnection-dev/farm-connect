@@ -13,9 +13,10 @@ interface InventoryPageProps {
     setFarms: React.Dispatch<React.SetStateAction<Farm[]>>;
     showToast: (msg: string) => void;
     setSelectedImage: (img: string | null) => void;
+    userProfile: { id?: string }; // Simplified UserProfile
 }
 
-export const InventoryPage: React.FC<InventoryPageProps> = ({ t, setView, farms, setFarms, showToast, setSelectedImage }) => {
+export const InventoryPage: React.FC<InventoryPageProps> = ({ t, setView, farms, setFarms, showToast, setSelectedImage, userProfile }) => {
     const [newProductName, setNewProductName] = useState('');
     const [newProductPrice, setNewProductPrice] = useState('');
     const [newProductUnit, setNewProductUnit] = useState('/kg');
@@ -26,8 +27,8 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ t, setView, farms,
 
     const productImgInputRef = useRef<HTMLInputElement>(null);
 
-    // Assuming logged in farmer is ID '1'
-    const myFarm = farms.find(f => f.id === '1');
+    // Select correct farm by owner ID (User's farm)
+    const myFarm = farms.find(f => f.owner_id === userProfile.id);
     const farmerProducts = myFarm?.products || [];
 
     const handleSmartProductInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +77,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ t, setView, farms,
         };
 
         setFarms(currentFarms => currentFarms.map(farm => {
-            if (farm.id === '1') {
+            if (myFarm && farm.id === myFarm.id) {
                 return { ...farm, products: [newProduct, ...farm.products] };
             }
             return farm;
@@ -88,7 +89,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ t, setView, farms,
 
     const toggleProductAvailability = (pid: string) => {
         setFarms(currentFarms => currentFarms.map(farm => {
-            if (farm.id === '1') {
+            if (myFarm && farm.id === myFarm.id) {
                 return {
                     ...farm,
                     products: farm.products.map(p => p.id === pid ? { ...p, available: !p.available } : p)
@@ -101,7 +102,7 @@ export const InventoryPage: React.FC<InventoryPageProps> = ({ t, setView, farms,
 
     const deleteProduct = (pid: string) => {
         setFarms(currentFarms => currentFarms.map(farm => {
-            if (farm.id === '1') {
+            if (myFarm && farm.id === myFarm.id) {
                 return { ...farm, products: farm.products.filter(p => p.id !== pid) };
             }
             return farm;

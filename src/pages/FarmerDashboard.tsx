@@ -34,10 +34,16 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
         conversion: '7.2%' // Simulated
     });
 
-    // INTELLIGENT FARM SELECTION
-    // Prioritize a farm that is NOT the demo farm '1' (assuming it's the user's new farm)
-    // Fallback to farm '1' (demo) if no other farm exists.
-    const myFarm = farms.filter(f => f.id !== '1').pop() || farms.find(f => f.id === '1');
+    // INTELLIGENT FARM SELECTION - STRICT OWNERSHIP
+    // We selecteren ALLEEN de farm die matcht met de ingelogde user ID.
+    // Als de farms nog niet geladen zijn, geven we null terug (geen demo data fallback!)
+    const myFarm = farms.find(f => f.owner_id === userProfile.id);
+
+    // Debug
+    useEffect(() => {
+        console.log("🚜 FarmerDashboard Active Farm:", myFarm);
+        console.log("👤 User ID:", userProfile.id);
+    }, [myFarm, userProfile.id]);
 
     useEffect(() => {
         const fetchStats = async () => {

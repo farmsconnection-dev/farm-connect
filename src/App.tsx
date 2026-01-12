@@ -804,6 +804,7 @@ const App: React.FC = () => {
             setFarms={setFarms}
             showToast={showToast}
             setSelectedImage={setSelectedImage}
+            userProfile={userProfile}
           />
         )}
         {view === 'verification_pending' && (

@@ -51,6 +51,7 @@ export interface Farm {
   };
   heeft_automaat?: boolean; // 24/7 vending machine
   is_verified?: boolean; // Admin verification
+  owner_id?: string;
 }
 
 export interface UserProfile {
