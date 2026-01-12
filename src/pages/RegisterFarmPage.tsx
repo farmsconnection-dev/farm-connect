@@ -28,6 +28,8 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
     });
     const addressInputRef = useRef<HTMLInputElement>(null);
     const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+    const automaatAddressInputRef = useRef<HTMLInputElement>(null);
+    const automaatAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
     // Initialize Google Places Autocomplete
     useEffect(() => {
@@ -253,12 +255,14 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                 {formData.automaat_locatie === 'anders' && (
                                     <div className="mt-2">
                                         <input
+                                            ref={automaatAddressInputRef}
                                             type="text"
                                             value={formData.automaat_adres || ''}
                                             onChange={e => setFormData({ ...formData, automaat_adres: e.target.value })}
                                             className="w-full px-4 py-3 bg-slate-50 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:outline-none font-bold text-slate-700 text-sm"
-                                            placeholder="Vul het adres van de automaat in..."
+                                            placeholder="Begin met typen voor suggesties..."
                                         />
+                                        <p className="text-xs text-emerald-600 mt-1">📍 Selecteer een adres uit de suggesties</p>
                                     </div>
                                 )}
                             </div>
