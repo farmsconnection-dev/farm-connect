@@ -48,9 +48,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 { id: 'calendar', label: t('menu_calendar'), icon: <Calendar size={20} />, action: () => setIsSeasonCalendarOpen(true) },
                 ...common
             ];
-            // Add admin at the end if user is admin
             if (isAdmin) {
                 farmerItems.push({ id: 'admin', label: 'Admin', icon: <ShieldCheck size={20} /> });
+                farmerItems.push({ id: 'admin_prospects', label: 'Prospects', icon: <Users size={20} /> });
             }
             return farmerItems;
         }

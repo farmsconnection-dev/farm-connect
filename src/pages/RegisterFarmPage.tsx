@@ -10,12 +10,13 @@ interface RegisterFarmPageProps {
     onSuccess: () => void;
     onLogout: () => void;
     lang: string;
+    initialName?: string; // New prop for claim link
 }
 
-export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userId, onSuccess, onLogout }) => {
+export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userId, onSuccess, onLogout, initialName = '' }) => {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        name: '',
+        name: initialName, // Pre-fill name
         address: '',
         phone: '',
         lat: 50.8503,

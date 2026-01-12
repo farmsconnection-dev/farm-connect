@@ -44,6 +44,7 @@ import { FarmerDashboard } from './pages/FarmerDashboard';
 import { InventoryPage } from './pages/InventoryPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { AdminPage } from './pages/AdminPage';
+import { AdminProspectsPage } from './pages/AdminProspectsPage';
 import { VerificationPendingPage } from './pages/VerificationPendingPage';
 import { RegisterFarmPage } from './pages/RegisterFarmPage';
 
@@ -111,6 +112,38 @@ const App: React.FC = () => {
 
   const [toast, setToast] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [claimName, setClaimName] = useState('');
+
+  // Handle Claim Link Logic
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name') || params.get('claim_name');
+
+    if (name) {
+      console.log('🔗 Claim detected:', name);
+      setClaimName(name);
+      localStorage.setItem('claim_name', name);
+      localStorage.setItem('pendingRole', 'farmer'); // Force farmer flow
+      setPendingRole('farmer');
+
+      if (!userProfile.isLoggedIn) {
+        setIsAuthModalOpen(true); // Prompt login
+        showToast(`Welkom ${name}! Log in om je profiel te claimen.`);
+      }
+    } else {
+      // Check local storage if we lost params due to redirect
+      const stored = localStorage.getItem('claim_name');
+      if (stored) setClaimName(stored);
+    }
+  }, [userProfile.isLoggedIn]);
+
+  // Redirect to register after login if claim exists
+  useEffect(() => {
+    if (userProfile.isLoggedIn && claimName && view !== 'register_farm' && userType !== 'farmer') {
+      setView('register_farm');
+    }
+  }, [userProfile.isLoggedIn, claimName, view, userType]);
+
   const [detailFarm, setDetailFarm] = useState<Farm | null>(null);
   const [factModalProduct, setFactModalProduct] = useState<string | null>(null);
   const [pendingRole, setPendingRole] = useState<'discoverer' | 'farmer' | null>(() => {
@@ -727,6 +760,7 @@ const App: React.FC = () => {
             onSuccess={() => checkFarmerVerification(userProfile.email)}
             onLogout={handleLogout}
             lang={lang}
+            initialName={claimName}
           />
         )}
         {view === 'admin' && (
@@ -735,6 +769,12 @@ const App: React.FC = () => {
             farms={farms}
             setFarms={setFarms}
             userEmail={userProfile.email}
+            showToast={showToast}
+          />
+        )}
+        {view === 'admin_prospects' && (
+          <AdminProspectsPage
+            onBack={() => setView('admin')}
             showToast={showToast}
           />
         )}
