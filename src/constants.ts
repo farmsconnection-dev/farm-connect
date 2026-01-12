@@ -770,14 +770,14 @@ export const INITIAL_FARMS: Farm[] = [
     joinedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
     followerCount: 142,
     products: [
-      { id: 'p1', name: 'Aardappelen', available: true, category: 'vegetables', image: '/products/aardappelen.jpg', price: '2.50', unit: 'kg' },
+      { id: 'p1', name: 'Aardappelen', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1518977676601-b53f02bad673?auto=format&fit=crop&q=80&w=400', price: '2.50', unit: 'kg' },
       { id: 'p2', name: 'Eieren', available: true, category: 'eggs', image: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&q=80&w=400', price: '3.00', unit: 'doos (6)' },
       { id: 'p4', name: 'Melk', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400', price: '1.50', unit: 'l' },
-      { id: 'p5', name: 'Prei', available: true, category: 'vegetables', image: '/products/prei.jpg', price: '1.20', unit: 'bussel' },
-      { id: 'p6', name: 'Broccoli', available: true, category: 'vegetables', image: '/products/broccoli.png', price: '1.80', unit: 'stuk' },
+      { id: 'p5', name: 'Prei', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1506364020200-3f1d277f0383?auto=format&fit=crop&q=80&w=400', price: '1.20', unit: 'bussel' },
+      { id: 'p6', name: 'Broccoli', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1459411621453-7b03977f4bbe?auto=format&fit=crop&q=80&w=400', price: '1.80', unit: 'stuk' },
       { id: 'p11', name: 'Wortelen', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=400', price: '1.50', unit: 'bussel' },
       { id: 'p12', name: 'Uien', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?auto=format&fit=crop&q=80&w=400', price: '1.00', unit: 'kg' },
-      { id: 'p13', name: 'Pompoen', available: true, category: 'vegetables', image: '/products/pompoen.png', price: '3.00', unit: 'stuk' }
+      { id: 'p13', name: 'Pompoen', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1506806732259-39c2d4ad68b9?auto=format&fit=crop&q=80&w=400', price: '3.00', unit: 'stuk' }
     ],
     paymentMethods: ['cash', 'payconiq'],
     lastStockUpdate: new Date().toISOString()
@@ -810,7 +810,7 @@ export const INITIAL_FARMS: Farm[] = [
       },
       { id: 'p7', name: 'Kersen', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1528821128474-27f963b062bf?auto=format&fit=crop&q=80&w=400', price: '6.00', unit: 'kg' },
       { id: 'p8', name: 'Rundvlees', available: true, category: 'meat', image: 'https://images.unsplash.com/photo-1551028150-64b9f398f678?auto=format&fit=crop&q=80&w=400', price: '15.00', unit: 'kg' },
-      { id: 'p9', name: 'Kipfilet', available: true, category: 'meat', image: '/products/kipfilet.jpg', price: '12.00', unit: 'kg' },
+      { id: 'p9', name: 'Kipfilet', available: true, category: 'meat', image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&q=80&w=400', price: '12.00', unit: 'kg' },
       { id: 'p10', name: 'Aardbeien', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1464965911861-746a04b4b0ae?auto=format&fit=crop&q=80&w=400', price: '4.50', unit: '500g' }
     ],
     paymentMethods: ['cash'],
@@ -934,8 +934,8 @@ export const INITIAL_FARMS: Farm[] = [
     ],
     products: [
       { id: 'p71', name: 'Appels', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&q=80&w=400', price: '2.50', unit: '/kg' },
-      { id: 'p72', name: 'Peren', available: true, category: 'fruit', image: '/products/peren.jpg', price: '3.00', unit: '/kg' },
-      { id: 'p73', name: 'Aardbeien', available: true, category: 'fruit', image: '/src/assets/aardbeien.jpg', price: '5.00', unit: '/kg' },
+      { id: 'p72', name: 'Peren', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1514756331096-242f390ef2a5?auto=format&fit=crop&q=80&w=400', price: '3.00', unit: '/kg' },
+      { id: 'p73', name: 'Aardbeien', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1464965911861-746a04b4b0ae?auto=format&fit=crop&q=80&w=400', price: '5.00', unit: '/kg' },
       { id: 'p74', name: 'Frambozen', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1577069861033-55d04cec4ef5?auto=format&fit=crop&q=80&w=400', price: '7.00', unit: '/kg' },
       { id: 'p75', name: 'Kersen', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1528821128474-27f963b062bf?auto=format&fit=crop&q=80&w=400', price: '6.50', unit: '/kg' }
     ],
@@ -965,7 +965,7 @@ export const INITIAL_FARMS: Farm[] = [
       { id: 'p82', name: 'Komkommers', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?auto=format&fit=crop&q=80&w=400', price: '1.50', unit: '/st.' },
       { id: 'p83', name: 'Paprika', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&q=80&w=400', price: '2.00', unit: '/st.' },
       { id: 'p84', name: 'Sla', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1622206151226-18ca2c958a2f?auto=format&fit=crop&q=80&w=400', price: '1.20', unit: '/st.' },
-      { id: 'p85', name: 'Broccoli', available: true, category: 'vegetables', image: '/products/broccoli.png', price: '2.50', unit: '/st.' }
+      { id: 'p85', name: 'Broccoli', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1459411621453-7b03977f4bbe?auto=format&fit=crop&q=80&w=400', price: '2.50', unit: '/st.' }
     ],
     paymentMethods: ['cash', 'payconiq'],
     lastStockUpdate: new Date().toISOString(),
@@ -990,7 +990,7 @@ export const INITIAL_FARMS: Farm[] = [
     ],
     products: [
       { id: 'p91', name: 'Bio Wortelen', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=400', price: '2.80', unit: '/kg' },
-      { id: 'p92', name: 'Bio Aardappelen', available: true, category: 'vegetables', image: '/products/aardappelen.jpg', price: '2.20', unit: '/kg' },
+      { id: 'p92', name: 'Bio Aardappelen', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1518977676601-b53f02bad673?auto=format&fit=crop&q=80&w=400', price: '2.20', unit: '/kg' },
       { id: 'p93', name: 'Bio Eieren', available: true, category: 'eggs', image: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&q=80&w=400', price: '5.00', unit: '/doos' },
       { id: 'p94', name: 'Bio Melk', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400', price: '1.80', unit: '/liter' }
     ],
@@ -1018,7 +1018,7 @@ export const INITIAL_FARMS: Farm[] = [
     products: [
       { id: 'p101', name: 'Witte Asperges', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1515471209610-dae1c92d8777?auto=format&fit=crop&q=80&w=400', price: '12.00', unit: '/kg' },
       { id: 'p102', name: 'Groene Asperges', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=400', price: '8.00', unit: '/kg' },
-      { id: 'p103', name: 'Aardbeien', available: true, category: 'fruit', image: '/src/assets/aardbeien.jpg', price: '4.80', unit: '/kg' }
+      { id: 'p103', name: 'Aardbeien', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1464965911861-746a04b4b0ae?auto=format&fit=crop&q=80&w=400', price: '4.80', unit: '/kg' }
     ],
     paymentMethods: ['cash'],
     lastStockUpdate: new Date().toISOString(),
@@ -1069,7 +1069,7 @@ export const INITIAL_FARMS: Farm[] = [
       { day: 'zondag', isOpen: true, openTime: '10:00', closeTime: '17:00' }
     ],
     products: [
-      { id: 'p121', name: 'Pompoenen', available: true, category: 'vegetables', image: '/products/pompoen.png', price: '3.00', unit: '/st.' },
+      { id: 'p121', name: 'Pompoenen', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1506806732259-39c2d4ad68b9?auto=format&fit=crop&q=80&w=400', price: '3.00', unit: '/st.' },
       { id: 'p122', name: 'Courgettes', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1561856618-cce7c59c3d89?auto=format&fit=crop&q=80&w=400', price: '2.20', unit: '/kg' },
       { id: 'p123', name: 'Uien', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?auto=format&fit=crop&q=80&w=400', price: '1.80', unit: '/kg' }
     ],
@@ -1099,7 +1099,7 @@ export const INITIAL_FARMS: Farm[] = [
       { id: 'p132', name: 'Appels', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&q=80&w=400', price: '2.30', unit: '/kg' },
       { id: 'p133', name: 'Eieren', available: true, category: 'eggs', image: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&q=80&w=400', price: '3.80', unit: '/doos' },
       { id: 'p134', name: 'Verse Melk', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400', price: '1.40', unit: '/liter' },
-      { id: 'p135', name: 'Kippenvlees', available: true, category: 'meat', image: '/products/kipfilet.jpg', price: '11.00', unit: '/kg' }
+      { id: 'p135', name: 'Kippenvlees', available: true, category: 'meat', image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&q=80&w=400', price: '11.00', unit: '/kg' }
     ],
     paymentMethods: ['cash', 'payconiq'],
     lastStockUpdate: new Date().toISOString(),
@@ -1189,7 +1189,7 @@ export const INITIAL_FARMS: Farm[] = [
     products: [
       { id: 'p181', name: 'Witte Asperges', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1529566652340-2b3e0fca2d66?auto=format&fit=crop&q=80&w=400', price: '12.00', unit: '/kg' },
       { id: 'p182', name: 'Groene Asperges', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&q=80&w=400', price: '8.50', unit: '/kg' },
-      { id: 'p183', name: 'Aardappelen', available: true, category: 'vegetables', image: '/products/aardappelen.jpg', price: '2.20', unit: '/kg' }
+      { id: 'p183', name: 'Aardappelen', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1518977676601-b53f02bad673?auto=format&fit=crop&q=80&w=400', price: '2.20', unit: '/kg' }
     ],
     paymentMethods: ['cash'],
     lastStockUpdate: new Date().toISOString(),
@@ -1404,22 +1404,22 @@ export const PRODUCT_FACTS: Record<string, string> = {
 
 export const SMART_IMAGE_MAP: Record<string, string> = {
   "appels": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&q=80&w=400",
-  "peren": "/products/peren.jpg",
+  "peren": "https://images.unsplash.com/photo-1514756331096-242f390ef2a5?auto=format&fit=crop&q=80&w=400",
   "wortelen": "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=400",
   "kaas": "https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&q=80&w=400",
   "melk": "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400",
   "eieren": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&q=80&w=400",
-  "aardappelen": "/products/aardappelen.jpg",
-  "aardbeien": aardbeienImg,
+  "aardappelen": "https://images.unsplash.com/photo-1518977676601-b53f02bad673?auto=format&fit=crop&q=80&w=400",
+  "aardbeien": "https://images.unsplash.com/photo-1464965911861-746a04b4b0ae?auto=format&fit=crop&q=80&w=400",
   "kersen": "https://images.unsplash.com/photo-1528821128474-27f963b062bf?auto=format&fit=crop&q=80&w=400",
   "tomaten": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=400",
   "komkommer": "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?auto=format&fit=crop&q=80&w=400",
-  "prei": "/products/prei.jpg",
-  "broccoli": "/products/broccoli.png",
-  "pompoen": "/products/pompoen.png",
+  "prei": "https://images.unsplash.com/photo-1506364020200-3f1d277f0383?auto=format&fit=crop&q=80&w=400",
+  "broccoli": "https://images.unsplash.com/photo-1459411621453-7b03977f4bbe?auto=format&fit=crop&q=80&w=400",
+  "pompoen": "https://images.unsplash.com/photo-1506806732259-39c2d4ad68b9?auto=format&fit=crop&q=80&w=400",
   "uien": "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?auto=format&fit=crop&q=80&w=400",
-  "witloof": "/products/witloof.png",
-  "spruitjes": "/products/spruitjes.jpg",
+  "witloof": "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=400",
+  "spruitjes": "https://images.unsplash.com/photo-1438118907704-7718ee9a191a?auto=format&fit=crop&q=80&w=400",
   "asperges": "https://images.unsplash.com/photo-1515471209610-dae1c92d8777?auto=format&fit=crop&q=80&w=400",
   "spinazie": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=400",
   "bloemkool": "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?auto=format&fit=crop&q=80&w=400",
@@ -1430,8 +1430,8 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
 
   "bonen": "https://images.unsplash.com/photo-1566842600175-97dca489844f?auto=format&fit=crop&q=80&w=400",
   "rundvlees": "https://images.unsplash.com/photo-1551028150-64b9f398f678?auto=format&fit=crop&q=80&w=400",
-  "kip": "/products/kipfilet.jpg",
-  "kipfilet": "/products/kipfilet.jpg",
+  "kip": "https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&q=80&w=400",
+  "kipfilet": "https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&q=80&w=400",
   "varkensvlees": "https://images.unsplash.com/photo-1602086389696-ae4a4816e1c0?auto=format&fit=crop&q=80&w=400",
   "sjalot": "https://images.unsplash.com/photo-1589621773682-939de0082645?auto=format&fit=crop&q=80&w=400",
   "courgette": "https://images.unsplash.com/photo-1561856618-cce7c59c3d89?auto=format&fit=crop&q=80&w=400",
