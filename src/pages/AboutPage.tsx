@@ -46,7 +46,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
                                     "De regels zijn absurd. De quota's verstikkend. En de prijzen oneerlijk."
                                 </p>
                                 <p className="text-white/90 text-lg leading-relaxed mb-4">
-                                    Als boerenzoon zag ik van dichtbij hoe de industrie de touwtjes in handen heeft. Zij bepalen de prijs, niet de kwaliteit. Boeren worden gedwongen om groter te worden of te stoppen. De menselijke maat is weg.
+                                    Ik zag van dichtbij hoe de industrie de touwtjes in handen heeft. Zij bepalen de prijs, niet de kwaliteit. Boeren worden gedwongen om groter te worden of te stoppen. De menselijke maat is weg.
                                 </p>
                                 <p className="text-white/90 text-lg leading-relaxed">
                                     Ik startte Farm Connect met één simpele missie: <strong>De macht teruggeven aan de boer.</strong> Door consumenten rechtstreeks te verbinden met de bron, snijden we de industrie eruit. Zo krijgt de boer weer wat hij verdient: respect én een eerlijke prijs.

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import {
   MapPin, Search, Heart, User, Navigation, Menu, X, CheckCircle, Upload, Leaf,
   Store, Compass, LogOut, Map as MapIcon, List as ListIcon, ChevronDown, Trash2,
@@ -65,19 +65,32 @@ const App: React.FC = () => {
   // --- Global State ---
   const [lang, setLang] = useState<Language>('nl');
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const [userType, setUserType] = useState<UserType>(null);
-  const [view, setView] = useState<ViewState>('landing');
+  const [userType, setUserType] = useState<UserType>(() => {
+    return localStorage.getItem('guest_mode') === 'true' ? 'guest' : null;
+  });
+  const [view, setView] = useState<ViewState>(() => {
+    return localStorage.getItem('guest_mode') === 'true' ? 'discover' : 'landing';
+  });
   const [previousView, setPreviousView] = useState<ViewState>('discover');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // Check if we're coming from OAuth redirect (has access_token in URL)
   const [isAuthLoading, setIsAuthLoading] = useState(() =>
     window.location.hash.includes('access_token') || window.location.hash.includes('error')
   );
-  const [userProfile, setUserProfile] = useState<UserProfile>({
-    name: 'Gast Gebruiker',
-    email: '',
-    isLoggedIn: false
+  const [userProfile, setUserProfile] = useState<UserProfile>(() => {
+    const isGuest = localStorage.getItem('guest_mode') === 'true';
+    if (isGuest) {
+      return { name: 'Gast Gebruiker', email: '', isLoggedIn: false };
+    }
+    return {
+      name: 'Gast Gebruiker',
+      email: '',
+      isLoggedIn: false
+    };
   });
+
+  // Ref to track if user explicitly chose Guest mode to prevent auto-login
+  const isGuestModeRef = useRef(false);
 
   // FORCE VIEW LOGIC (Recovery from hanging registration)
   useEffect(() => {
@@ -100,6 +113,16 @@ const App: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [isAuthLoading]);
+
+  // BRUTE FORCE GUEST MODE ENFORCEMENT
+  useEffect(() => {
+    const isGuestPersistent = localStorage.getItem('guest_mode') === 'true';
+    if (isGuestPersistent && userType !== 'guest') {
+      console.log("🛡️ Guest Mode Enforcement: Reverting profile to Guest");
+      setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+      setUserType('guest');
+    }
+  }, [userProfile.name, userType]);
 
   // Farms Data (Single Source of Truth)
   const [farms, setFarms] = useState<Farm[]>(() => {
@@ -307,7 +330,21 @@ const App: React.FC = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('🔐 Auth State Change:', event, session?.user?.email);
 
-      if (session) {
+      // Check if we should be in guest mode
+      const isGuestModePersistent = localStorage.getItem('guest_mode') === 'true';
+
+      // IF GUEST MODE IS ON: Force sign out immediately if a session exists
+      if (session && isGuestModePersistent) {
+        console.log("🛡️ Shield activated: Killing persistent session for Guest");
+        supabase.auth.signOut();
+        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+        setUserType('guest');
+        return;
+      }
+
+      // If user explicitly chose Guest mode (runtime flag), ignore auto-login signals
+      const isGuestMode = isGuestModeRef.current || isGuestModePersistent;
+      if (session && !isGuestMode) {
         const { email, user_metadata } = session.user;
         const name = user_metadata.full_name || email?.split('@')[0] || 'Gebruiker';
         const photoUrl = user_metadata.avatar_url;
@@ -320,33 +357,31 @@ const App: React.FC = () => {
           isLoggedIn: true
         });
 
-        // CRITICAL FIX: Ensure user profile exists in DB to prevent FK errors when creating farm
+        // CRITICAL FIX: Ensure user profile exists in DB
         try {
           await supabase.from('user_profiles').upsert({
             id: session.user.id,
             email: email || '',
             name: name || 'User',
             photo_url: photoUrl,
-            role: 'consumer' // default, will be updated if farmer
+            role: 'consumer'
           });
         } catch (err) {
           console.error('Error syncing profile:', err);
         }
 
-        // Smart Redirect Logic
         if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
-
-          // 0. ADMIN BYPASS
+          // ADMIN BYPASS
           if (email?.toLowerCase() === 'farmsconnection@gmail.com') {
             setUserType('farmer');
             setView('admin');
             setIsAuthModalOpen(false);
             localStorage.removeItem('pendingRole');
-            setIsAuthLoading(false); // CRITICAL FIX: Stop loading spinner
+            localStorage.removeItem('guest_mode');
+            setIsAuthLoading(false);
             return;
           }
 
-          // 1. Check if user is a farmer (has a farm) - USE RAW FETCH FOR RELIABILITY
           try {
             const rawUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms?owner_id=eq.${session.user.id}&select=*`;
             const response = await fetch(rawUrl, {
@@ -358,25 +393,16 @@ const App: React.FC = () => {
 
             if (response.ok) {
               const userFarms = await response.json();
-              console.log("🌾 Raw fetch user farms:", userFarms);
-
               if (userFarms && userFarms.length > 0) {
-                // MERGE MET BESTAANDE FARMS of OVERWRITE?
-                // We voegen de gevonden farm toe aan de lijst of updaten hem
                 setFarms(prev => {
                   const existingIds = new Set(prev.map(f => f.id));
                   const newFarms = userFarms.filter((f: any) => !existingIds.has(f.id));
-                  return [...newFarms, ...prev]; // Zet eigen farm vooraan
+                  return [...newFarms, ...prev];
                 });
-
                 setUserType('farmer');
                 setIsFarmerVerified(userFarms[0].is_verified !== false);
-
-                // Forceer view naar farmer dashboard als we op landing zijn
-                if (view === 'landing') setView('farmer'); // view name aangepast naar 'farmer' (was 'farmer_dashboard' wat niet bestaat in switch?)
-                // Check App.tsx switch: case is 'farmer' (line 751)
+                if (view === 'landing') setView('farmer');
               } else {
-                // Geen farms gevonden
                 const storedRole = localStorage.getItem('pendingRole');
                 if (storedRole === 'farmer') {
                   setUserType('farmer');
@@ -391,11 +417,7 @@ const App: React.FC = () => {
             }
           } catch (fetchErr) {
             console.error("❌ Failed to fetch user farms via raw fetch", fetchErr);
-            // Fallback to minimal logic (if any)
           }
-
-
-
           localStorage.removeItem('pendingRole');
         }
 
@@ -404,10 +426,17 @@ const App: React.FC = () => {
         setIsMenuOpen(false);
         setIsAuthLoading(false);
       } else if (event === 'SIGNED_OUT') {
-        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-        setUserType(null);
-        setView('landing');
-        localStorage.removeItem('pendingRole');
+        // ONLY reset to landing if we are NOT in guest mode
+        if (!isGuestMode) {
+          setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+          setUserType(null);
+          setView('landing');
+          localStorage.removeItem('pendingRole');
+        } else {
+          // Stay as guest, but ensure profile is clean
+          setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+          setUserType('guest');
+        }
       }
     });
 
@@ -455,29 +484,30 @@ const App: React.FC = () => {
     setFarms(prev => prev.map(f => f.id === updatedFarm.id ? updatedFarm : f));
 
     try {
-      const rawUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms?id=eq.${updatedFarm.id}`;
-      await fetch(rawUrl, {
-        method: 'PATCH',
-        headers: {
-          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({
+      const { error } = await supabase
+        .from('farms')
+        .update({
           name: updatedFarm.name,
-          phone: updatedFarm.phone || updatedFarm.telefoonnummer,
+          phone: updatedFarm.phone || (updatedFarm as any).telefoonnummer,
           heeft_automaat: updatedFarm.heeft_automaat,
           automaat_adres: updatedFarm.automaat_adres,
           schedule: updatedFarm.schedule,
           products: updatedFarm.products,
           statusUpdate: updatedFarm.statusUpdate,
           image: updatedFarm.image,
-          address: updatedFarm.address
+          address: updatedFarm.address,
+          subscription: updatedFarm.subscription,
+          extra_automaten: updatedFarm.extra_automaten
         })
-      });
+        .eq('id', updatedFarm.id);
+
+      if (error) {
+        console.error('Supabase update error:', error);
+        throw error;
+      }
     } catch (err) {
       console.error('Error updating farm:', err);
+      showToast('Fout bij opslaan: controleer je internet');
     }
   };
 
@@ -510,13 +540,25 @@ const App: React.FC = () => {
     }, 50);
   };
 
-  const handleGuestContinue = () => {
-    setUserType('discoverer');
+  const handleGuestContinue = async () => {
+    console.log("👤 Choosing Guest Mode...");
+    isGuestModeRef.current = true;
+    localStorage.setItem('guest_mode', 'true');
+    setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+    setUserType('guest');
     setView('discover');
     setIsAuthModalOpen(false);
+
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {
+      console.error("SignOut error:", e);
+    }
   };
 
   const handleLogin = (email: string, name: string) => {
+    isGuestModeRef.current = false; // Reset guest flag
+    localStorage.removeItem('guest_mode'); // Clear persisted preference
     setUserProfile({ name, email, photoUrl: 'https://picsum.photos/id/1005/100/100', isLoggedIn: true });
     if (pendingRole === 'farmer') {
       checkFarmerVerification(email);
@@ -529,7 +571,12 @@ const App: React.FC = () => {
     setIsMenuOpen(false);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (e) { console.error("SignOut error:", e); }
+    // Clean up all state
+    localStorage.removeItem('guest_mode');
     setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
     setUserType(null);
     setView('landing');
@@ -621,7 +668,7 @@ const App: React.FC = () => {
     setIsAiLoading(true);
     setIsAiAdviceModalOpen(true);
     const simulateAi = () => {
-      const tips = [t('tip_1'), t('tip_2'), t('tip_3'), t('tip_4'), t('tip_5'), t('tip_6'), t('tip_7')];
+      const tips = [t('tip_1'), t('tip_2'), t('tip_3'), t('tip_4'), t('tip_5'), t('tip_6'), t('tip_7'), t('tip_8'), t('tip_9'), t('tip_10')];
       setAiAdvice({ suggestions: tips, marketingDescription: "Uw hoeve staat voor pure passie.", dailyTip: tips[0], isSimulated: true });
       setIsAiLoading(false);
     };
@@ -692,8 +739,9 @@ const App: React.FC = () => {
           ) : (
             <motion.button
               onClick={() => {
-                setView('discover');
-                setDetailFarm(null);
+                if (detailFarm) setDetailFarm(null);
+                if (view !== 'discover') setView('discover');
+                else window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
               className="flex items-center group transition-transform active:scale-95 cursor-pointer"
@@ -805,6 +853,7 @@ const App: React.FC = () => {
             handleRouteClick={handleRouteClick}
           />
         )}
+
         {view === 'about' && <AboutPage t={t} setView={setView} />}
         {view === 'support' && (
           <SupportPage
@@ -861,6 +910,7 @@ const App: React.FC = () => {
             onUpdateFarm={handleUpdateFarm}
             showToast={showToast}
             userProfile={userProfile}
+            setIsReferralModalOpen={setIsReferralModalOpen}
           />
         )}
         {view === 'verification_pending' && (

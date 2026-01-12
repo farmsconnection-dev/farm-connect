@@ -32,6 +32,8 @@ export const SupportPage: React.FC<SupportPageProps> = ({ t, setView, previousVi
                                 { q: t('faq_privacy_q'), a: t('faq_privacy_a') },
                                 { q: t('faq_switch_q'), a: t('faq_switch_a') },
                                 { q: t('faq_annual_q'), a: t('faq_annual_a') },
+                                { q: t('faq_extra_machine_q'), a: t('faq_extra_machine_a') },
+                                { q: t('faq_verification_q'), a: t('faq_verification_a') },
                                 { q: t('faq_payments_q'), a: t('faq_payments_a') }
                             ]
                             : [
@@ -39,6 +41,9 @@ export const SupportPage: React.FC<SupportPageProps> = ({ t, setView, previousVi
                                 { q: t('faq_stock_q'), a: t('faq_stock_a') },
                                 { q: t('faq_3_q'), a: t('faq_3_a') },
                                 { q: t('faq_4_q'), a: t('faq_4_a') },
+                                { q: t('faq_costs_q'), a: t('faq_costs_a') },
+                                { q: t('faq_verification_q'), a: t('faq_verification_a') },
+                                { q: t('faq_extra_machine_q'), a: t('faq_extra_machine_a') },
                                 { q: t('faq_order_q'), a: t('faq_order_a') }
                             ]
                         ).map((faq, i) => (

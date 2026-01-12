@@ -62,8 +62,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ t, handleRoleSelect, l
                     </motion.button>
                 </div>
             </div>
-            <div className="absolute bottom-2 left-0 right-0 z-10 text-center opacity-40">
+            <div className="absolute bottom-2 left-0 right-0 z-10 text-center opacity-40 flex flex-col items-center gap-0.5 pb-2">
                 <p className="text-white text-[10px] font-black uppercase tracking-[0.3em]">{t('premium_platform')}</p>
+                <p className="text-white text-[9px] font-bold tracking-wider">© {new Date().getFullYear()} Farm Connect. Alle rechten voorbehouden.</p>
             </div>
         </motion.div>
     );

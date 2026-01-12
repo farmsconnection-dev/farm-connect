@@ -1,7 +1,7 @@
 
 export type Language = 'nl' | 'fr' | 'en' | 'de';
 export type UserType = 'guest' | 'discoverer' | 'farmer' | null;
-export type ViewState = 'landing' | 'discover' | 'farmer' | 'inventory' | 'vending' | 'about' | 'support' | 'favorites' | 'admin' | 'admin_prospects' | 'register_farm' | 'verification_pending' | 'my_farm';
+export type ViewState = 'landing' | 'discover' | 'farmer' | 'inventory' | 'vending' | 'about' | 'support' | 'favorites' | 'admin' | 'admin_prospects' | 'register_farm' | 'verification_pending' | 'my_farm' | 'pricing';
 export type ProductCategory = 'all' | 'nearby' | 'fruit' | 'vegetables' | 'dairy' | 'meat' | 'eggs' | 'honey' | 'nuts' | 'route' | 'no-waste' | 'other';
 
 export interface TranslationDictionary {
@@ -53,6 +53,7 @@ export interface Farm {
   heeft_automaat?: boolean; // 24/7 vending machine
   automaat_adres?: string;
   is_verified?: boolean; // Admin verification
+  extra_automaten?: number;
   owner_id?: string;
 }
 

@@ -5,6 +5,7 @@ import { Users, Share2, TrendingUp, Sparkles, Heart, Eye, Store, Edit2, Upload, 
 import { Farm, UserProfile, DaySchedule } from '../types';
 import { supabase } from '../lib/supabase';
 import { DEFAULT_SCHEDULE } from '../constants';
+import { SubscriptionSection } from '../components/farmer/SubscriptionSection';
 
 interface FarmerDashboardProps {
     t: (key: string) => string;
@@ -404,6 +405,19 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
                     {/* ROUTES & CONVERSION STATS REMOVED (Coming Soon) */}
                 </div>
+
+                {/* SUBSCRIPTION SECTION */}
+                {myFarm && (
+                    <SubscriptionSection
+                        farm={myFarm}
+                        onUpdate={(updates) => {
+                            const updated = { ...myFarm, ...updates };
+                            if (onUpdateFarm) onUpdateFarm(updated);
+                            else setFarms(prev => prev.map(f => f.id === myFarm.id ? updated : f));
+                        }}
+                        showToast={showToast}
+                    />
+                )}
 
                 {/* STATUS UPDATE SECTION */}
                 <div className="bg-white/80 backdrop-blur-xl p-8 rounded-apple shadow-xl border border-white/20">

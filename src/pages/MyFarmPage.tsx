@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Edit2, Save, MapPin, Store, Clock, ToggleLeft, ToggleRight, Loader2, Trash2, Camera } from 'lucide-react';
+import { ArrowLeft, Edit2, Save, MapPin, Store, Clock, ToggleLeft, ToggleRight, Loader2, Trash2, Camera, Sparkles } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Farm, ViewState } from '../types';
 import { DEFAULT_SCHEDULE } from '../constants';
@@ -14,9 +14,10 @@ interface MyFarmPageProps {
     onUpdateFarm?: (farm: Farm) => void;
     showToast: (msg: string) => void;
     userProfile: { id?: string };
+    setIsReferralModalOpen: (open: boolean) => void;
 }
 
-export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFarms, onUpdateFarm, showToast, userProfile }) => {
+export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFarms, onUpdateFarm, showToast, userProfile, setIsReferralModalOpen }) => {
     const myFarm = farms.find(f => f.owner_id === userProfile.id);
 
     const [isEditingFarm, setIsEditingFarm] = useState(false);
@@ -205,9 +206,21 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
                 )}
             </div>
 
-            <div className="p-4 flex justify-center pb-20">
-                <button onClick={handleDeleteFarm} className="flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-200 hover:text-red-100 font-bold transition-all border border-red-500/30 text-sm uppercase tracking-wide">
-                    <Trash2 size={18} />
+            <div className="p-4 flex flex-col items-center justify-center pb-24 gap-6">
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsReferralModalOpen(true)}
+                    className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-400 to-orange-500 text-white font-black rounded-2xl shadow-xl shadow-orange-200 flex items-center justify-center gap-3 uppercase tracking-wide border-b-4 border-orange-600 active:border-b-0 active:translate-y-1 transition-all"
+                >
+                    <Sparkles size={24} className="animate-pulse" /> {t('referral_share_promo') || "Maak mijn boerderij zichtbaar"}
+                </motion.button>
+                <p className="text-slate-400 text-xs font-bold max-w-xs text-center">
+                    Deel je unieke code en ontvang bonussen voor elke nieuwe boerderij die zich aansluit!
+                </p>
+
+                <button onClick={handleDeleteFarm} className="mt-8 flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-red-300 hover:text-red-500 hover:bg-red-50 font-bold transition-all text-[10px] uppercase tracking-widest">
+                    <Trash2 size={14} />
                     Verwijder mijn boerderij
                 </button>
             </div>

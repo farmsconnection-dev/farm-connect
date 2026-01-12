@@ -137,7 +137,7 @@ export const DICTIONARY: TranslationDictionary = {
   phone: { nl: "Telefoonnummer", fr: "Téléphone", en: "Phone Number", de: "Telefonnummer" },
   btn_register_farm: { nl: "+ Nieuwe Boerderij Registreren", fr: "+ Enregistrer une nouvelle ferme", en: "+ Register New Farm", de: "+ Neuen Bauernhof registrieren" },
   faq_costs_q: { nl: "Wat zijn de kosten?", fr: "Quels sont les coûts ?", en: "What are the costs?", de: "Was sind die Kosten?" },
-  faq_costs_a: { nl: "Registratie is gratis. Een premium abonnement kost €10/maand of €100/jaar (Bespaar €20).", fr: "L'inscription est gratuite. L'abonnement premium coûte 10 €/mois ou 100 €/an.", en: "Registration is free. Premium subscription is €10/month or €100/year.", de: "Die Registrierung ist kostenlos. Das Premium-Abonnement kostet 10 €/Monat oder 100 €/Jahr." },
+  faq_costs_a: { nl: "Registratie is gratis. Een premium abonnement kost €10/maand of €80/jaar. Hierbij is 1 boerderij en 1 automaat inbegrepen.", fr: "L'inscription est gratuite. Abonnement premium: 10 €/mois ou 80 €/an (1 ferme + 1 distributeur inclus).", en: "Registration is free. Premium subscription: €10/month or €80/year (1 farm + 1 machine included).", de: "Die Registrierung ist kostenlos. Premium-Abonnement: 10 €/Monat oder 80 €/Jahr (1 Hof + 1 Automat inklusive)." },
   faq_privacy_q: { nl: "Hoe zit het met mijn privacy?", fr: "Et ma vie privée ?", en: "What about my privacy?", de: "Was ist mit meiner Privatsphäre?" },
   faq_privacy_a: { nl: "Wij verkopen nooit uw data aan derden. Al uw gegevens worden beveiligd opgeslagen volgens de GDPR-richtlijnen.", fr: "Nous ne vendons jamais vos données. Conformité RGPD.", en: "We never sell your data. GDPR compliant.", de: "Wir verkaufen Ihre Daten niemals. DSGVO-konform." },
   faq_switch_q: { nl: "Kan ik tussen accounts wisselen?", fr: "Puis-je changer de compte ?", en: "Can I switch accounts?", de: "Kann ich das Konto wechseln?" },
@@ -191,7 +191,7 @@ export const DICTIONARY: TranslationDictionary = {
     de: "Was sind die Vorteile eines Jahresabonnements?"
   },
   faq_annual_a: {
-    nl: "Je betaalt slechts €100 ipv €120 (Bespaar €20), je krijgt voorrang in de zoekresultaten en je kunt onbeperkt verdienen met het referral-systeem.",
+    nl: "Je betaalt slechts €80 ipv €120 (Bespaar €40), je krijgt voorrang in de zoekresultaten en je kunt onbeperkt verdienen met het referral-systeem.",
     fr: "Vous ne payez que 100 € au lieu de 120 € (Économisez 20 €), vous obtenez la priorité dans les résultats et vous pouvez gagner de manière illimitée avec le système de parrainage.",
     en: "You pay only €100 instead of €120 (Save €20), get priority in search results, and can earn unlimitedly with the referral system.",
     de: "Sie zahlen nur 100 € statt 120 € (Sparen Sie 20 €), erhalten Priorität in den Suchergebnissen und können unbegrenzt mit dem Empfehlungssystem verdienen."
@@ -208,6 +208,10 @@ export const DICTIONARY: TranslationDictionary = {
     en: "Customers pay you directly via Payconiq or cash. We do not take any commission on your sales.",
     de: "Die Kunden bezahlen Sie direkt über Payconiq oder bar. Wir erheben keine Provision auf Ihre Verkäufe."
   },
+  faq_extra_machine_q: { nl: "Hoe voeg ik extra automaten toe?", fr: "Comment ajouter des distributeurs ?", en: "How to add extra machines?", de: "Wie füge ich Automaten hinzu?" },
+  faq_extra_machine_a: { nl: "De eerste automaat is inbegrepen bij je abonnement. Pas vanaf de 3e verkooplocatie (extra automaat) betaal je €3/maand (of €2 via jaarplan).", fr: "Le premier distributeur est inclus. Payez à partir du 3ème point de vente.", en: "The first machine is included. Pay from the 3rd sales point.", de: "Der erste Automat ist inbegriffen. Zahlen Sie ab dem 3. Verkaufsstandort." },
+  faq_verification_q: { nl: "Hoe werkt de verificatie?", fr: "Comment fonctionne la vérification ?", en: "How does verification work?", de: "Wie funktioniert die Verifikation?" },
+  faq_verification_a: { nl: "Wij controleren elke boerderij handmatig op echtheid en lokale productie. Alleen échte producenten krijgen toegang tot het platform.", fr: "Nous vérifions chaque ferme manuellement. Seuls les vrais producteurs ont accès.", en: "We verify every farm manually. Only real producers get access.", de: "Wir überprüfen jeden Hof manuell. Nur echte Produzenten erhalten Zugang." },
   login_required_favs: {
     nl: "Log in om je favorieten te bewaren.",
     fr: "Connectez-vous pour enregistrer vos favoris.",
@@ -645,6 +649,75 @@ export const DICTIONARY: TranslationDictionary = {
     fr: "La poire Conférence, aujourd'hui la plus populaire en Belgique, a été développée en 1885 et a remporté un prix lors d'une conférence à Londres - d'où son nom ! Les poires mûrissent de l'intérieur, donc quand l'extérieur est mou, le cœur est souvent déjà trop mûr.\n\n🍐 Astuce : Conservez les poires séparément des pommes - les pommes émettent de l'éthylène qui fait mûrir les poires plus vite !",
     en: "The Conference pear, today the most popular in Belgium, was developed in 1885 and won a prize at a conference in London - hence the name! Pears ripen from the inside out, so when the outside is soft, the core is often already overripe.\n\n🍐 Tip: Store pears separately from apples - apples release ethylene gas which causes pears to ripen faster!",
     de: "Die Conference-Birne, heute die beliebteste in Belgien, wurde 1885 entwickelt und gewann einen Preis auf einer Konferenz in London - daher der Name! Birnen reifen von innen nach außen, wenn also die Außenseite weich ist, ist der Kern oft schon überreif.\n\n🍐 Tipp: Bewahren Sie Birnen getrennt von Äpfeln auf - Äpfel geben Ethylengas ab, das Birnen schneller reifen lässt!"
+  },
+
+  // Product facts - Eieren
+  fact_eieren_title: {
+    nl: "Eieren - Vers van de pers",
+    fr: "Œufs - Frais pondus",
+    en: "Eggs - Freshly laid",
+    de: "Eier - Frisch gelegt"
+  },
+  fact_eieren: {
+    nl: "De kleur van de eierschaal hangt af van het ras, niet de voeding! Kippen met rode oorlellen leggen bruine eieren, witte oorlellen witte. In de winkel zijn eieren vaak weken oud, bij de boer soms nog warm! \n\n🥚 Weetje: Een kip heeft ongeveer 24-26 uur nodig om één ei te maken.",
+    fr: "La couleur de la coquille dépend de la race ! Les poules aux lobes rouges pondent des œufs bruns, les blancs des œufs blancs. Le saviez-vous : Une poule met environ 24-26 heures pour faire un œuf.",
+    en: "Shell color depends on the breed! Red-lobed chickens lay brown eggs, white-lobed lay white. Fact: A chicken takes about 24-26 hours to produce one egg.",
+    de: "Die Schalenfarbe hängt von der Rasse ab! Hühner mit roten Ohrläppchen legen braune Eier, weiße Ohrläppchen weiße. Fakt: Ein Huhn braucht etwa 24-26 Stunden für ein Ei."
+  },
+
+  // Product facts - Courgette
+  fact_courgette_title: {
+    nl: "Courgette - Groene Groeier",
+    fr: "Courgette - Géant Vert",
+    en: "Zucchini - Green Grower",
+    de: "Zucchini - Grüner Riese"
+  },
+  fact_courgette: {
+    nl: "Courgettes groeien razendsnel! In de zomer kan een vrucht wel 2-3 cm per dag groeien. De bloemen (courgettefleurs) zijn ook eetbaar en een delicatesse. Courgette bevat weinig calorieën maar veel vitaminen.",
+    fr: "Les courgettes poussent très vite ! En été, un fruit peut grandir de 2-3 cm par jour. Les fleurs sont aussi comestibles et sont un délice.",
+    en: "Zucchinis grow very fast! In summer, a fruit can grow 2-3 cm per day. The flowers are also edible and a delicacy.",
+    de: "Zucchinis wachsen sehr schnell! Im Sommer kann eine Frucht 2-3 cm pro Tag wachsen. Die Blüten sind ebenfalls essbar und eine Delikatesse."
+  },
+
+  // Product facts - Rode Biet
+  fact_rode_biet_title: {
+    nl: "Rode Biet - Power Knol",
+    fr: "Betterave - Racine Puissante",
+    en: "Beetroot - Power Root",
+    de: "Rote Bete - Kraftwurzel"
+  },
+  fact_rode_biet: {
+    nl: "Rode bieten bevatten betanine, wat ze hun dieprode kleur geeft. Dit is zo krachtig dat het ook als natuurlijke kleurstof (E162) wordt gebruikt! Bieten zijn geweldig voor je uithoudingsvermogen dankzij de nitraten.",
+    fr: "Les betteraves contiennent de la bétanine, qui leur donne leur couleur rouge intense. C'est un colorant naturel (E162) ! Les betteraves sont excellentes pour l'endurance.",
+    en: "Beetroots contain betanin, giving them their deep red color. It is used as a natural dye (E162)! Beets are great for endurance thanks to nitrates.",
+    de: "Rote Bete enthält Betanin, das ihr die tiefrote Farbe verleiht. Es wird als natürlicher Farbstoff (E162) verwendet! Beete sind gut für die Ausdauer."
+  },
+
+  // Extra Tips
+  tip_8: {
+    nl: "Introduceer een stempelkaart: 10x kopen = gratis product. Klanten komen terug!",
+    fr: "Introduisez une carte de fidélité : 10 achats = produit gratuit. Les clients reviennent !",
+    en: "Introduce a loyalty card: 10 buys = free product. Customers return!",
+    de: "Führen Sie eine Stempelkarte ein: 10x kaufen = kostenloses Produkt. Kunden kommen zurück!"
+  },
+  tip_9: {
+    nl: "Organiseer een 'Proef de Oogst' weekend. Proeven doet kopen!",
+    fr: "Organisez un week-end 'Goûtez la Récolte'. Goûter c'est acheter !",
+    en: "Organize a 'Taste the Harvest' weekend. Tasting leads to buying!",
+    de: "Organisieren Sie ein 'Probieren Sie die Ernte'-Wochenende. Probieren führt zum Kauf!"
+  },
+  tip_10: {
+    nl: "Zet bordjes met 'Wist-je-datjes' (zoals deze!) bij je producten. Kennis verhoogt de waardering.",
+    fr: "Placez des panneaux 'Le saviez-vous' près de vos produits. La connaissance augmente l'appréciation.",
+    en: "Place 'Did you know' signs by your products. Knowledge increases appreciation.",
+    de: "Platzieren Sie 'Wussten Sie schon'-Schilder bei Ihren Produkten. Wissen steigert die Wertschätzung."
+  },
+
+  referral_share_promo: {
+    nl: "Maak mijn boerderij zichtbaar",
+    fr: "Promouvoir ma ferme",
+    en: "Promote my farm",
+    de: "Meinen Hof bewerben"
   },
 
 };
