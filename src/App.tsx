@@ -41,6 +41,7 @@ import { DiscoverPage } from './pages/DiscoverPage';
 import { AboutPage } from './pages/AboutPage';
 import { SupportPage } from './pages/SupportPage';
 import { FarmerDashboard } from './pages/FarmerDashboard';
+import { VendingPage } from './pages/VendingPage';
 import { InventoryPage } from './pages/InventoryPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { AdminPage } from './pages/AdminPage';
@@ -804,6 +805,16 @@ const App: React.FC = () => {
             setFarms={setFarms}
             showToast={showToast}
             setSelectedImage={setSelectedImage}
+            userProfile={userProfile}
+          />
+        )}
+        {view === 'vending' && (
+          <VendingPage
+            t={t}
+            setView={setView}
+            farms={farms}
+            setFarms={setFarms}
+            showToast={showToast}
             userProfile={userProfile}
           />
         )}
