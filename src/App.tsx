@@ -77,6 +77,17 @@ const App: React.FC = () => {
     isLoggedIn: false
   });
 
+  // Safety net: Force stop loading after 4 seconds if stuck
+  useEffect(() => {
+    if (isAuthLoading) {
+      const timer = setTimeout(() => {
+        console.warn('⚠️ Auth loading timed out, forcing app open.');
+        setIsAuthLoading(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [isAuthLoading]);
+
   // Farms Data (Single Source of Truth)
   const [farms, setFarms] = useState<Farm[]>(() => {
     return INITIAL_FARMS.map(f => ({
@@ -318,6 +329,7 @@ const App: React.FC = () => {
             setView('admin');
             setIsAuthModalOpen(false);
             localStorage.removeItem('pendingRole');
+            setIsAuthLoading(false); // CRITICAL FIX: Stop loading spinner
             return;
           }
 
