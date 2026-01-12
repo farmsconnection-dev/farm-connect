@@ -59,7 +59,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
         if (window.google && window.google.maps && window.google.maps.places && addressInputRef.current) {
             autocompleteRef.current = new window.google.maps.places.Autocomplete(addressInputRef.current, {
                 types: ['address'],
-                componentRestrictions: { country: ['be', 'nl'] }, // Belgium and Netherlands
+                componentRestrictions: { country: 'be' }, // Belgium only
                 fields: ['formatted_address', 'geometry']
             });
 
