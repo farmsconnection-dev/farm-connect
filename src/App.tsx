@@ -311,6 +311,16 @@ const App: React.FC = () => {
 
         // Smart Redirect Logic
         if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
+
+          // 0. ADMIN BYPASS
+          if (email?.toLowerCase() === 'farmsconnection@gmail.com') {
+            setUserType('farmer');
+            setView('admin');
+            setIsAuthModalOpen(false);
+            localStorage.removeItem('pendingRole');
+            return;
+          }
+
           // 1. Check if user is a farmer (has a farm)
           const { data: userFarms } = await supabase
             .from('farms')
