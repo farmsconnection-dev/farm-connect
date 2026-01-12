@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { X, HelpCircle, TrendingUp, Box, Heart, Users, Compass, Calendar, Leaf, LogIn, LogOut, User, ShieldCheck } from 'lucide-react';
+import { X, HelpCircle, TrendingUp, Box, Heart, Users, Compass, Calendar, Leaf, LogIn, LogOut, User, ShieldCheck, ArrowLeftCircle } from 'lucide-react';
 import { UserType, UserProfile, ViewState } from '../../types';
 
 interface MenuItem {
@@ -110,11 +110,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     </button>
                 ))}
             </div>
-            {userProfile.isLoggedIn && (
-                <div className="p-6 border-t border-white/10">
-                    <button onClick={handleLogout} className="w-full flex items-center gap-4 p-4 rounded-xl font-bold text-red-400 hover:bg-red-500/10 transition-colors"><LogOut size={20} /> {t('logout')}</button>
-                </div>
-            )}
+            <div className="p-6 border-t border-white/10">
+                <button onClick={handleLogout} className="w-full flex items-center gap-4 p-4 rounded-xl font-bold text-red-400 hover:bg-red-500/10 transition-colors">
+                    {userProfile.isLoggedIn ? <LogOut size={20} /> : <ArrowLeftCircle size={20} />}
+                    {userProfile.isLoggedIn ? t('logout') : "Terug naar Start"}
+                </button>
+            </div>
         </motion.div>
     );
 };
