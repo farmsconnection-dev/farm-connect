@@ -44,7 +44,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [selectedFarm, setSelectedFarm] = useState<Farm | null>(null);
 
-    const filterList = ['all', 'fruit', 'vegetables', 'dairy', 'meat', 'eggs', 'honey', 'nearby'];
+    const filterList = ['all', 'fruit', 'vegetables', 'dairy', 'meat', 'eggs', 'honey', 'nuts', 'nearby'];
 
     const searchSuggestions = useMemo(() => {
         if (!searchQuery.trim()) return [];

@@ -557,7 +557,7 @@ const App: React.FC = () => {
       <AnimatePresence>{toast && (<motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 100, opacity: 0 }} className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] bg-forest text-mint px-8 py-4 rounded-2xl shadow-2xl font-bold flex items-center gap-3 border-2 border-white/20"><CheckCircle size={24} />{toast}</motion.div>)}</AnimatePresence>
 
       {/* --- Persistent Header --- */}
-      <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-30 pointer-events-none">
+      <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-[60] pointer-events-none">
         <div className="pointer-events-auto flex items-center h-full">
           {(view === 'landing' || view === 'register_farm') ? (
             <div className="flex items-center gap-3 select-none pointer-events-none">

@@ -101,6 +101,7 @@ export const DICTIONARY: TranslationDictionary = {
   filter_meat: { nl: "Vlees", fr: "Viande", en: "Meat", de: "Fleisch" },
   filter_eggs: { nl: "Eieren", fr: "Œufs", en: "Eggs", de: "Eier" },
   filter_honey: { nl: "Honing", fr: "Miel", en: "Honey", de: "Honig" },
+  filter_nuts: { nl: "Noten", fr: "Noix", en: "Nuts", de: "Nüsse" },
   filter_route: { nl: "Route", fr: "Itinéraire", en: "Route", de: "Route" },
   filter_open_now: { nl: "Nu Open", fr: "Ouvert", en: "Open Now", de: "Jetzt offen" },
   start_route: { nl: "Start Route", fr: "Démarrer", en: "Start Route", de: "Route starten" },

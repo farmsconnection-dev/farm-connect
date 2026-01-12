@@ -2,7 +2,7 @@
 export type Language = 'nl' | 'fr' | 'en' | 'de';
 export type UserType = 'guest' | 'discoverer' | 'farmer' | null;
 export type ViewState = 'landing' | 'discover' | 'farmer' | 'inventory' | 'about' | 'support' | 'favorites';
-export type ProductCategory = 'all' | 'nearby' | 'fruit' | 'vegetables' | 'dairy' | 'meat' | 'eggs' | 'honey' | 'route' | 'no-waste' | 'other';
+export type ProductCategory = 'all' | 'nearby' | 'fruit' | 'vegetables' | 'dairy' | 'meat' | 'eggs' | 'honey' | 'nuts' | 'route' | 'no-waste' | 'other';
 
 export interface TranslationDictionary {
   [key: string]: {
