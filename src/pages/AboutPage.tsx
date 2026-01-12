@@ -9,7 +9,7 @@ import ScrollExpandMedia from '../components/ui/scroll-expansion-hero';
 import barnImg from '../assets/farm-barn-belgian.jpg';
 import harvestImg from '../assets/farm-harvest-belgian.jpg';
 import sheepImg from '../assets/farm-sheep-belgian.jpg';
-import carrotsImg from '../assets/farm-veggies-belgian.jpg';
+import carrotsImg from '../assets/farm-carrots-close.jpg';
 
 interface AboutPageProps {
     t: (key: string) => string;

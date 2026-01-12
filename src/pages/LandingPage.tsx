@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Leaf, Apple, Tractor } from 'lucide-react';
 import logo from '../assets/logo-landing.png';
-import landingBg from '../assets/landing-bg-belgian.jpg';
+import landingBg from '../assets/landing-bg-belgian-v2.jpg';
 
 interface LandingPageProps {
     t: (key: string) => string;
