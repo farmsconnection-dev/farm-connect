@@ -344,32 +344,55 @@ const App: React.FC = () => {
             return;
           }
 
-          // 1. Check if user is a farmer (has a farm)
-          const { data: userFarms } = await supabase
-            .from('farms')
-            .select('id, is_verified')
-            .eq('owner_id', session.user.id);
+          // 1. Check if user is a farmer (has a farm) - USE RAW FETCH FOR RELIABILITY
+          try {
+            const rawUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms?owner_id=eq.${session.user.id}&select=*`;
+            const response = await fetch(rawUrl, {
+              headers: {
+                'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+              }
+            });
 
-          if (userFarms && userFarms.length > 0) {
-            setUserType('farmer');
-            setIsFarmerVerified(userFarms[0].is_verified !== false);
-            // Optionally redirect to dashboard if not already there
-            if (view === 'landing') setView('farmer_dashboard');
-          } else {
-            // 2. User has no farm. Check pending role or user type
-            const storedRole = localStorage.getItem('pendingRole');
+            if (response.ok) {
+              const userFarms = await response.json();
+              console.log("🌾 Raw fetch user farms:", userFarms);
 
-            if (storedRole === 'farmer') {
-              setUserType('farmer');
-              setView('register_farm');
-            } else if (storedRole === 'discoverer') {
-              setUserType('discoverer');
-              setView('discover');
-            } else if (event === 'SIGNED_IN') {
-              // 3. Login without clear intend -> Show Selection Modal
-              setIsRoleSelectionOpen(true);
+              if (userFarms && userFarms.length > 0) {
+                // MERGE MET BESTAANDE FARMS of OVERWRITE?
+                // We voegen de gevonden farm toe aan de lijst of updaten hem
+                setFarms(prev => {
+                  const existingIds = new Set(prev.map(f => f.id));
+                  const newFarms = userFarms.filter((f: any) => !existingIds.has(f.id));
+                  return [...newFarms, ...prev]; // Zet eigen farm vooraan
+                });
+
+                setUserType('farmer');
+                setIsFarmerVerified(userFarms[0].is_verified !== false);
+
+                // Forceer view naar farmer dashboard als we op landing zijn
+                if (view === 'landing') setView('farmer'); // view name aangepast naar 'farmer' (was 'farmer_dashboard' wat niet bestaat in switch?)
+                // Check App.tsx switch: case is 'farmer' (line 751)
+              } else {
+                // Geen farms gevonden
+                const storedRole = localStorage.getItem('pendingRole');
+                if (storedRole === 'farmer') {
+                  setUserType('farmer');
+                  setView('register_farm');
+                } else if (storedRole === 'discoverer') {
+                  setUserType('discoverer');
+                  setView('discover');
+                } else if (event === 'SIGNED_IN') {
+                  setIsRoleSelectionOpen(true);
+                }
+              }
             }
+          } catch (fetchErr) {
+            console.error("❌ Failed to fetch user farms via raw fetch", fetchErr);
+            // Fallback to minimal logic (if any)
           }
+
+
 
           localStorage.removeItem('pendingRole');
         }

@@ -143,6 +143,12 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
         showToast(t('save'));
     };
 
+    const handleUpdateName = (val: string) => {
+        if (!myFarm) return;
+        setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, name: val } : f));
+    };
+
+
     const copyReferralCode = () => {
         if (myFarm?.referralCode) {
             navigator.clipboard.writeText(myFarm.referralCode);
@@ -544,7 +550,16 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         </motion.button>
                     </div>
 
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-slate-400 uppercase ml-2">{t('farm_name') || 'NAAM BOERDERIJ'}</label>
+                            <div className="relative">
+                                <Store size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
+                                <input type="text" disabled={!isEditingFarm} value={myFarm?.name || ''} onChange={(e) => handleUpdateName(e.target.value)} className={`w-full bg-slate-50 pl-12 pr-4 py-3 rounded-2xl outline-none transition-all font-bold text-slate-700 ${isEditingFarm ? 'ring-2 ring-forest/10 border-forest/20' : 'border-transparent'}`} />
+                            </div>
+                        </div>
+
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-slate-400 uppercase ml-2">{t('phone')}</label>
                             <div className="relative">
