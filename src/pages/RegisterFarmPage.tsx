@@ -208,11 +208,31 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                     alert("Supabase Error: " + error.message);
                                 } else {
                                     console.log("✅ Supabase Connection OK. Count:", count);
-                                    alert("Verbinding met database is OK! Aantal farms: " + count);
                                 }
-                            } catch (e) {
+                            } catch (e: any) {
                                 console.error("❌ Supabase Crash:", e);
-                                alert("Supabase Crash: " + e);
+                                alert("Supabase Crash: " + e.message);
+                            }
+
+                            // TEST 3: RAW FETCH (Bypass JS Client)
+                            try {
+                                console.log("3️⃣ Test Raw Fetch...");
+                                const rawUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms?select=count&head=true`;
+                                const response = await fetch(rawUrl, {
+                                    headers: {
+                                        'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+                                        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+                                    }
+                                });
+                                console.log("✅ Raw Fetch Status:", response.status);
+                                if (response.ok) {
+                                    alert("✅ DIAGNOSE COMPLETE!\n\n1. Netwerk: OK\n2. Supabase Client: OK/FAIL?\n3. Raw Fetch: OK");
+                                } else {
+                                    alert("❌ Raw Fetch Failed: " + response.status);
+                                }
+                            } catch (e: any) {
+                                console.error("❌ Raw Fetch FAIL:", e);
+                                alert("Raw fetch error: " + e.message);
                             }
                         }}
                         className="bg-amber-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-amber-600"
@@ -354,7 +374,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                 <button onClick={onLogout} className="mt-6 w-full text-center text-slate-400 text-sm font-bold hover:text-slate-600">
                     Annuleren en uitloggen
                 </button>
-            </motion.div>
-        </div>
+            </motion.div >
+        </div >
     );
 };
