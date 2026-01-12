@@ -207,7 +207,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         </div>
 
                         <div className="flex-1 text-center md:text-left">
-                            <div className="flex flex-wrap items-center gap-3 mb-2 justify-center md:justify-start">
+                            <div className="flex flex-wrap items-center gap-4 md:gap-8 mb-2 justify-center md:justify-start">
                                 <h1 className="text-4xl md:text-5xl font-black text-white drop-shadow-lg m-0">
                                     Welkom terug, {(!myFarm || myFarm.id === '1') ? userProfile.name.split(' ')[0] : myFarm.name}! 👋
                                 </h1>

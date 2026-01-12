@@ -36,6 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         const isAdmin = userProfile.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 
         const common = [
+            { id: 'about', label: t('menu_about'), icon: <Leaf size={20} /> },
             { id: 'support', label: t('menu_support'), icon: <HelpCircle size={20} /> },
         ];
 
@@ -45,7 +46,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 { id: 'admin', label: 'Admin Dashboard', icon: <ShieldCheck size={20} /> },
                 { id: 'admin_prospects', label: 'Prospects', icon: <Users size={20} /> },
                 { id: 'discover', label: t('menu_discover'), icon: <Compass size={20} /> },
-                { id: 'about', label: t('menu_about'), icon: <Leaf size={20} /> },
                 ...common
             ];
         }
@@ -68,7 +68,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             { id: 'discover', label: t('menu_discover'), icon: <Compass size={20} /> },
             { id: 'calendar', label: t('menu_calendar'), icon: <Calendar size={20} />, action: () => setIsSeasonCalendarOpen(true) },
             { id: 'favorites', label: t('menu_favorites'), icon: <Heart size={20} /> },
-            { id: 'about', label: t('menu_about'), icon: <Leaf size={20} /> },
             ...common
         ];
         // Add admin at the end if user is admin
