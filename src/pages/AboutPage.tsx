@@ -37,6 +37,28 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
                         <p className="text-lg text-white font-medium max-w-xl mx-auto drop-shadow-md">{t('mission_text')}</p>
                     </div>
 
+                    {/* Persoonlijk Verhaal Sectie */}
+                    <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 mb-16 border border-white/10 shadow-2xl">
+                        <div className="flex flex-col md:flex-row gap-8 md:items-center">
+                            <div className="flex-1">
+                                <h2 className="text-3xl md:text-4xl font-black text-white mb-6">Waarom ik Farm Connect startte</h2>
+                                <p className="text-white/95 text-xl leading-relaxed mb-6 font-medium italic pl-4 border-l-4 border-emerald-500">
+                                    "De regels zijn absurd. De quota's verstikkend. En de prijzen oneerlijk."
+                                </p>
+                                <p className="text-white/90 text-lg leading-relaxed mb-4">
+                                    Als boerenzoon zag ik van dichtbij hoe de industrie de touwtjes in handen heeft. Zij bepalen de prijs, niet de kwaliteit. Boeren worden gedwongen om groter te worden of te stoppen. De menselijke maat is weg.
+                                </p>
+                                <p className="text-white/90 text-lg leading-relaxed">
+                                    Ik startte Farm Connect met één simpele missie: <strong>De macht teruggeven aan de boer.</strong> Door consumenten rechtstreeks te verbinden met de bron, snijden we de industrie eruit. Zo krijgt de boer weer wat hij verdient: respect én een eerlijke prijs.
+                                </p>
+                                <div className="mt-6 flex items-center gap-3">
+                                    <div className="h-0.5 w-12 bg-emerald-500"></div>
+                                    <p className="text-emerald-300 font-black font-serif italic text-lg">Mathias</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
                         <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="relative overflow-hidden p-8 rounded-apple shadow-xl border border-white/10 group">
                             <div className="absolute inset-0 z-0">

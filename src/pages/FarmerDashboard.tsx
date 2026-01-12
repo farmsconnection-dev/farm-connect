@@ -192,7 +192,9 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         </div>
 
                         <div className="flex-1 text-center md:text-left">
-                            <h1 className="text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-lg">Welkom op Farm Connect! 👋</h1>
+                            <h1 className="text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-lg">
+                                Dag {(!myFarm || myFarm.id === '1') ? userProfile.name.split(' ')[0] : myFarm.name}! 👋
+                            </h1>
                             <p className="text-emerald-100 text-lg font-medium mb-6 max-w-2xl leading-relaxed">Bedankt dat je deel uitmaakt van dit initiatief. Samen maken we een vuist voor eerlijke prijzen en kortere ketens.</p>
 
                             <div className="grid grid-cols-3 gap-4 max-w-md mx-auto md:mx-0">
