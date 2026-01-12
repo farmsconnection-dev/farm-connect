@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Tractor, MapPin, Phone, Save, Loader2 } from 'lucide-react';
+import { Tractor, MapPin, Phone, Save, Loader2, Mail } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface RegisterFarmPageProps {
@@ -16,7 +16,8 @@ interface RegisterFarmPageProps {
 export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userId, onSuccess, onLogout, initialName = '' }) => {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        name: initialName, // Pre-fill name
+        name: initialName,
+        email: '', // User enters their own email
         address: '',
         phone: '',
         lat: 50.8503,
@@ -79,12 +80,8 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!formData.name || !formData.address) {
-            alert('Vul alle verplichte velden in.');
-            return;
-        }
-        if (!email) {
-            alert('E-mailadres ontbreekt. Log opnieuw in.');
+        if (!formData.name || !formData.address || !formData.email) {
+            alert('Vul alle verplichte velden in (naam, e-mail en adres).');
             return;
         }
 
@@ -105,7 +102,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                     phone: formData.phone,
                     lat: formData.lat,
                     lng: formData.lng,
-                    owner_email: email,
+                    owner_email: formData.email,
                     owner_id: userId,
                     heeft_automaat: formData.heeft_automaat,
                     is_verified: false,
@@ -162,13 +159,16 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                     </div>
 
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">E-mailadres (Account)</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">E-mailadres</label>
                         <div className="relative">
+                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                             <input
                                 type="email"
-                                value={email}
-                                disabled
-                                className="w-full px-4 py-4 bg-slate-100 rounded-xl border-2 border-slate-100 text-slate-500 font-bold cursor-not-allowed opacity-75"
+                                required
+                                value={formData.email}
+                                onChange={e => setFormData({ ...formData, email: e.target.value })}
+                                className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-emerald-500 focus:outline-none font-bold text-slate-700"
+                                placeholder="jandeboer@hoeve.be"
                             />
                         </div>
                     </div>
