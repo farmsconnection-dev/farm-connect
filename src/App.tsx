@@ -77,6 +77,17 @@ const App: React.FC = () => {
     isLoggedIn: false
   });
 
+  // FORCE VIEW LOGIC (Recovery from hanging registration)
+  useEffect(() => {
+    const forcedView = localStorage.getItem('force_view');
+    if (forcedView === 'farmer') {
+      console.log("⚡ Forced view detected: Farmer Dashboard");
+      setUserType('farmer');
+      setView('farmer');
+      localStorage.removeItem('force_view');
+    }
+  }, []);
+
   // Safety net: Force stop loading after 4 seconds if stuck
   useEffect(() => {
     if (isAuthLoading) {

@@ -153,9 +153,24 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
             }
 
             console.log('✅ Farm registered successfully via Raw Fetch!');
-            onSuccess();
 
-        } catch (err: any) {
+            // FORCE REDIRECT - BYPASS CLIENT HANGING
+            // We doen een harde reload naar de dashboard pagina om client state te resetten
+            // en te voorkomen dat we wachten op hangende async checks
+            window.location.href = window.location.origin + '?view=farmer'; // Of een manier om de view state te zetten
+            // Omdat we SPA routing hebben, is href=/dashboard misschien niet genoeg als route niet bestaat.
+            // App.tsx kijkt naar userType en view.
+            // Hard refresh is veiligst.
+
+            // We zetten local storage om 'farmer' view te forceren na reload
+            localStorage.setItem('force_view', 'farmer');
+            window.location.reload();
+
+            // Alternatief: als onSuccess direct view state zou zetten in App.tsx...
+            // Maar onSuccess zit nu vast in de hangende checkFarmerVerification.
+            // Dus we negeren onSuccess prop en doen het zelf.            
+            // onSuccess(); <--- DEZE HANGT
+
             clearTimeout(timeout);
             console.error('❌ Error registering farm:', err);
             console.error('Error details:', JSON.stringify(err, null, 2));
@@ -189,68 +204,6 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                         <h1 className="text-2xl font-black text-slate-800">Registreer je Boerderij</h1>
                         <p className="text-slate-500 font-medium">Start met verkopen op Farm Connect</p>
                     </div>
-                </div>
-
-                {/* DIAGNOSTIC TOOL - TEMPORARY */}
-                <div className="bg-amber-50 border-2 border-amber-200 p-4 rounded-xl mb-6">
-                    <h3 className="font-bold text-amber-800 mb-2">🔧 DIAGNOSE TOOL</h3>
-                    <button
-                        type="button"
-                        onClick={async () => {
-                            console.log("🔍 START DIAGNOSE...");
-
-                            // TEST 1: Network
-                            try {
-                                console.log("1️⃣ Test network connection...");
-                                await fetch('https://www.google.com', { mode: 'no-cors' });
-                                console.log("✅ Network OK");
-                            } catch (e) {
-                                console.error("❌ Network FAIL", e);
-                                alert("Netwerk fout: " + e);
-                                return;
-                            }
-
-                            // TEST 2: Supabase Read
-                            try {
-                                console.log("2️⃣ Test Supabase Connection...");
-                                const { count, error } = await supabase.from('farms').select('*', { count: 'exact', head: true });
-                                if (error) {
-                                    console.error("❌ Supabase Connection FAIL:", error);
-                                    alert("Supabase Error: " + error.message);
-                                } else {
-                                    console.log("✅ Supabase Connection OK. Count:", count);
-                                }
-                            } catch (e: any) {
-                                console.error("❌ Supabase Crash:", e);
-                                alert("Supabase Crash: " + e.message);
-                            }
-
-                            // TEST 3: RAW FETCH (Bypass JS Client)
-                            try {
-                                console.log("3️⃣ Test Raw Fetch...");
-                                const rawUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms?select=count&head=true`;
-                                const response = await fetch(rawUrl, {
-                                    headers: {
-                                        'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-                                        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-                                    }
-                                });
-                                console.log("✅ Raw Fetch Status:", response.status);
-                                if (response.ok) {
-                                    alert("✅ DIAGNOSE COMPLETE!\n\n1. Netwerk: OK\n2. Supabase Client: OK/FAIL?\n3. Raw Fetch: OK");
-                                } else {
-                                    alert("❌ Raw Fetch Failed: " + response.status);
-                                }
-                            } catch (e: any) {
-                                console.error("❌ Raw Fetch FAIL:", e);
-                                alert("Raw fetch error: " + e.message);
-                            }
-                        }}
-                        className="bg-amber-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-amber-600"
-                    >
-                        Test Verbinding
-                    </button>
-                    <p className="text-xs text-amber-700 mt-2">Klik hier als opslaan niet werkt en kijk in de console (F12).</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
