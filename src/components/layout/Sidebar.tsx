@@ -30,9 +30,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
     const menuItems = useMemo((): MenuItem[] => {
         // ADMIN EMAIL - Vervang met je echte email!
-        const ADMIN_EMAIL = 'farmsconncection@gmail.com';
-        // TEMPORARY: Allow all users to see admin button for testing
-        const isAdmin = true; // userProfile.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+        // ADMIN EMAIL - Vervang met je echte email!
+        const ADMIN_EMAIL = 'farmsconnection@gmail.com';
+        // Only allow admin access for specific email
+        const isAdmin = userProfile.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 
         const common = [
             { id: 'support', label: t('menu_support'), icon: <HelpCircle size={20} /> },
