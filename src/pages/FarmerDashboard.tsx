@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, Share2, TrendingUp, Sparkles, Heart, Eye, Store, Edit2, Upload, Phone, MapPin, Clock, ToggleRight, ToggleLeft, User, Copy, Gift, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Users, Share2, TrendingUp, Sparkles, Heart, Eye, Store, Edit2, Upload, Phone, MapPin, Clock, ToggleRight, ToggleLeft, User, Copy, Gift, AlertTriangle, ShieldCheck, Box } from 'lucide-react';
 import { Farm, UserProfile, DaySchedule } from '../types';
 import { supabase } from '../lib/supabase';
 
