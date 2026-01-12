@@ -110,7 +110,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
     };
 
     return (
-        <div className="min-h-screen bg-emerald-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-emerald-50 flex items-start justify-center p-4 pt-28 sm:pt-32">
             <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
