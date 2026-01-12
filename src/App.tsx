@@ -581,7 +581,7 @@ const App: React.FC = () => {
                 <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform border-2 border-white/50 overflow-hidden">
                   <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
                 </div>
-                <h1 className="text-2xl font-black text-white tracking-tight drop-shadow-md">
+                <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight drop-shadow-md">
                   Farm <span className="text-amber-500">Connect</span>
                 </h1>
               </div>
@@ -591,13 +591,13 @@ const App: React.FC = () => {
             </motion.button>
           )}
         </div>
-        <div className="flex items-center gap-3 pointer-events-auto">
+        <div className="flex items-center gap-2 sm:gap-3 pointer-events-auto">
           <div className="relative">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setIsLangOpen(!isLangOpen)}
-              className={`${view === 'landing' ? 'bg-white/10 text-white border-white/10' : 'bg-forest/90 text-white border-forest/20'} backdrop-blur-xl px-4 py-2.5 rounded-full shadow-lg font-black text-xs flex items-center gap-1 border hover:bg-opacity-80 transition-all`}
+              className={`${view === 'landing' ? 'bg-white/10 text-white border-white/10' : 'bg-forest/90 text-white border-forest/20'} backdrop-blur-xl px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-full shadow-lg font-black text-[10px] sm:text-xs flex items-center gap-1 border hover:bg-opacity-80 transition-all`}
             >
               {lang.toUpperCase()} <ChevronDown size={14} className={`transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
             </motion.button>
@@ -616,9 +616,10 @@ const App: React.FC = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setIsMenuOpen(true)}
-              className={`${view === 'landing' ? 'bg-white/10 text-white border-white/10' : 'bg-forest/90 text-white border-forest/20'} backdrop-blur-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-opacity-80 transition-all border`}
+              className={`${view === 'landing' ? 'bg-white/10 text-white border-white/10' : 'bg-forest/90 text-white border-forest/20'} backdrop-blur-xl w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-opacity-80 transition-all border`}
             >
-              <Menu size={24} />
+              <Menu size={20} className="sm:hidden" />
+              <Menu size={24} className="hidden sm:block" />
             </motion.button>
           )}
         </div>
