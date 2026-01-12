@@ -36,6 +36,9 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
         conversion: '0%'
     });
 
+    const [statusMessage, setStatusMessage] = useState('');
+    const [statusDuration, setStatusDuration] = useState('1');
+
     // INTELLIGENT FARM SELECTION - STRICT OWNERSHIP
     // We selecteren ALLEEN de farm die matcht met de ingelogde user ID.
     // Als de farms nog niet geladen zijn, geven we null terug (geen demo data fallback!)
@@ -409,15 +412,20 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                             <input
                                 type="text"
                                 placeholder="Bijv: Verse aardbeien nu beschikbaar! 🍓"
-                                className="w-full bg-slate-50 px-4 py-3 rounded-2xl outline-none ring-2 ring-transparent focus:ring-orange-500/20 transition-all"
-                                defaultValue={myFarm?.statusUpdate?.message || ''}
+                                className="w-full bg-slate-50 px-4 py-3 rounded-2xl outline-none ring-2 ring-transparent focus:ring-orange-500/20 transition-all font-bold text-slate-700"
+                                value={statusMessage}
+                                onChange={(e) => setStatusMessage(e.target.value)}
                             />
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="text-xs font-black text-slate-400 uppercase ml-2 mb-2 block">Geldig voor</label>
-                                <select className="w-full bg-slate-50 px-4 py-3 rounded-2xl outline-none ring-2 ring-transparent focus:ring-orange-500/20 transition-all">
+                                <select
+                                    className="w-full bg-slate-50 px-4 py-3 rounded-2xl outline-none ring-2 ring-transparent focus:ring-orange-500/20 transition-all font-bold text-slate-700"
+                                    value={statusDuration}
+                                    onChange={(e) => setStatusDuration(e.target.value)}
+                                >
                                     <option value="1">1 dag</option>
                                     <option value="2">2 dagen</option>
                                     <option value="3">3 dagen</option>
@@ -430,27 +438,30 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
-                                    onClick={(e) => {
-                                        const input = e.currentTarget.parentElement?.parentElement?.querySelector('input') as HTMLInputElement;
-                                        const select = e.currentTarget.parentElement?.querySelector('select') as HTMLSelectElement;
-                                        const message = input?.value;
-                                        const days = parseInt(select?.value || '1');
-
-                                        if (message) {
+                                    onClick={() => {
+                                        if (statusMessage && myFarm) {
+                                            const days = parseInt(statusDuration);
                                             const expiresAt = new Date();
                                             expiresAt.setDate(expiresAt.getDate() + days);
 
-                                            if (myFarm) {
-                                                setFarms(prev => prev.map(f =>
-                                                    f.id === myFarm.id
-                                                        ? { ...f, statusUpdate: { message, expiresAt: expiresAt.toISOString() } }
-                                                        : f
-                                                ));
-                                                showToast(`Status update gepubliceerd voor ${days} dag${days > 1 ? 'en' : ''}!`);
+                                            // Optimistic Update
+                                            const updatedFarm = {
+                                                ...myFarm,
+                                                statusUpdate: { message: statusMessage, expiresAt: expiresAt.toISOString() }
+                                            };
+
+                                            // Call global update handler or local setFarms
+                                            if (onUpdateFarm) {
+                                                onUpdateFarm(updatedFarm);
+                                            } else {
+                                                setFarms(prev => prev.map(f => f.id === myFarm.id ? updatedFarm : f));
                                             }
+
+                                            showToast(`Status update gepubliceerd voor ${days} dag${days > 1 ? 'en' : ''}!`);
+                                            setStatusMessage(''); // Clear input
                                         }
                                     }}
-                                    className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-2xl font-black uppercase text-sm shadow-lg"
+                                    className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-2xl font-black uppercase text-sm shadow-lg whitespace-nowrap"
                                 >
                                     Publiceer
                                 </motion.button>
