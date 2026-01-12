@@ -39,6 +39,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
             { id: 'support', label: t('menu_support'), icon: <HelpCircle size={20} /> },
         ];
 
+        // ADMIN GETS SPECIAL MENU (no farmer stuff)
+        if (isAdmin) {
+            return [
+                { id: 'admin', label: 'Admin Dashboard', icon: <ShieldCheck size={20} /> },
+                { id: 'admin_prospects', label: 'Prospects', icon: <Users size={20} /> },
+                { id: 'discover', label: t('menu_discover'), icon: <Compass size={20} /> },
+                { id: 'about', label: t('menu_about'), icon: <Leaf size={20} /> },
+                ...common
+            ];
+        }
+
         if (userType === 'farmer') {
             const farmerItems = [
                 { id: 'farmer', label: 'Dashboard', icon: <TrendingUp size={20} /> },
@@ -48,10 +59,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 { id: 'calendar', label: t('menu_calendar'), icon: <Calendar size={20} />, action: () => setIsSeasonCalendarOpen(true) },
                 ...common
             ];
-            if (isAdmin) {
-                farmerItems.push({ id: 'admin', label: 'Admin', icon: <ShieldCheck size={20} /> });
-                farmerItems.push({ id: 'admin_prospects', label: 'Prospects', icon: <Users size={20} /> });
-            }
             return farmerItems;
         }
 
