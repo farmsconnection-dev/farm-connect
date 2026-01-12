@@ -1373,3 +1373,24 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "bramen": "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=400",
   "blauwbessen": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&q=80&w=400"
 };
+
+// Add Mock Farm with Nuts & Honey
+INITIAL_FARMS.push({
+  id: 'mock-honey-nuts',
+  name: "Imkerij De Zoete Korf & Notengaard",
+  image: "https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&q=80&w=800",
+  lat: 51.0,
+  lng: 4.5,
+  address: "Honingweg 12, 1980 Zemst",
+  phone: "0499 11 22 33",
+  schedule: MOCK_SCHEDULE_1,
+  joinedDate: new Date().toISOString(),
+  followerCount: 88,
+  products: [
+    { id: 'h1', name: 'Acacia Honing', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=400', price: '8.00', unit: 'pot 500g' },
+    { id: 'n1', name: 'Verse Walnoten', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1596627670783-f8a846152a1d?auto=format&fit=crop&q=80&w=400', price: '6.00', unit: 'kg' },
+    { id: 'n2', name: 'Hazelnoten', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1509356391480-2a29da758223?auto=format&fit=crop&q=80&w=400', price: '7.50', unit: 'kg' }
+  ],
+  paymentMethods: ['cash', 'payconiq'],
+  lastStockUpdate: new Date().toISOString()
+});
