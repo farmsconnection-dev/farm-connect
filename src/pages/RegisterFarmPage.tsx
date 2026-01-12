@@ -180,6 +180,48 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                     </div>
                 </div>
 
+                {/* DIAGNOSTIC TOOL - TEMPORARY */}
+                <div className="bg-amber-50 border-2 border-amber-200 p-4 rounded-xl mb-6">
+                    <h3 className="font-bold text-amber-800 mb-2">🔧 DIAGNOSE TOOL</h3>
+                    <button
+                        type="button"
+                        onClick={async () => {
+                            console.log("🔍 START DIAGNOSE...");
+
+                            // TEST 1: Network
+                            try {
+                                console.log("1️⃣ Test network connection...");
+                                await fetch('https://www.google.com', { mode: 'no-cors' });
+                                console.log("✅ Network OK");
+                            } catch (e) {
+                                console.error("❌ Network FAIL", e);
+                                alert("Netwerk fout: " + e);
+                                return;
+                            }
+
+                            // TEST 2: Supabase Read
+                            try {
+                                console.log("2️⃣ Test Supabase Connection...");
+                                const { count, error } = await supabase.from('farms').select('*', { count: 'exact', head: true });
+                                if (error) {
+                                    console.error("❌ Supabase Connection FAIL:", error);
+                                    alert("Supabase Error: " + error.message);
+                                } else {
+                                    console.log("✅ Supabase Connection OK. Count:", count);
+                                    alert("Verbinding met database is OK! Aantal farms: " + count);
+                                }
+                            } catch (e) {
+                                console.error("❌ Supabase Crash:", e);
+                                alert("Supabase Crash: " + e);
+                            }
+                        }}
+                        className="bg-amber-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-amber-600"
+                    >
+                        Test Verbinding
+                    </button>
+                    <p className="text-xs text-amber-700 mt-2">Klik hier als opslaan niet werkt en kijk in de console (F12).</p>
+                </div>
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Naam Boerderij</label>
