@@ -158,6 +158,8 @@ export const DICTIONARY: TranslationDictionary = {
   faq_3_a: { nl: "Boeren bieden producten aan die vaak diezelfde dag nog geoogst zijn. Versheid en smaak staan centraal bij onze Belgische hoeves.", fr: "Les agriculteurs proposent des produits souvent récoltés le jour même. La fraîcheur et le goût sont au cœur de nos fermes belges.", en: "Farmers offer products often harvested the same day. Freshness and taste are key to our Belgian farms.", de: "Die Landwirte bieden Produkte an, die oft am selben Tag geerntet wurden. Frische und Geschmack stehen bei unseren belgischen Höfen im Mittelpunkt." },
   faq_4_q: { nl: "Hoe werkt de route?", fr: "Comment fait l'itinéraire ?", en: "How does the route work?", de: "Wie funktioniert die Route?" },
   faq_4_a: { nl: "Gebruik de route planner op de hoofdpagina. Wij tonen je alle boeren die direct op je weg liggen.", fr: "Utilisez le planificateur d'itinéraire sur la page principale. Nous vous montrons tous les agriculteurs sur votre chemin.", en: "Use the route planner on the main page. We show you all the farmers directly on your way.", de: "Nutzen Sie den Routenplaner auf der Hauptseite. Wir zeigen Ihnen alle Landwirte, die direkt op uw weg liggen." },
+  faq_order_q: { nl: "Kan ik online bestellen?", fr: "Puis-je commander en ligne ?", en: "Can I order online?", de: "Kann ich online bestellen?" },
+  faq_order_a: { nl: "Nee, Farm Connect brengt je tot bij de boer. Je koopt en betaalt rechtstreeks in de hoevewinkel of automaat.", fr: "Non, Farm Connect vous amène à la ferme. Vous achetez et payez directement à la boutique ou au distributeur.", en: "No, Farm Connect brings you to the farmer. You buy and pay directly at the farm shop or vending machine.", de: "Nein, Farm Connect bringt Sie zum Bauern. Sie kaufen und bezahlen direkt im Hofladen oder am Automaten." },
   faq_stock_q: {
     nl: "Is de voorraad altijd actueel?",
     fr: "Le stock est-il toujours à jour ?",
@@ -415,10 +417,10 @@ export const DICTIONARY: TranslationDictionary = {
     de: "Lauch - Winterkraft"
   },
   fact_prei: {
-    nl: "Prei is familie van ui en knoflook en zit vol vitamine K, foliumzuur en vezels. Het groene deel is ook eetbaar en gezond. Prei groeit goed in de winter en is een veelzijdige groente voor soepen en stoofpotten.\n\n🏴󠁧󠁢󠁷󠁬󠁳󠁿 Historisch: In Wales is prei een nationaal symbool; soldaten droegen het vroeger om zichzelf te herkennen in de strijd.",
-    fr: "Le poireau est de la famille de l'oignon et de l'ail et est riche en vitamine K, acide folique et fibres. La partie verte est également comestible et saine. Le poireau pousse bien en hiver et est un légume polyvalent pour les soupes et les ragoûts.\n\n🏴󠁧󠁢󠁷󠁬󠁳󠁿 Historique : Au Pays de Galles, le poireau est un symbole national ; les soldats le portaient autrefois pour se reconnaître au combat.",
-    en: "Leeks are part of the onion and garlic family and are full of vitamin K, folic acid and fiber. The green part is also edible and healthy. Leeks grow well in winter and are a versatile vegetable for soups and stews.\n\n🏴󠁧󠁢󠁷󠁬󠁳󠁿 Historical: In Wales, leeks are a national symbol; soldiers used to wear them to recognize each other in battle.",
-    de: "Lauch gehört zur Familie der Zwiebeln und des Knoblauchs und ist voll von Vitamin K, Folsäure und Ballaststoffen. Der grüne Teil ist ebenfalls essbar und gesund. Lauch wächst gut im Winter und ist ein vielseitiges Gemüse für Suppen und Eintöpfe.\n\n🏴󠁧󠁢󠁷󠁬󠁳󠁿 Historisch: In Wales ist Lauch ein nationales Symbol; Soldaten trugen ihn früher, um sich im Kampf zu erkennen."
+    nl: "België is absolute wereldtop in prei, vooral in West-Vlaanderen! Onze boeren telen ze bijna het hele jaar door. In de middeleeuwse kloostertuinen van onze gewesten was 'poreye' al een basisgroente voor soep.",
+    fr: "La Belgique est un leader mondial du poireau, surtout en Flandre occidentale ! Nos agriculteurs les cultivent toute l'année. Dans les jardins monastiques médiévaux, le 'poreye' était déjà un légume de base.",
+    en: "Belgium is a world leader in leeks, especially in West Flanders! Our farmers grow them almost year-round. In medieval monastery gardens in our regions, 'poreye' was already a staple vegetable.",
+    de: "Belgien ist Weltspitze beim Lauch, besonders in Westflandern! Unsere Bauern bauen ihn fast das ganze Jahr über an. In den mittelalterlichen Klostergärten unserer Regionen war 'Poreye' bereits ein Grundnahrungsmittel."
   },
 
   // Landing page translations
@@ -485,10 +487,10 @@ export const DICTIONARY: TranslationDictionary = {
     de: "Zwiebeln - Küchenessentiell"
   },
   fact_uien: {
-    nl: "Uien worden al meer dan 5000 jaar geteeld en waren in het oude Egypte zelfs betaalmiddel! Ze bevatten krachtige antioxidanten en hebben ontstekingsremmende eigenschappen. De scherpe stoffen die je laten huilen zijn eigenlijk een verdedigingsmechanisme van de plant.\n\n🧅 Tip: Snijd uien onder stromend water of met een natte mes om minder te huilen. De zwavel-verbindingen lossen op in water!",
-    fr: "Les oignons sont cultivés depuis plus de 5000 ans et servaient même de monnaie d'échange dans l'Égypte ancienne ! Ils contiennent de puissants antioxydants et ont des propriétés anti-inflammatoires. Les substances piquantes qui font pleurer sont en fait un mécanisme de défense de la plante.\n\n🧅 Astuce : Coupez les oignons sous l'eau courante ou avec un couteau humide pour moins pleurer. Les composés soufrés se dissolvent dans l'eau !",
-    en: "Onions have been cultivated for over 5000 years and were even used as currency in ancient Egypt! They contain powerful antioxidants and have anti-inflammatory properties. The sharp substances that make you cry are actually a defense mechanism of the plant.\n\n🧅 Tip: Cut onions under running water or with a wet knife to cry less. The sulfur compounds dissolve in water!",
-    de: "Zwiebeln werden seit über 5000 Jahren angebaut und dienten im alten Ägypten sogar als Zahlungsmittel! Sie enthalten starke Antioxidantien und haben entzündungshemmende Eigenschaften. Die scharfen Stoffe, die zum Weinen bringen, sind eigentlich ein Abwehrmechanismus der Pflanze.\n\n🧅 Tipp: Schneiden Sie Zwiebeln unter fließendem Wasser oder mit einem nassen Messer, um weniger zu weinen. Die Schwefelverbindungen lösen sich in Wasser!"
+    nl: "Uien worden al meer dan 5000 jaar geteeld. Ze bevatten krachtige antioxidanten. \n\n🧅 Historisch: De inwoners van Aalst dragen de geuzennaam 'Ajuinen'. Dit komt omdat de streek rond Aalst in de 19e eeuw het centrum was van de uienteelt in Vlaanderen.",
+    fr: "Les oignons sont cultivés depuis plus de 5000 ans. Ils contiennent de puissants antioxydants. \n\n🧅 Historique : Les habitants d'Alost sont surnommés 'Oignons' (Ajuinen). La région était le centre de la culture de l'oignon en Flandre au 19ème siècle.",
+    en: "Onions have been cultivated for over 5000 years. They contain powerful antioxidants. \n\n🧅 Historical: The inhabitants of Aalst are nicknamed 'Onions' (Ajuinen). This is because the region around Aalst was the center of onion cultivation in Flanders in the 19th century.",
+    de: "Zwiebeln werden seit über 5000 Jahren angebaut. Sie enthalten starke Antioxidantien. \n\n🧅 Historisch: Die Einwohner von Aalst tragen den Spitznamen 'Zwiebeln' (Ajuinen). Die Region um Aalst war im 19. Jahrhundert das Zentrum des Zwiebelanbaus in Flandern."
   },
 
   // Product facts - Witloof
@@ -555,10 +557,10 @@ export const DICTIONARY: TranslationDictionary = {
     de: "Kürbis - Herbstmagie"
   },
   fact_pompoen: {
-    nl: "De zwaarste pompoen ooit gewogen woog meer dan 1200 kg! Pompoenen zijn familie van de komkommer en meloen. De oranje kleur komt door bètacaroteen, dezelfde stof als in wortelen. De zaden zijn zeer voedzaam en rijk aan zink.\n\n🎃 Leuk weetje: Pompoenen zijn voor 90% water en bevatten meer vezels dan boerenkool!",
-    fr: "La citrouille la plus lourde jamais pesée faisait plus de 1200 kg ! Les citrouilles font partie de la famille du concombre et du melon. La couleur orange vient du bêta-carotène, la même substance que dans les carottes. Les graines sont très nutritives et riches en zinc.\n\n🎃 Fait amusant : Les citrouilles sont composées à 90% d'eau et contiennent plus de fibres que le chou frisé !",
-    en: "The heaviest pumpkin ever weighed over 1200 kg! Pumpkins are related to cucumbers and melons. The orange color comes from beta-carotene, the same substance as in carrots. The seeds are very nutritious and rich in zinc.\n\n🎃 Fun fact: Pumpkins are 90% water and contain more fiber than kale!",
-    de: "Der schwerste Kürbis, der je gewogen wurde, wog über 1200 kg! Kürbisse sind mit Gurken und Melonen verwandt. Die orange Farbe kommt von Beta-Carotin, dem gleichen Stoff wie in Karotten. Die Samen sind sehr nahrhaft und reich an Zink.\n\n🎃 Fun Fact: Kürbisse bestehen zu 90% aus Wasser und enthalten mehr Ballaststoffe als Grünkohl!"
+    nl: "De zwaarste pompoen ooit gewogen woog meer dan 1200 kg! \n\n🎃 Belgische Traditie: In Kasterlee vindt jaarlijks de Pompoenregatta plaats, waarbij deelnemers in uitgeholde reuzenpompoenen over het water varen!",
+    fr: "La citrouille la plus lourde jamais pesée faisait plus de 1200 kg ! \n\n🎃 Tradition Belge : À Kasterlee, la régate de citrouilles a lieu chaque année, où les participants naviguent sur l'eau dans des citrouilles géantes évidées !",
+    en: "The heaviest pumpkin ever weighed over 1200 kg! \n\n🎃 Belgian Tradition: In Kasterlee, the Pumpkin Regatta takes place annually, where participants sail over water in hollowed-out giant pumpkins!",
+    de: "Der schwerste Kürbis, der je gewogen wurde, wog über 1200 kg! \n\n🎃 Belgische Tradition: In Kasterlee findet jährlich die Kürbisregatta statt, bei der Teilnehmer in ausgehöhlten Riesenkürbissen über das Wasser fahren!"
   },
 
   // Product facts - Asperges
@@ -611,10 +613,10 @@ export const DICTIONARY: TranslationDictionary = {
     de: "Gurke - Kühle Erfrischung"
   },
   fact_komkommer: {
-    nl: "Een komkommer bestaat voor 95% uit water, waardoor het de perfecte dorstlesser is! De binnenkant van een komkommer kan tot 20 graden koeler zijn dan de buitentemperatuur. Vandaar de uitdrukking 'cool as a cucumber'!\n\n🥒 Beautytip: Leg plakjes komkommer op je ogen tegen wallen - de koelte en antioxidanten werken ontspannend!",
-    fr: "Un concombre est composé à 95% d'eau, ce qui en fait le parfait désaltérant ! L'intérieur d'un concombre peut être jusqu'à 20 degrés plus frais que la température extérieure. D'où l'expression 'cool as a cucumber' !\n\n🥒 Conseil beauté : Posez des tranches de concombre sur vos yeux contre les cernes - la fraîcheur et les antioxydants ont un effet relaxant !",
-    en: "A cucumber is 95% water, making it the perfect thirst quencher! The inside of a cucumber can be up to 20 degrees cooler than the outside temperature. Hence the expression 'cool as a cucumber'!\n\n🥒 Beauty tip: Place cucumber slices on your eyes against puffiness - the coolness and antioxidants have a relaxing effect!",
-    de: "Eine Gurke besteht zu 95% aus Wasser, was sie zum perfekten Durstlöscher macht! Das Innere einer Gurke kann bis zu 20 Grad kühler sein als die Außentemperatur. Daher der Ausdruck 'cool wie eine Gurke'!\n\n🥒 Beauty-Tipp: Legen Sie Gurkenscheiben auf die Augen gegen geschwollene Lider - die Kühle und Antioxidantien wirken entspannend!"
+    nl: "Keizer Tiberius van Rome was zo dol op komkommers dat hij ze elke dag at! Zijn tuiniers bouwden de allereerste verplaatsbare serres op wielen. Komkommer is plantkundig gezien familie van de meloen!\n\n🥒 Wist je dat? Komkommers bestaan voor 95% uit water en zijn de perfecte dorstlesser.",
+    fr: "L'empereur Tibère de Rome aimait tellement les concombres qu'il en mangeait tous les jours ! Ses jardiniers ont construit les premières serres mobiles. Le concombre est cousin du melon !\n\n🥒 Le saviez-vous ? Les concombres sont composés à 95 % d'eau.",
+    en: "Emperor Tiberius of Rome loved cucumbers so much he ate them every day! His gardeners built the first portable greenhouses. Botanically, cucumber is related to melon!\n\n🥒 Did you know? Cucumbers are 95% water.",
+    de: "Kaiser Tiberius von Rom liebte Gurken so sehr, dass er sie jeden Tag aß! Seine Gärtner bauten die ersten tragbaren Gewächshäuser. Botanisch ist die Gurke mit der Melone verwandt!\n\n🥒 Wussten Sie? Gurken bestehen zu 95% aus Wasser."
   },
 
   // Product facts - Bloemkool

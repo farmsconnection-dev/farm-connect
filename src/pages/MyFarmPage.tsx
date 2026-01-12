@@ -1,7 +1,8 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Edit2, Save, MapPin, Store, Clock, ToggleLeft, ToggleRight, Loader2 } from 'lucide-react';
+import { ArrowLeft, Edit2, Save, MapPin, Store, Clock, ToggleLeft, ToggleRight, Loader2, Trash2, Camera } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import { Farm, ViewState } from '../types';
 import { DEFAULT_SCHEDULE } from '../constants';
 
@@ -24,6 +25,18 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
     // Initial load check
     if (!myFarm) return <div className="p-8 text-white flex items-center gap-2"><Loader2 className="animate-spin" /> Profiel laden...</div>;
 
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64 = reader.result as string;
+                setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, image: base64 } : f));
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleUpdateName = (val: string) => {
         setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, name: val } : f));
     };
@@ -38,6 +51,32 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
         if (onUpdateFarm) onUpdateFarm(myFarm);
         setIsEditingSchedule(false);
         showToast(t('save'));
+    };
+
+    const handleDeleteFarm = async () => {
+        if (!window.confirm("Weet je zeker dat je je boerderij wilt verwijderen? Dit kan niet ongedaan worden gemaakt.")) {
+            return;
+        }
+
+        try {
+            const { error } = await supabase.from('farms').delete().eq('id', myFarm.id);
+
+            if (error) {
+                console.error("Delete error:", error);
+                // Fallback for demo mode or RLS issues:
+                setFarms(prev => prev.filter(f => f.id !== myFarm.id));
+                setView('landing');
+                showToast("Boerderij verwijderd (lokaal)");
+                return;
+            }
+
+            setFarms(prev => prev.filter(f => f.id !== myFarm.id));
+            setView('landing');
+            showToast("Boerderij succesvol verwijderd");
+        } catch (err) {
+            console.error(err);
+            showToast("Er ging iets mis.");
+        }
     };
 
     // Helper to ensure schedule exists
@@ -65,6 +104,23 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
                 </div>
 
                 <div className="space-y-6">
+
+                    <div className="flex justify-center mb-2">
+                        <div className="relative group">
+                            <img
+                                src={myFarm.image || "https://images.unsplash.com/photo-1500382017468-9049fed747ef"}
+                                alt={myFarm.name}
+                                className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg bg-emerald-100"
+                            />
+                            {isEditingFarm && (
+                                <label className="absolute bottom-0 right-0 p-2 bg-emerald-500 text-white rounded-full cursor-pointer hover:bg-emerald-600 shadow-md transition-all hover:scale-110">
+                                    <Camera size={18} />
+                                    <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                                </label>
+                            )}
+                        </div>
+                    </div>
+
                     <div>
                         <label className="text-[10px] font-black text-slate-400 uppercase ml-1 mb-1 block">Naam Boerderij</label>
                         <input
@@ -86,7 +142,7 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
             </div>
 
             {/* --- Opening Hours Section --- */}
-            <div className="bg-white/90 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/20 pb-20">
+            <div className="bg-white/90 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/20 mb-8">
                 <div className="flex justify-between items-center mb-6">
                     <h3 className="text-xl font-bold text-emerald-900 flex items-center gap-2"><Clock size={24} className="text-emerald-500" /> {t('opening_hours')}</h3>
 
@@ -147,6 +203,13 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
                         ))}
                     </div>
                 )}
+            </div>
+
+            <div className="p-4 flex justify-center pb-20">
+                <button onClick={handleDeleteFarm} className="flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-200 hover:text-red-100 font-bold transition-all border border-red-500/30 text-sm uppercase tracking-wide">
+                    <Trash2 size={18} />
+                    Verwijder mijn boerderij
+                </button>
             </div>
         </motion.div>
     );

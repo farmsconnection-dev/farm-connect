@@ -207,14 +207,22 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         </div>
 
                         <div className="flex-1 text-center md:text-left">
-                            <h1 className="text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-lg">
-                                Welkom terug, {(!myFarm || myFarm.id === '1') ? userProfile.name.split(' ')[0] : myFarm.name}! 👋
-                            </h1>
+                            <div className="flex flex-wrap items-center gap-3 mb-2 justify-center md:justify-start">
+                                <h1 className="text-4xl md:text-5xl font-black text-white drop-shadow-lg m-0">
+                                    Welkom terug, {(!myFarm || myFarm.id === '1') ? userProfile.name.split(' ')[0] : myFarm.name}! 👋
+                                </h1>
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => setIsReferralModalOpen(true)}
+                                    className="bg-amber-400 text-amber-900 text-xs sm:text-sm px-4 py-2 rounded-full font-black uppercase tracking-wide shadow-lg hover:bg-amber-300 transition-colors flex items-center gap-2 border-2 border-amber-200"
+                                >
+                                    <Gift size={16} /> Nodig uit & Verdien €20
+                                </motion.button>
+                            </div>
                             <p className="text-emerald-100 text-lg font-medium mb-6 max-w-2xl leading-relaxed">Bedankt dat je deel uitmaakt van dit initiatief. Samen maken we een vuist voor eerlijke prijzen en kortere ketens.</p>
 
-                            <div className="grid grid-cols-1 gap-4 max-w-md mx-auto md:mx-0">
-                                {/* Stats moved to main content */}
-                            </div>
+
                         </div>
 
                         {(!myFarm || myFarm.id === '1') && (

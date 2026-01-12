@@ -57,7 +57,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 { id: 'vending', label: 'Mijn Automaten', icon: <Store size={20} /> },
                 { id: 'inventory', label: t('menu_inventory'), icon: <Box size={20} /> },
                 { id: 'favorites', label: t('menu_favorites'), icon: <Heart size={20} /> },
-                { id: 'referral', label: 'Referral Programma', icon: <Users size={20} />, action: () => setIsReferralModalOpen(true) },
+
                 { id: 'calendar', label: t('menu_calendar'), icon: <Calendar size={20} />, action: () => setIsSeasonCalendarOpen(true) },
                 ...common
             ];
@@ -124,6 +124,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     {userProfile.isLoggedIn ? <LogOut size={20} /> : <ArrowLeftCircle size={20} />}
                     {userProfile.isLoggedIn ? t('logout') : "Terug naar Start"}
                 </button>
+                <div className="text-center mt-4 text-[10px] text-white/20 font-medium">
+                    © 2026 FarmConnect
+                </div>
             </div>
         </motion.div>
     );
