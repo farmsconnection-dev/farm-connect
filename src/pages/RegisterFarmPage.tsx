@@ -106,23 +106,32 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                 userId
             });
 
+            // Build insert data with only essential fields first
+            const insertData: any = {
+                name: formData.name,
+                address: formData.address,
+                phone: formData.phone || formData.email,
+                lat: formData.lat,
+                lng: formData.lng,
+                owner_email: email, // Use authenticated user's email
+                products: []
+            };
+
+            // Add optional fields if they have values
+            if (userId) insertData.owner_id = userId;
+            if (formData.heeft_automaat !== undefined) insertData.heeft_automaat = formData.heeft_automaat;
+            if (formData.heeft_automaat && formData.automaat_locatie) {
+                insertData.automaat_locatie = formData.automaat_locatie;
+            }
+            if (formData.automaat_locatie === 'anders' && formData.automaat_adres) {
+                insertData.automaat_adres = formData.automaat_adres;
+            }
+
+            console.log('📦 Insert data:', insertData);
+
             const { data, error } = await supabase
                 .from('farms')
-                .insert({
-                    name: formData.name,
-                    address: formData.address,
-                    phone: formData.phone || formData.email, // Use form email as contact if no phone
-                    lat: formData.lat,
-                    lng: formData.lng,
-                    owner_email: email, // CRITICAL: Use the authenticated user's email (from props), not form email!
-                    owner_id: userId,
-                    heeft_automaat: formData.heeft_automaat,
-                    automaat_locatie: formData.heeft_automaat ? formData.automaat_locatie : null,
-                    automaat_adres: formData.automaat_locatie === 'anders' ? formData.automaat_adres : null,
-                    is_verified: false,
-                    products: [],
-                    status_update: { status: 'open', message: 'Welkom bij Farm Connect' }
-                })
+                .insert(insertData)
                 .select();
 
             clearTimeout(timeout);
