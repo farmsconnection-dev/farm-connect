@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Search, Plus, Phone, ExternalLink, MessageCircle, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
+import { Users, Plus, Phone, MessageCircle, Mail } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface AdminProspectsPageProps {
@@ -13,6 +13,7 @@ interface Prospect {
     id: string;
     name: string;
     phone: string;
+    email?: string;
     region: string;
     type: string;
     status: 'todo' | 'sent' | 'joined';
@@ -29,6 +30,7 @@ export const AdminProspectsPage: React.FC<AdminProspectsPageProps> = ({ onBack, 
     const [newProspect, setNewProspect] = useState({
         name: '',
         phone: '',
+        email: '',
         region: '',
         type: 'other'
     });
@@ -48,7 +50,6 @@ export const AdminProspectsPage: React.FC<AdminProspectsPageProps> = ({ onBack, 
             setProspects(data || []);
         } catch (err) {
             console.error('Error fetching prospects:', err);
-            // showToast('Fout bij laden prospects');
         } finally {
             setLoading(false);
         }
@@ -65,7 +66,7 @@ export const AdminProspectsPage: React.FC<AdminProspectsPageProps> = ({ onBack, 
 
             showToast('Prospect toegevoegd!');
             setIsAddOpen(false);
-            setNewProspect({ name: '', phone: '', region: '', type: 'other' });
+            setNewProspect({ name: '', phone: '', email: '', region: '', type: 'other' });
             fetchProspects();
         } catch (err: any) {
             console.error(err);
@@ -73,31 +74,34 @@ export const AdminProspectsPage: React.FC<AdminProspectsPageProps> = ({ onBack, 
         }
     };
 
-    const handleSendSMS = async (prospect: Prospect) => {
-        // 1. Prepare SMS Link
+    const getMessage = (prospect: Prospect) => {
         const baseUrl = 'https://farmconnect.be';
-        // const claimUrl = `${baseUrl}/?name=${encodeURIComponent(prospect.name)}&view=register_farm`; // Old approach
-        // Better: simple claim param
         const claimUrl = `${baseUrl}?name=${encodeURIComponent(prospect.name)}`;
+        return `Hey ${prospect.name}, de regels en quota's in onze sector zijn absurd aan het worden. Tijd voor verandering? Word bondgenoot op FarmConnect: ${claimUrl}`;
+    };
 
-        const message = `Hey ${prospect.name}, de regels en quota's in onze sector zijn absurd aan het worden. Tijd voor verandering? Word bondgenoot op FarmConnect: ${claimUrl}`;
+    const handleSendWhatsApp = async (prospect: Prospect) => {
+        const message = getMessage(prospect);
+        const phone = prospect.phone.replace(/[^0-9]/g, '');
+        const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+        await updateStatus(prospect);
+    };
 
-        // 2. Open SMS app
-        const smsUrl = `sms:${prospect.phone}?body=${encodeURIComponent(message)}`;
+    const handleSendEmail = async (prospect: Prospect) => {
+        const message = getMessage(prospect);
+        const subject = 'Word bondgenoot - Farm Connect';
+        const mailtoUrl = `mailto:${prospect.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+        window.location.href = mailtoUrl;
+        await updateStatus(prospect);
+    };
 
-        // Note: iOS uses '&' separator, Android uses '?'. Checking user agent is complex here, 
-        // usually ';', '&' or '?' works depending on OS.
-        // Let's try standard approach.
-        window.location.href = smsUrl;
-
-        // 3. Update status to 'sent'
+    const updateStatus = async (prospect: Prospect) => {
         if (prospect.status === 'todo') {
             await supabase
                 .from('prospects')
                 .update({ status: 'sent' })
                 .eq('id', prospect.id);
-
-            // Optimistic update
             setProspects(prev => prev.map(p => p.id === prospect.id ? { ...p, status: 'sent' } : p));
         }
     };
@@ -164,31 +168,32 @@ export const AdminProspectsPage: React.FC<AdminProspectsPageProps> = ({ onBack, 
                                                 prospect.status === 'sent' ? 'bg-blue-100 text-blue-600' :
                                                     'bg-green-100 text-green-600'
                                                 }`}>
-                                                {prospect.status}
+                                                {prospect.status === 'todo' ? 'Nog uitnodigen' : prospect.status === 'sent' ? 'Uitgenodigd' : 'Geregistreerd'}
                                             </span>
                                         </div>
-                                        <div className="flex items-center gap-4 text-sm text-slate-500">
-                                            <span className="flex items-center gap-1"><Phone size={14} /> {prospect.phone}</span>
+                                        <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
+                                            {prospect.phone && <span className="flex items-center gap-1"><Phone size={14} /> {prospect.phone}</span>}
+                                            {prospect.email && <span className="flex items-center gap-1"><Mail size={14} /> {prospect.email}</span>}
                                             <span className="flex items-center gap-1">📍 {prospect.region}</span>
                                             <span className="capitalize">🚜 {prospect.type}</span>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-3">
-                                        {prospect.status === 'todo' && (
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                        {prospect.email && (
                                             <button
-                                                onClick={() => handleSendSMS(prospect)}
-                                                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-md shadow-blue-200"
+                                                onClick={() => handleSendEmail(prospect)}
+                                                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-md"
                                             >
-                                                <MessageCircle size={18} /> Stuur SMS (Link)
+                                                <Mail size={16} /> E-mail
                                             </button>
                                         )}
-                                        {prospect.status === 'sent' && (
+                                        {prospect.phone && (
                                             <button
-                                                onClick={() => handleSendSMS(prospect)} // Resend
-                                                className="bg-white border-2 border-slate-200 text-slate-500 hover:border-blue-200 hover:text-blue-500 px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2"
+                                                onClick={() => handleSendWhatsApp(prospect)}
+                                                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-md"
                                             >
-                                                <MessageCircle size={18} /> Opnieuw
+                                                <MessageCircle size={16} /> WhatsApp
                                             </button>
                                         )}
                                     </div>
@@ -211,7 +216,11 @@ export const AdminProspectsPage: React.FC<AdminProspectsPageProps> = ({ onBack, 
                             </div>
                             <div>
                                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Telefoon (+32...)</label>
-                                <input required type="tel" value={newProspect.phone} onChange={e => setNewProspect({ ...newProspect, phone: e.target.value })} className="w-full bg-slate-50 p-3 rounded-xl border border-slate-200" />
+                                <input type="tel" value={newProspect.phone} onChange={e => setNewProspect({ ...newProspect, phone: e.target.value })} className="w-full bg-slate-50 p-3 rounded-xl border border-slate-200" placeholder="Optioneel" />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">E-mail</label>
+                                <input type="email" value={newProspect.email} onChange={e => setNewProspect({ ...newProspect, email: e.target.value })} className="w-full bg-slate-50 p-3 rounded-xl border border-slate-200" placeholder="Optioneel" />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
