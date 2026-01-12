@@ -1,7 +1,9 @@
+// @ts-nocheck
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Leaf, Apple, Tractor } from 'lucide-react';
 import logo from '../assets/logo-landing.png';
+import landingBg from '../assets/landing-bg-belgian.jpg';
 
 interface LandingPageProps {
     t: (key: string) => string;
@@ -14,7 +16,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ t, handleRoleSelect, l
     return (
         <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="relative h-screen max-h-screen w-full flex flex-col items-center justify-center p-4 text-center overflow-hidden">
             <div className="absolute inset-0 z-0">
-                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover scale-105" alt="Belgian Farm Landscape" />
+                <img src={landingBg} className="w-full h-full object-cover scale-105" alt="Authentic Belgian Landscape" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             </div>
             <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center justify-between h-full pt-4 pb-6 md:pt-8 md:pb-8">

@@ -5,11 +5,11 @@ import { Heart, ShieldCheck, Leaf } from 'lucide-react';
 import { ViewState } from '../types';
 import ScrollExpandMedia from '../components/ui/scroll-expansion-hero';
 
-// Images
-import barnImg from '../assets/farm-barn-v2.jpg';
-import harvestImg from '../assets/farm-harvest-v2.jpg';
-import sheepImg from '../assets/farm-sheep-new.jpg';
-import carrotsImg from '../assets/farm-carrots-close.jpg';
+// Images (Authentic Belgian AI-Generated)
+import barnImg from '../assets/farm-barn-belgian.jpg';
+import harvestImg from '../assets/farm-harvest-belgian.jpg';
+import sheepImg from '../assets/farm-sheep-belgian.jpg';
+import carrotsImg from '../assets/farm-veggies-belgian.jpg';
 
 interface AboutPageProps {
     t: (key: string) => string;
