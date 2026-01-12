@@ -67,9 +67,9 @@ export const AdminProspectsPage: React.FC<AdminProspectsPageProps> = ({ onBack, 
             setIsAddOpen(false);
             setNewProspect({ name: '', phone: '', region: '', type: 'other' });
             fetchProspects();
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
-            showToast('Fout bij opslaan');
+            showToast('Fout: ' + (err.message || 'Kon niet opslaan'));
         }
     };
 
@@ -133,8 +133,8 @@ export const AdminProspectsPage: React.FC<AdminProspectsPageProps> = ({ onBack, 
                             key={f}
                             onClick={() => setFilter(f)}
                             className={`px-4 py-2 rounded-full font-bold text-sm capitalize whitespace-nowrap border ${filter === f
-                                    ? 'bg-emerald-100 text-emerald-700 border-emerald-200'
-                                    : 'bg-white text-slate-500 border-slate-200 hover:border-emerald-200'
+                                ? 'bg-emerald-100 text-emerald-700 border-emerald-200'
+                                : 'bg-white text-slate-500 border-slate-200 hover:border-emerald-200'
                                 }`}
                         >
                             {f === 'todo' ? 'Nog uitnodigen' : f === 'sent' ? 'Uitgenodigd' : f === 'joined' ? 'Geregistreerd' : 'Alles'}
@@ -161,8 +161,8 @@ export const AdminProspectsPage: React.FC<AdminProspectsPageProps> = ({ onBack, 
                                         <div className="flex items-center gap-3 mb-1">
                                             <h3 className="font-bold text-slate-800 text-lg">{prospect.name}</h3>
                                             <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider ${prospect.status === 'todo' ? 'bg-slate-100 text-slate-500' :
-                                                    prospect.status === 'sent' ? 'bg-blue-100 text-blue-600' :
-                                                        'bg-green-100 text-green-600'
+                                                prospect.status === 'sent' ? 'bg-blue-100 text-blue-600' :
+                                                    'bg-green-100 text-green-600'
                                                 }`}>
                                                 {prospect.status}
                                             </span>

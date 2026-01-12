@@ -17,8 +17,11 @@ interface AdminPageProps {
 const ADMIN_EMAILS = ['farmsconncection@gmail.com', 'admin@farmconnect.be'];
 
 export const AdminPage: React.FC<AdminPageProps> = ({ t, farms, setFarms, userEmail, showToast }) => {
-    const [unverifiedFarms, setUnverifiedFarms] = useState<Farm[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    // Initialize with props data immediately to prevent empty state
+    const [unverifiedFarms, setUnverifiedFarms] = useState<Farm[]>(
+        farms.filter(f => f.is_verified === false)
+    );
+    const [isLoading, setIsLoading] = useState(false);
 
     // TEMPORARY: Allow all users to access admin for setup/demo purposes.
     // In production, change this back to:
@@ -27,24 +30,30 @@ export const AdminPage: React.FC<AdminPageProps> = ({ t, farms, setFarms, userEm
 
     useEffect(() => {
         if (isAdmin) {
-            // Fetch directly from DB to be sure
             const fetchUnverified = async () => {
-                const { data, error } = await supabase
-                    .from('farms')
-                    .select('*')
-                    .eq('is_verified', false);
+                setIsLoading(true);
+                try {
+                    // Fetch directly from DB to be sure
+                    const { data, error } = await supabase
+                        .from('farms')
+                        .select('*')
+                        .eq('is_verified', false);
 
-                if (data) {
-                    setUnverifiedFarms(data as Farm[]);
-                } else {
-                    // Fallback to props if offline or error
-                    setUnverifiedFarms(farms.filter(f => !f.is_verified));
+                    if (error) throw error;
+
+                    if (data) {
+                        setUnverifiedFarms(data as Farm[]);
+                    }
+                } catch (err) {
+                    console.error("Admin fetch error:", err);
+                    // Fallback is already set via initial state
+                } finally {
+                    setIsLoading(false);
                 }
-                setIsLoading(false);
             };
             fetchUnverified();
         }
-    }, [farms, isAdmin]);
+    }, []); // Run only once on mount
 
     const handleVerify = async (farmId: string) => {
         try {
