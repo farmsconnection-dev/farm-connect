@@ -1365,52 +1365,52 @@ export const PRODUCT_FACTS: Record<string, string> = {
   "witloof": "💡 Witloof is het 'Witte Goud' uit Brussel! Het werd per toeval ontdekt in 1830 in een donkere kelder. Een boer had cichoreiwortel vergeten en ontdekte later de witte spruiten.\n\n🥬 Het moet in volledige duisternis groeien, anders wordt het groen en bitter. België is 's werelds grootste producent van witloof!",
 
   // Spruitjes
-  "spruitjes": "💡 Onze nationale trots! Ze heten wereldwijd 'Brussels Sprouts' vanwege de historische teelt rondom Brussel sinds de 13e eeuw.\n\n🥦 Spruitjes bevatten meer vitamine C dan sinaasappels! Eén plant kan wel 50-100 spruitjes produceren. Moderne rassen zijn veel minder bitter dan vroeger.",
+  "spruitjes": "💡 Onze nationale trots! Ze heten wereldwijd 'Brussels Sprouts' vanwege de historische teelt rondom Brussel sinds de 13e eeuw. In 1821 werd de naam 'Chou de Bruxelles' officieel vastgelegd in de markten van Sint-Gillis.\n\n🥦 Spruitjes bevatten meer vitamine C dan sinaasappels! Eén plant kan wel 50-100 spruitjes produceren.",
 
   // Wortelen
-  "wortelen": "💡 Wortelen waren oorspronkelijk paars of wit! De oranje kleur is een eerbetoon aan Willem van Oranje, gekweekt door Nederlandse telers in de 17e eeuw als eerbetoon aan het Huis van Oranje.\n\n🥕 Fun fact: Het eten van te veel wortelen kan je huid tijdelijk oranje kleuren - dit heet 'carotenemie'!",
+  "wortelen": "💡 Wortelen waren oorspronkelijk paars of wit! De oranje kleur is een eerbetoon aan Willem van Oranje, gekweekt door Nederlandse telers in de 17e eeuw. Het is daarmee de eerste 'politieke groente' ter wereld.\n\n🥕 Fun fact: Het eten van te veel wortelen kan je huid tijdelijk oranje kleuren - dit heet 'carotenemie'!",
 
   // Appels
-  "appels": "💡 België heeft meer dan 100 appelrassen! De Jonagold is koning, maar de Belgica is de lokale ster. De Jonagold werd ontwikkeld in New York maar groeide uit tot de populairste Belgische appel.\n\n🍎 Een appelboom kan wel 400 appels per seizoen produceren en tot 100 jaar oud worden!",
+  "appels": "💡 België heeft meer dan 100 appelrassen! De Jonagold is koning, maar de 'Pomme de Reinette' is een van de oudste rassen, vroeger geliefd aan het Franse hof. \n\n🍎 Een appelboom kan wel 400 appels per seizoen produceren en tot 100 jaar oud worden! In de Noorse mythologie gaven appels de goden eeuwige jeugd.",
 
   // Aardappelen
-  "aardappelen": "💡 België is de wereldkampioen in de export van diepvriesfrietjes! We eten gemiddeld 80kg aardappelen per persoon per jaar.\n\n🥔 Aardappelen hebben hun oorsprong in Zuid-Amerika. In de 18e eeuw hielp de aardappel hongersnood bestrijden in Europa en werd hij een basisvoedsel voor miljoenen mensen.",
+  "aardappelen": "💡 België is de wereldkampioen in de export van diepvriesfrietjes! We eten gemiddeld 80kg aardappelen per persoon per jaar.\n\n🥔 Wist je dat Marie Antoinette aardappelbloesems in haar haar droeg om de groente populair te maken bij het Franse volk? Het werkte!",
 
   // Aardbeien
-  "aardbeien": "💡 De aardbei is de enige vrucht met de zaadjes aan de buitenkant - gemiddeld 200 per bes! Technisch gezien is de aardbei geen bes maar een 'schijnvrucht'.\n\n🍓 De moderne tuinaardbei ontstond in Frankrijk in de 18e eeuw. Een aardbei bevat meer vitamine C dan een sinaasappel!",
+  "aardbeien": "💡 De aardbei is de enige vrucht met de zaadjes aan de buitenkant - gemiddeld 200 per bes! In de Middeleeuwen werden aardbeien geserveerd op belangrijke staatsbanketten als symbool voor vrede en welvaart.\n\n🍓 De moderne tuinaardbei ontstond in Frankrijk in de 18e eeuw. Een aardbei bevat meer vitamine C dan een sinaasappel!",
 
   // Prei
-  "prei": "💡 Als je prei laat doorgroeien, krijgt hij prachtige grote paarse bloembollen die erg geliefd zijn bij bijen! Het groene deel is ook eetbaar en gezond.\n\n🏴󠁧󠁢󠁷󠁬󠁳󠁿 In Wales is prei een nationaal symbool; soldaten droegen het vroeger om zichzelf te herkennen in de strijd.",
+  "prei": "💡 Als je prei laat doorgroeien, krijgt hij prachtige grote paarse bloembollen die erg geliefd zijn bij bijen! Keizer Nero at elke dag prei-soep omdat hij geloofde dat het zijn zangstem verbeterde.\n\n🏴󠁧󠁢󠁷󠁬󠁳󠁿 In Wales is prei een nationaal symbool; soldaten droegen het vroeger om zichzelf te herkennen in de strijd.",
 
   // Extra producten
-  "peren": "💡 De Conférence peer, vandaag de populairste in België, werd ontwikkeld in 1885 en won een prijs op een conferentie in Londen - vandaar de naam!\n\n🍐 Peren rijpen van binnenuit, dus wanneer de buitenkant zacht is, is de kern vaak al te rijp. Bewaar peren apart van appels!",
+  "peren": "💡 De Conférence peer, vandaag de populairste in België, werd ontwikkeld in 1885 en won een prijs op een conferentie in Londen - vandaar de naam!\n\n🍐 Peren rijpen van binnenuit. Homerus noemde peren in de Odyssee een 'geschenk van de goden'.",
 
-  "spinazie": "💡 De mythe dat spinazie super veel ijzer bevat komt van een rekenfout! Een onderzoeker plaatste ooit een decimaal verkeerd. Toch blijft het een superfood vol vitaminen.\n\n💪 Tip: Eet spinazie met iets zuurs (zoals citroen) om het ijzer beter op te nemen!",
+  "spinazie": "💡 De mythe dat spinazie super veel ijzer bevat komt van een rekenfout! Een onderzoeker plaatste ooit een decimaal verkeerd. Toch was het Catherine de' Medici die spinazie populair maakte in Frankrijk, vandaar de term 'à la Florentine'.\n\n💪 Tip: Eet spinazie met iets zuurs (zoals citroen) om het ijzer beter op te nemen!",
 
-  "pompoen": "💡 De zwaarste pompoen ooit gewogen woog meer dan 1200 kg! Pompoenen zijn familie van de komkommer en meloen.\n\n🎃 De zaden zijn zeer voedzaam en rijk aan zink. Pompoenen zijn voor 90% water en bevatten meer vezels dan boerenkool!",
+  "pompoen": "💡 De zwaarste pompoen ooit gewogen woog meer dan 1200 kg! Pompoenen werden al 7000 jaar geleden verbouwd in Mexico, lang voor de uitvinding van het wiel.\n\n🎃 De zaden zijn zeer voedzaam en rijk aan zink. Pompoenen zijn voor 90% water en bevatten meer vezels dan boerenkool!",
 
   // Belgische Klassiekers
-  "grondwitloof": "💡 Grondwitloof is het 'witte goud' dat in de volle grond groeit, in tegenstelling tot het witloof dat in bakken wordt gekweekt. Het heeft een stevigere structuur en intenser bittere smaak.\n\n🥬 In de Belgische keuken wordt grondwitloof graag gekaramelliseerd in boter met een vleugje bruine suiker - pure comfort food!",
+  "grondwitloof": "💡 Grondwitloof is het 'witte goud' dat in de volle grond groeit. Het werd per toeval ontdekt tijdens de Belgische Revolutie van 1830 toen boer Jan Lammers zijn cichoreiwortels verborg in een kelder met aarde.\n\n🥬 In de Belgische keuken wordt grondwitloof graag gekaramelliseerd in boter met een vleugje bruine suiker - pure comfort food!",
 
-  "schorseneren": "💡 Schorseneren worden ook wel 'keukenmeidenverdriet' genoemd. Waarom? Bij het schillen komt er een plakkerig melksap vrij dat bijna niet van je handen af te krijgen is!\n\n🍳 Tip: Schil ze onder water of met handschoenen. In België worden ze klassiek geserveerd in een romige witte saus.",
+  "schorseneren": "💡 Schorseneren worden ook wel 'keukenmeidenverdriet' genoemd vanwege het plakkerige melksap bij het schillen. Maar wist je dat ze in de 16e eeuw als medicijn werden gebruikt tegen slangenbeten? Vandaar de naam 'Adderkruid'.\n\n🍳 Tip: Schil ze onder water of met handschoenen. In België worden ze klassiek geserveerd in een romige witte saus.",
 
-  "pastinaak": "💡 Pastinaak was de 'aardappel van de middeleeuwen'! Voordat de aardappel uit Amerika kwam, was dit de basis van vele Europese gerechten. Het heeft een zoete, nootachtige smaak.\n\n🥕 Pastinaak wordt zoeter na de eerste vorst - de kou zet het zetmeel om in suiker. Perfect voor een herfstige puree!",
+  "pastinaak": "💡 Pastinaak was de 'aardappel van de middeleeuwen'! Keizer Tiberius liet ze speciaal uit Germanië importeren omdat ze daar zoeter smaakten door de kou.\n\n🥕 Pastinaak wordt zoeter na de eerste vorst - de kou zet het zetmeel om in suiker. Perfect voor een herfstige puree!",
 
-  "rammenas": "💡 Rammenas (zwarte radijs) werd vroeger gebruikt als natuurlijke hoestsiroop! Je snijdt de kop eraf, holt hem uit, vult met honing en laat een nacht staan. De siroop die eruit komt werkt verzachtend.\n\n🍯 In de Belgische volksgeneeskunde is dit nog steeds een populair huismiddeltje bij verkoudheid.",
+  "rammenas": "💡 Rammenas werd door de bouwers van de piramides in Egypte gegeten voor kracht en uithoudingsvermogen, samen met uien en knoflook!\n\n🍯 In de Belgische volksgeneeskunde is dit nog steeds een populair huismiddeltje bij verkoudheid (uitgehold met honing).",
 
-  "warmoes": "💡 Warmoes, ook bekend als snijbiet, is een kleurrijke krachtpatser uit de Belgische groentetuin. De felgekleurde stelen (rood, geel, oranje) zijn niet alleen mooi maar ook eetbaar!\n\n🌈 In de Middeleeuwen was warmoes zo populair dat 'warmoesland' de naam was voor moestuinen. Vandaar ook de Warmoesstraat in veel steden!",
+  "warmoes": "💡 Warmoes, ook bekend als snijbiet, is een kleurrijke krachtpatser. Aristoteles schreef er al over in de 4e eeuw voor Christus!\n\n🌈 In de Middeleeuwen was warmoes zo populair dat 'warmoesland' de naam was voor moestuinen. Vandaar ook de Warmoesstraat in veel steden!",
 
-  "knolselderij": "💡 Knolselderij is de basis van élke goede Belgische soep en bouillon! Deze lelijke knol met zijn ruw uiterlijk verbergt een zachte, nootachtige smaak die diepte geeft aan stoofpotten.\n\n🍲 Klassiek Belgisch: knolselderijpuree met een klontje boter en nootmuskaat. Hemels naast een konijnenbout!",
+  "knolselderij": "💡 Knolselderij is de basis van élke goede Belgische soep. In de Odyssee wordt selderij al genoemd als een plant die groeide op het eiland van de nimf Calypso.\n\n🍲 Klassiek Belgisch: knolselderijpuree met een klontje boter en nootmuskaat. Hemels naast een konijnenbout!",
 
   // Honing & Bijenproducten
-  "honing": "💡 Wist je dat honing de enige voedingsbron is die nooit bederft? Er is honing gevonden in Egyptische graven van duizenden jaren oud die nog steeds eetbaar was!\n\n🐝 Belgische imkers produceren lindehoning, koolzaadhoning, heidehoning en bloemenhoning. Elke soort heeft een unieke smaak afhankelijk van waar de bijen foerageren.",
+  "honing": "💡 Wist je dat honing de enige voedingsbron is die nooit bederft? Alexander de Grote werd naar verluidt balsemd in honing om zijn lichaam te bewaren.\n\n🐝 Belgische imkers produceren lindehoning, koolzaadhoning, heidehoning en bloemenhoning.",
 
-  "honingraat": "💡 Honingraat is de puurste vorm van honing - rechtstreeks uit de bijenkorf! De wasstructuur bevat propolis en stuifmeel, waardoor het als een natuurlijke superfood wordt beschouwd.\n\n🍯 Bij lokale imkers kun je vaak honingraat en stuifmeelkorrels kopen. Perfect op toast of in een kaasplankje!",
+  "honingraat": "💡 Honingraat is de puurste vorm van honing. De zeshoekige vorm van de raat is wiskundig de meest efficiënte manier om ruimte te benutten - bijen zijn geniale architecten!\n\n🍯 Bij lokale imkers kun je vaak honingraat en stuifmeelkorrels kopen.",
 
   // Bessen
-  "frambozen": "💡 Frambozen zijn technisch gezien geen bessen maar 'samengestelde vruchten' - elke bolletje is een apart vruchtje! Ze zijn extreem teer en moeten binnen 2 dagen gegeten worden.\n\n🫐 Belgische boeren verkopen frambozen vaak in kleine bakjes via hun automaat of stalletje. Vers geplukt smaken ze het best!",
+  "frambozen": "💡 Frambozen zijn technisch gezien geen bessen maar 'samengestelde vruchten'. Volgens de legende waren frambozen oorspronkelijk wit, maar kleurden ze rood toen de nimf Ida zich prikte aan de doorns terwijl ze bessen plukte voor de jonge Jupiter.\n\n🫐 Belgische boeren verkopen frambozen vaak in kleine bakjes via hun automaat of stalletje.",
 
-  "bramen": "💡 Bramen groeien wild in heel België langs bosranden en heggen. In de herfst kun je ze gratis plukken! Let op: na 1 oktober zouden ze volgens de folklore niet meer mogen geplukt worden.\n\n🍇 Bramenjam is een Belgische klassieker. Combineer bramen met appels voor een heerlijke crumble!",
+  "bramen": "💡 Bramen groeien wild in heel België. In de Britse folklore mag je na 11 oktober geen bramen meer plukken omdat de duivel er dan op gespuugd zou hebben (eigenlijk worden ze dan gewoon muf door de vorst).\n\n🍇 Bramenjam is een Belgische klassieker. Combineer bramen met appels voor een heerlijke crumble!",
 
   "blauwbessen": "💡 Blauwbessen zijn ware superfoods vol antioxidanten! De blauwe kleur komt van anthocyanen, die je hersenen en ogen beschermen.\n\n💙 In België worden blauwbessen vooral geteeld in de Kempen. Ze zijn perfect om te bevriezen - ze verliezen nauwelijks voedingswaarde!",
 
@@ -1437,6 +1437,10 @@ import celeriac from './assets/product-celeriac.png';
 import broccoli from './assets/product-broccoli.png';
 import carrots from './assets/product-carrots.png';
 import tomatoes from './assets/product-tomatoes.png';
+import salsify from './assets/product-salsify.png';
+import blackRadish from './assets/product-black-radish.png';
+import chicory from './assets/product-chicory.png';
+import blackberries from './assets/product-blackberries.png';
 
 export const SMART_IMAGE_MAP: Record<string, string> = {
   "appels": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&q=80&w=400",
@@ -1487,13 +1491,13 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "salade": "https://images.unsplash.com/photo-1506073881649-4e23be3e9ed0?auto=format&fit=crop&q=80&w=400",
   "veldsla": "https://images.unsplash.com/photo-1556801712-76c8eb07bbc9?auto=format&fit=crop&q=80&w=400",
   "eikenbladsla": "https://images.unsplash.com/photo-1622206151226-18ca2c958a2f?auto=format&fit=crop&q=80&w=400",
-  "grondwitloof": "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?auto=format&fit=crop&q=80&w=400",
-  "schorseneren": "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?auto=format&fit=crop&q=80&w=400",
-  "rammenas": "https://images.unsplash.com/photo-1592394533824-9436d7d25d42?auto=format&fit=crop&q=80&w=400",
+  "grondwitloof": chicory,
+  "schorseneren": salsify,
+  "rammenas": blackRadish,
   "warmoes": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400",
   "snijbiet": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400",
   "knolselderij": celeriac,
-  "bramen": "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=400",
+  "bramen": blackberries,
   "blauwbessen": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&q=80&w=400"
 };
 

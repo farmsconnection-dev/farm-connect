@@ -265,31 +265,43 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                 )}
 
                 {/* VERIFICATION PENDING BANNER */}
-                {!isVerified && (
-                    <motion.div
-                        initial={{ scale: 0.95, opacity: 0, y: -10 }}
-                        animate={{ scale: 1, opacity: 1, y: 0 }}
-                        className="relative bg-gradient-to-r from-amber-500 to-orange-500 p-6 rounded-3xl shadow-lg overflow-hidden border-2 border-amber-300"
-                    >
-                        <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                            <div className="bg-white/20 backdrop-blur-md p-4 rounded-2xl">
-                                <ShieldCheck size={32} className="text-white" />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="text-lg font-black text-white mb-1 flex items-center gap-2">
-                                    <AlertTriangle size={18} /> Verificatie In Behandeling
-                                </h3>
-                                <p className="text-amber-100 text-sm leading-relaxed">
-                                    Je profiel is nog niet publiek zichtbaar. We verifiëren je gegevens binnen 24 uur.
-                                    In de tussentijd kun je alvast je profiel en producten volledig invullen.
-                                </p>
-                            </div>
+                {/* VERIFICATION STATUS BANNER */}
+                <motion.div
+                    initial={{ scale: 0.95, opacity: 0, y: -10 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    className={`relative p-6 rounded-3xl shadow-lg overflow-hidden border-2 ${isVerified
+                            ? 'bg-gradient-to-r from-emerald-500 to-green-600 border-emerald-400'
+                            : 'bg-gradient-to-r from-amber-500 to-orange-500 border-amber-300'
+                        }`}
+                >
+                    <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                        <div className="bg-white/20 backdrop-blur-md p-4 rounded-2xl">
+                            {isVerified ? <ShieldCheck size={32} className="text-white" /> : <ShieldCheck size={32} className="text-white" />}
                         </div>
-                        <div className="absolute -right-8 -bottom-8 text-white/10 pointer-events-none">
-                            <ShieldCheck size={120} />
+                        <div className="flex-1">
+                            <h3 className="text-lg font-black text-white mb-1 flex items-center gap-2">
+                                {isVerified ? (
+                                    <>
+                                        <ShieldCheck size={18} /> Geverifieerde Boerderij
+                                    </>
+                                ) : (
+                                    <>
+                                        <AlertTriangle size={18} /> Verificatie In Behandeling
+                                    </>
+                                )}
+                            </h3>
+                            <p className={`text-sm leading-relaxed ${isVerified ? 'text-emerald-50' : 'text-amber-100'}`}>
+                                {isVerified
+                                    ? "Je profiel is geverifieerd en volledig zichtbaar voor consumenten! Je bent goed bezig."
+                                    : "Je profiel is nog niet publiek zichtbaar. We verifiëren je gegevens binnen 24 uur. In de tussentijd kun je alvast je profiel en producten volledig invullen."
+                                }
+                            </p>
                         </div>
-                    </motion.div>
-                )}
+                    </div>
+                    <div className="absolute -right-8 -bottom-8 text-white/10 pointer-events-none">
+                        <ShieldCheck size={120} />
+                    </div>
+                </motion.div>
 
                 {/* COMPACT REFERRAL - MOVED TO MENU */}
 
