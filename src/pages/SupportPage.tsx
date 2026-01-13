@@ -34,10 +34,12 @@ export const SupportPage: React.FC<SupportPageProps> = ({ t, setView, previousVi
                                 { q: t('faq_annual_q'), a: t('faq_annual_a') },
                                 { q: t('faq_extra_machine_q'), a: t('faq_extra_machine_a') },
                                 { q: t('faq_verification_q'), a: t('faq_verification_a') },
+                                { q: t('faq_farmer_pwa_q'), a: t('faq_farmer_pwa_a') },
                                 { q: t('faq_payments_q'), a: t('faq_payments_a') }
                             ]
                             : [
                                 { q: t('faq_1_q'), a: t('faq_1_a') },
+                                { q: t('faq_pwa_q'), a: t('faq_pwa_a') },
                                 { q: t('faq_stock_q'), a: t('faq_stock_a') },
                                 { q: t('faq_3_q'), a: t('faq_3_a') },
                                 { q: t('faq_4_q'), a: t('faq_4_a') },

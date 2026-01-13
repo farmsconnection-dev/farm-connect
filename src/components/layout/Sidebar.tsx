@@ -123,13 +123,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <button
                     onClick={handleLogout}
                     className={`w-full flex items-center gap-4 p-4 rounded-xl font-bold transition-colors ${userProfile.isLoggedIn && userType !== 'guest'
-                            ? 'text-red-400 hover:bg-red-500/10'
-                            : 'text-slate-400 hover:bg-white/5'
+                        ? 'text-red-400 hover:bg-red-500/10'
+                        : 'text-slate-400 hover:bg-white/5'
                         }`}
                 >
                     {userProfile.isLoggedIn && userType !== 'guest' ? <LogOut size={20} /> : <ArrowLeftCircle size={20} />}
                     {userProfile.isLoggedIn && userType !== 'guest' ? t('logout') : "Terug naar Start"}
                 </button>
+                <div className="mt-4 px-2">
+                    <p className="text-[10px] text-mint/40 font-bold leading-tight uppercase tracking-wider">
+                        Tip: Installeer als App via je browser voor direct toegang!
+                    </p>
+                </div>
                 <div className="text-center mt-4 text-[10px] text-white/20 font-medium">
                     © {new Date().getFullYear()} FarmConnect. Alle rechten voorbehouden.
                 </div>

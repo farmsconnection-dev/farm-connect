@@ -212,6 +212,30 @@ export const DICTIONARY: TranslationDictionary = {
   faq_extra_machine_a: { nl: "De eerste automaat is inbegrepen bij je abonnement. Pas vanaf de 3e verkooplocatie (extra automaat) betaal je €3/maand (of €2 via jaarplan).", fr: "Le premier distributeur est inclus. Payez à partir du 3ème point de vente.", en: "The first machine is included. Pay from the 3rd sales point.", de: "Der erste Automat ist inbegriffen. Zahlen Sie ab dem 3. Verkaufsstandort." },
   faq_verification_q: { nl: "Hoe werkt de verificatie?", fr: "Comment fonctionne la vérification ?", en: "How does verification work?", de: "Wie funktioniert die Verifikation?" },
   faq_verification_a: { nl: "Wij controleren elke boerderij handmatig op echtheid en lokale productie. Alleen échte producenten krijgen toegang tot het platform.", fr: "Nous vérifions chaque ferme manuellement. Seuls les vrais producteurs ont accès.", en: "We verify every farm manually. Only real producers get access.", de: "Wir überprüfen jeden Hof manuell. Nur echte Produzenten erhalten Zugang." },
+  faq_pwa_q: {
+    nl: "Hoe installeer ik deze Web App?",
+    fr: "Comment installer cette Web App ?",
+    en: "How do I install this Web App?",
+    de: "Wie installiere ik deze Web App?"
+  },
+  faq_pwa_a: {
+    nl: "Op iPhone: Tik op het 'Deel'-icoon onderaan in Safari en kies 'Zet op beginscherm'. Op Android: Tik op de drie puntjes rechtsboven in Chrome en kies 'App installeren'.",
+    fr: "Sur iPhone : Appuyez sur l'icône 'Partager' dans Safari et choisissez 'Sur l'écran d'accueil'. Sur Android : Appuyez sur de drie punten dans Chrome et choisissez 'Installer l'application'.",
+    en: "On iPhone: Tap the 'Share' icon in Safari and choose 'Add to Home Screen'. On Android: Tap the three dots in Chrome and choose 'Install App'.",
+    de: "Auf dem iPhone: Tippen Sie in Safari auf das 'Teilen'-Symbol und wählen Sie 'Zum Home-Bildschirm'. Auf Android: Tippen Sie in Chrome auf die drie Punkte und wählen Sie 'App installeren'."
+  },
+  faq_farmer_pwa_q: {
+    nl: "Hoe download ik de app op mijn telefoon?",
+    fr: "Comment télécharger l'application ?",
+    en: "How do I download the app?",
+    de: "Wie lade ik die App herunter?"
+  },
+  faq_farmer_pwa_a: {
+    nl: "Je hoeft niets uit de App Store te downloaden. Open farmconnect.be in Safari (iPhone) of Chrome (Android) en kies 'Zet op beginscherm' of 'App installeren'. Zo heb je altijd direct toegang tot je dashboard.",
+    fr: "Rien à télécharger sur l'App Store. Ouvrez farmconnect.be en Safari ou Chrome et choisissez 'Sur l'écran d'accueil' of 'Installer l'application'.",
+    en: "No need to download from the App Store. Open farmconnect.be in Safari or Chrome and choose 'Add to Home Screen' or 'Install App'.",
+    de: "Kein Download aus dem App Store erforderlich. Öffnen Sie farmconnect.be in Safari oder Chrome und wählen Sie 'Zum Home-Bildschirm' oder 'App installieren'."
+  },
   login_required_favs: {
     nl: "Log in om je favorieten te bewaren.",
     fr: "Connectez-vous pour enregistrer vos favoris.",
