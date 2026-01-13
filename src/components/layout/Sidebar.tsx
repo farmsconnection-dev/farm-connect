@@ -1,7 +1,7 @@
 // @ts-nocheck
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { X, HelpCircle, TrendingUp, Box, Heart, Users, Compass, Calendar, Leaf, LogIn, LogOut, User, ShieldCheck, ArrowLeftCircle, Store, Tractor } from 'lucide-react';
+import { X, HelpCircle, TrendingUp, Box, Heart, Users, Compass, Calendar, Leaf, LogIn, LogOut, User, ShieldCheck, ArrowLeftCircle, Store, Tractor, Edit } from 'lucide-react';
 import { UserType, UserProfile, ViewState } from '../../types';
 
 interface MenuItem {
@@ -18,6 +18,7 @@ interface SidebarProps {
     setView: (view: ViewState) => void;
     userType: UserType;
     userProfile: UserProfile;
+    setUserProfile?: (profile: UserProfile) => void;
     handleLogout: () => void;
     handleLogin: () => void;
     setIsSeasonCalendarOpen: (open: boolean) => void;
@@ -26,9 +27,27 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
-    isOpen, onClose, view, setView, userType, userProfile,
+    isOpen, onClose, view, setView, userType, userProfile, setUserProfile,
     handleLogout, handleLogin, setIsSeasonCalendarOpen, setIsReferralModalOpen, t
 }) => {
+
+    // File upload logic for profile picture
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && setUserProfile) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setUserProfile({
+                    ...userProfile,
+                    photoUrl: reader.result as string
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const menuItems = useMemo((): MenuItem[] => {
         // ADMIN EMAIL - Vervang met je echte email!
         // ADMIN EMAIL - Vervang met je echte email!
@@ -93,16 +112,45 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <button onClick={onClose} className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors text-amber-400"><X size={24} /></button>
             </div>
             <div className="px-6 sm:px-8 pb-8 flex flex-col items-center text-center border-b border-white/10 mb-4 -mt-6">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-apple bg-white/10 border-4 border-white/20 shadow-xl overflow-hidden mb-4 p-2 flex items-center justify-center">
-                    {userProfile.photoUrl ? (
-                        <img src={userProfile.photoUrl} className="w-full h-full object-cover rounded-[32px]" alt="Profile" />
-                    ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-transparent text-mint rounded-[32px]">
-                            <User size={48} className="sm:hidden" />
-                            <User size={64} className="hidden sm:block" />
-                        </div>
+                <div className="relative group">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-apple bg-white/10 border-4 border-white/20 shadow-xl overflow-hidden mb-4 p-2 flex items-center justify-center relative">
+                        {userProfile.photoUrl ? (
+                            <img src={userProfile.photoUrl} className="w-full h-full object-cover rounded-[32px]" alt="Profile" />
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-transparent text-mint rounded-[32px]">
+                                <User size={48} className="sm:hidden" />
+                                <User size={64} className="hidden sm:block" />
+                            </div>
+                        )}
+
+                        {/* Farmer Edit Overlay */}
+                        {userType === 'farmer' && userProfile.isLoggedIn && (
+                            <div
+                                onClick={() => fileInputRef.current?.click()}
+                                className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer rounded-[32px]"
+                            >
+                                <Edit className="text-white drop-shadow-md" size={24} />
+                            </div>
+                        )}
+                    </div>
+                    {/* Always visible edit button for mobile/ux clarity */}
+                    {userType === 'farmer' && userProfile.isLoggedIn && (
+                        <button
+                            onClick={() => fileInputRef.current?.click()}
+                            className="absolute -bottom-2 -right-2 bg-amber-500 text-white p-2 rounded-full shadow-lg hover:bg-amber-400 transition-colors z-10"
+                        >
+                            <Edit size={14} />
+                        </button>
                     )}
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                        accept="image/*"
+                    />
                 </div>
+
                 {userProfile.isLoggedIn && userType !== 'guest' ? (
                     <div>
                         <p className="font-bold text-white text-lg sm:text-xl mb-1">{userProfile.name}</p>

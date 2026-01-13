@@ -848,6 +848,7 @@ const App: React.FC = () => {
               setView={setView}
               userType={userType}
               userProfile={userProfile}
+              setUserProfile={setUserProfile}
               handleLogout={handleLogout}
               handleLogin={() => { setIsLoginPromptOpen(false); setIsAuthModalOpen(true); }}
               setIsSeasonCalendarOpen={setIsSeasonCalendarOpen}
