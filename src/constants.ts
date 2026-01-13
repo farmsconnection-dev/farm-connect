@@ -1426,21 +1426,33 @@ export const PRODUCT_FACTS: Record<string, string> = {
 };
 
 
+// Product Images
+import aardbeien from './assets/aardbeien.jpg';
+import potatoes from './assets/product-potatoes.png';
+import leek from './assets/product-leek.png';
+import pears from './assets/product-pears.png';
+import pumpkin from './assets/product-pumpkin.png';
+import parsnip from './assets/product-parsnip.png';
+import celeriac from './assets/product-celeriac.png';
+import broccoli from './assets/product-broccoli.png';
+import carrots from './assets/product-carrots.png';
+import tomatoes from './assets/product-tomatoes.png';
+
 export const SMART_IMAGE_MAP: Record<string, string> = {
   "appels": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&q=80&w=400",
-  "peren": "https://images.unsplash.com/photo-1514756331096-242f390ef2a5?auto=format&fit=crop&q=80&w=400",
-  "wortelen": "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=400",
+  "peren": pears,
+  "wortelen": carrots,
   "kaas": "https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&q=80&w=400",
   "melk": "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400",
   "eieren": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&q=80&w=400",
-  "aardappelen": "https://images.unsplash.com/photo-1518977676601-b53f02bad673?auto=format&fit=crop&q=80&w=400",
-  "aardbeien": "https://images.unsplash.com/photo-1464965911861-746a04b4b0ae?auto=format&fit=crop&q=80&w=400",
+  "aardappelen": potatoes,
+  "aardbeien": aardbeien, // Local asset
   "kersen": "https://images.unsplash.com/photo-1528821128474-27f963b062bf?auto=format&fit=crop&q=80&w=400",
-  "tomaten": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=400",
+  "tomaten": tomatoes,
   "komkommer": "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?auto=format&fit=crop&q=80&w=400",
-  "prei": "https://images.unsplash.com/photo-1506364020200-3f1d277f0383?auto=format&fit=crop&q=80&w=400",
-  "broccoli": "https://images.unsplash.com/photo-1459411621453-7b03977f4bbe?auto=format&fit=crop&q=80&w=400",
-  "pompoen": "https://images.unsplash.com/photo-1506806732259-39c2d4ad68b9?auto=format&fit=crop&q=80&w=400",
+  "prei": leek,
+  "broccoli": broccoli,
+  "pompoen": pumpkin,
   "uien": "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?auto=format&fit=crop&q=80&w=400",
   "witloof": "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=400",
   "spruitjes": "https://images.unsplash.com/photo-1438118907704-7718ee9a191a?auto=format&fit=crop&q=80&w=400",
@@ -1464,8 +1476,8 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "radijs": "https://images.unsplash.com/photo-1598030688666-f93e4d78f986?auto=format&fit=crop&q=80&w=400",
   "bieten": "https://images.unsplash.com/photo-1603048297172-c92544798d5e?auto=format&fit=crop&q=80&w=400",
   "rode biet": "https://images.unsplash.com/photo-1603048297172-c92544798d5e?auto=format&fit=crop&q=80&w=400",
-  "knolselder": "https://images.unsplash.com/photo-1629739566373-d5d4d38864d7?auto=format&fit=crop&q=80&w=400",
-  "pastinaak": "https://images.unsplash.com/photo-1596452292671-5509a25b290d?auto=format&fit=crop&q=80&w=400",
+  "knolselder": celeriac,
+  "pastinaak": parsnip,
   "gehakt": "https://images.unsplash.com/photo-1594968132386-896db5efbb88?auto=format&fit=crop&q=80&w=400",
   "honing": "https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&q=80&w=400",
   "honingraat": "https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&q=80&w=400",
@@ -1480,7 +1492,7 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "rammenas": "https://images.unsplash.com/photo-1592394533824-9436d7d25d42?auto=format&fit=crop&q=80&w=400",
   "warmoes": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400",
   "snijbiet": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400",
-  "knolselderij": "https://images.unsplash.com/photo-1629739566373-d5d4d38864d7?auto=format&fit=crop&q=80&w=400",
+  "knolselderij": celeriac,
   "bramen": "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=400",
   "blauwbessen": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&q=80&w=400"
 };

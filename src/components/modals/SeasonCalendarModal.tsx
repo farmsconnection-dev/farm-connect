@@ -42,8 +42,8 @@ const translateProduct = (product: string, t: (key: string) => string): string =
 export const SeasonCalendarModal: React.FC<SeasonCalendarModalProps> = ({ isOpen, onClose, t, handleSeasonalItemClick, currentMonthIndex }) => {
     if (!isOpen) return null;
     return (
-        <div className="fixed inset-0 z-[200] bg-emerald-950/90 backdrop-blur-2xl flex flex-col overflow-hidden">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="p-8 md:p-12 flex justify-between items-center border-b border-white/10 shrink-0 bg-black/20">
+        <div className="fixed inset-0 z-[200] bg-emerald-950/90 backdrop-blur-2xl flex flex-col overflow-hidden" onClick={(e) => { e.stopPropagation(); onClose(); }}>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="p-8 md:p-12 flex justify-between items-center border-b border-white/10 shrink-0 bg-black/20" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center gap-6">
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="bg-amber-500/20 p-5 rounded-[2rem] text-amber-400 shadow-lg shadow-amber-500/10 border border-amber-500/20"><Calendar size={40} /></motion.div>
                     <div>
@@ -54,7 +54,7 @@ export const SeasonCalendarModal: React.FC<SeasonCalendarModalProps> = ({ isOpen
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={onClose} className="p-4 hover:bg-white/10 rounded-full transition-colors text-white/60 hover:text-white"><X size={40} /></motion.button>
             </motion.div>
 
-            <div className="flex-1 w-full flex flex-nowrap overflow-x-auto snap-x snap-mandatory scrollbar-thin scrollbar-thumb-amber-500 scrollbar-track-white/5 pb-4 p-8 md:p-16 gap-8 md:gap-12 items-center">
+            <div className="flex-1 w-full flex flex-nowrap overflow-x-auto snap-x snap-mandatory scrollbar-thin scrollbar-thumb-amber-500 scrollbar-track-white/5 pb-4 p-8 md:p-16 gap-8 md:gap-12 items-center" onClick={(e) => e.stopPropagation()}>
                 {SEASONAL_DATA.map((data, i) => {
                     const isCurrentMonth = i === currentMonthIndex;
                     return (
