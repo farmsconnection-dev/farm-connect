@@ -66,10 +66,12 @@ const App: React.FC = () => {
   const [lang, setLang] = useState<Language>('nl');
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [userType, setUserType] = useState<UserType>(() => {
-    return localStorage.getItem('guest_mode') === 'true' ? 'guest' : null;
+    return sessionStorage.getItem('guest_mode') === 'true' ? 'guest' : null;
   });
   const [view, setView] = useState<ViewState>(() => {
-    return localStorage.getItem('guest_mode') === 'true' ? 'discover' : 'landing';
+    // Initial check for recovery
+    if (localStorage.getItem('force_view') === 'farmer') return 'farmer';
+    return sessionStorage.getItem('guest_mode') === 'true' ? 'discover' : 'landing';
   });
   const [previousView, setPreviousView] = useState<ViewState>('discover');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -78,7 +80,7 @@ const App: React.FC = () => {
     window.location.hash.includes('access_token') || window.location.hash.includes('error')
   );
   const [userProfile, setUserProfile] = useState<UserProfile>(() => {
-    const isGuest = localStorage.getItem('guest_mode') === 'true';
+    const isGuest = sessionStorage.getItem('guest_mode') === 'true';
     if (isGuest) {
       return { name: 'Gast Gebruiker', email: '', isLoggedIn: false };
     }
@@ -90,7 +92,7 @@ const App: React.FC = () => {
   });
 
   // Ref to track if user explicitly chose Guest mode to prevent auto-login
-  const isGuestModeRef = useRef(localStorage.getItem('guest_mode') === 'true');
+  const isGuestModeRef = useRef(sessionStorage.getItem('guest_mode') === 'true');
 
   // FORCE VIEW LOGIC (Recovery from hanging registration)
   useEffect(() => {
@@ -141,7 +143,7 @@ const App: React.FC = () => {
 
   // BRUTE FORCE GUEST MODE ENFORCEMENT
   useEffect(() => {
-    const isGuestPersistent = localStorage.getItem('guest_mode') === 'true';
+    const isGuestPersistent = sessionStorage.getItem('guest_mode') === 'true';
     if (isGuestPersistent) {
       if (userType !== 'guest' || userProfile.name !== 'Gast Gebruiker') {
         console.log("🛡️ Guest Mode Enforcement: Correcting state");
@@ -362,7 +364,7 @@ const App: React.FC = () => {
       console.log('🔐 Auth State Change:', event, session?.user?.email);
 
       // Check if we should be in guest mode
-      const isGuestModePersistent = localStorage.getItem('guest_mode') === 'true';
+      const isGuestModePersistent = sessionStorage.getItem('guest_mode') === 'true';
 
       // IF GUEST MODE IS ON: Force sign out immediately if a session exists
       if (session && isGuestModePersistent) {
@@ -409,7 +411,7 @@ const App: React.FC = () => {
             setView('admin');
             setIsAuthModalOpen(false);
             localStorage.removeItem('pendingRole');
-            localStorage.removeItem('guest_mode');
+            sessionStorage.removeItem('guest_mode');
             setIsAuthLoading(false);
             return;
           }
@@ -458,7 +460,7 @@ const App: React.FC = () => {
         setIsMenuOpen(false);
         setIsAuthLoading(false);
       } else if (event === 'SIGNED_OUT') {
-        const stillGuest = localStorage.getItem('guest_mode') === 'true';
+        const stillGuest = sessionStorage.getItem('guest_mode') === 'true';
         if (stillGuest) {
           setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
           setUserType('guest');
@@ -469,7 +471,7 @@ const App: React.FC = () => {
           setUserType(null);
           setView('landing');
           localStorage.removeItem('pendingRole');
-          localStorage.removeItem('guest_mode');
+          sessionStorage.removeItem('guest_mode');
         }
       }
     });
@@ -577,7 +579,7 @@ const App: React.FC = () => {
   const handleGuestContinue = async () => {
     console.log("👤 Choosing Guest Mode...");
     isGuestModeRef.current = true;
-    localStorage.setItem('guest_mode', 'true');
+    sessionStorage.setItem('guest_mode', 'true');
     setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
     setUserType('guest');
     setView('discover');
@@ -592,7 +594,7 @@ const App: React.FC = () => {
 
   const handleLogin = (email: string, name: string) => {
     isGuestModeRef.current = false; // Reset guest flag
-    localStorage.removeItem('guest_mode'); // Clear persisted preference
+    sessionStorage.removeItem('guest_mode'); // Clear persisted preference
     setUserProfile({ name, email, photoUrl: 'https://picsum.photos/id/1005/100/100', isLoggedIn: true });
     if (pendingRole === 'farmer') {
       checkFarmerVerification(email);
@@ -610,7 +612,7 @@ const App: React.FC = () => {
 
     // 1. Reset guest flags immediately
     isGuestModeRef.current = false;
-    localStorage.removeItem('guest_mode');
+    sessionStorage.removeItem('guest_mode');
     localStorage.removeItem('fc_stay_logged_in');
     sessionStorage.removeItem('fc_active_tab');
 
