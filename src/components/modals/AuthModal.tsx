@@ -24,6 +24,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
     const [isLoading, setIsLoading] = useState(false);
     const [localMessage, setLocalMessage] = useState<{ type: 'error' | 'success'; text: string } | null>(null);
     const [farmerChoice, setFarmerChoice] = useState<'existing' | 'new' | null>(null);
+    const [stayLoggedIn, setStayLoggedIn] = useState(true);
 
     if (!isOpen) return null;
 
@@ -35,6 +36,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
 
     const handleGoogleLogin = async () => {
         setLocalMessage(null);
+        if (stayLoggedIn) {
+            localStorage.setItem('fc_stay_logged_in', 'true');
+        } else {
+            localStorage.removeItem('fc_stay_logged_in');
+        }
         try {
             const redirectUrl = window.location.hostname === 'localhost'
                 ? 'http://localhost:3001'
@@ -120,6 +126,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
                     console.error(error);
                 } else if (data.user) {
                     const name = data.user.user_metadata?.full_name || email.split('@')[0];
+                    if (stayLoggedIn) {
+                        localStorage.setItem('fc_stay_logged_in', 'true');
+                    } else {
+                        localStorage.removeItem('fc_stay_logged_in');
+                    }
                     showLocalMessage('success', `Welkom terug, ${name}!`);
                     setTimeout(() => {
                         handleLogin(email, name);
@@ -200,6 +211,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
                 ) : !showEmailLogin ? (
                     // Google Login View
                     <div className="space-y-4">
+                        <div className="flex items-center justify-center gap-3 mb-6">
+                            <input
+                                type="checkbox"
+                                id="stayLoggedInMain"
+                                checked={stayLoggedIn}
+                                onChange={(e) => setStayLoggedIn(e.target.checked)}
+                                className="w-5 h-5 rounded-md border-2 border-slate-200 text-emerald-500 focus:ring-emerald-500 cursor-pointer"
+                            />
+                            <label htmlFor="stayLoggedInMain" className="text-sm font-bold text-slate-600 cursor-pointer select-none">
+                                Aangemeld blijven
+                            </label>
+                        </div>
+
                         <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
@@ -278,6 +302,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
                                     disabled={isLoading}
                                     onKeyDown={(e) => e.key === 'Enter' && handleEmailSubmit()}
                                 />
+                            </div>
+
+                            <div className="flex items-center gap-3 px-1">
+                                <input
+                                    type="checkbox"
+                                    id="stayLoggedIn"
+                                    checked={stayLoggedIn}
+                                    onChange={(e) => setStayLoggedIn(e.target.checked)}
+                                    className="w-5 h-5 rounded-md border-2 border-slate-200 text-emerald-500 focus:ring-emerald-500 cursor-pointer"
+                                />
+                                <label htmlFor="stayLoggedIn" className="text-sm font-bold text-slate-600 cursor-pointer select-none">
+                                    Aangemeld blijven
+                                </label>
                             </div>
                         </div>
 

@@ -114,6 +114,31 @@ const App: React.FC = () => {
     }
   }, [isAuthLoading]);
 
+  // SESSION PERSISTENCE LOGIC (Respect "Aangemeld blijven" checkbox)
+  useEffect(() => {
+    const handlePersistence = async () => {
+      const stayLoggedIn = localStorage.getItem('fc_stay_logged_in') === 'true';
+      const hasTabSession = sessionStorage.getItem('fc_active_tab') === 'true';
+
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (session && !stayLoggedIn && !hasTabSession) {
+        console.log("🔒 Non-persistent session detected: Clearing for fresh visit.");
+        await supabase.auth.signOut();
+        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+        setUserType(null);
+        setView('landing');
+      }
+
+      // If we are logged in (either restored or just started), mark the tab as active
+      if (session) {
+        sessionStorage.setItem('fc_active_tab', 'true');
+      }
+    };
+
+    handlePersistence();
+  }, []);
+
   // BRUTE FORCE GUEST MODE ENFORCEMENT
   useEffect(() => {
     const isGuestPersistent = localStorage.getItem('guest_mode') === 'true';
@@ -586,6 +611,8 @@ const App: React.FC = () => {
     // 1. Reset guest flags immediately
     isGuestModeRef.current = false;
     localStorage.removeItem('guest_mode');
+    localStorage.removeItem('fc_stay_logged_in');
+    sessionStorage.removeItem('fc_active_tab');
 
     // 2. Clear state
     setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
