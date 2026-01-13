@@ -65,13 +65,11 @@ const App: React.FC = () => {
   // --- Global State ---
   const [lang, setLang] = useState<Language>('nl');
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const [userType, setUserType] = useState<UserType>(() => {
-    return sessionStorage.getItem('guest_mode') === 'true' ? 'guest' : null;
-  });
+  const [userType, setUserType] = useState<UserType>(null);
   const [view, setView] = useState<ViewState>(() => {
     // Initial check for recovery
     if (localStorage.getItem('force_view') === 'farmer') return 'farmer';
-    return sessionStorage.getItem('guest_mode') === 'true' ? 'discover' : 'landing';
+    return 'landing'; // Always start at landing unless forced or logged in
   });
   const [previousView, setPreviousView] = useState<ViewState>('discover');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,16 +77,10 @@ const App: React.FC = () => {
   const [isAuthLoading, setIsAuthLoading] = useState(() =>
     window.location.hash.includes('access_token') || window.location.hash.includes('error')
   );
-  const [userProfile, setUserProfile] = useState<UserProfile>(() => {
-    const isGuest = sessionStorage.getItem('guest_mode') === 'true';
-    if (isGuest) {
-      return { name: 'Gast Gebruiker', email: '', isLoggedIn: false };
-    }
-    return {
-      name: 'Gast Gebruiker',
-      email: '',
-      isLoggedIn: false
-    };
+  const [userProfile, setUserProfile] = useState<UserProfile>({
+    name: 'Gast Gebruiker',
+    email: '',
+    isLoggedIn: false
   });
 
   // Ref to track if user explicitly chose Guest mode to prevent auto-login
