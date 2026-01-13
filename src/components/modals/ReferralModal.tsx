@@ -72,7 +72,7 @@ export const ReferralModal: React.FC<ReferralModalProps> = ({ isOpen, onClose, t
                             <MessageCircle size={20} /> Deel via WhatsApp
                         </motion.button>
                         <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg flex items-center justify-center gap-3 hover:bg-slate-700 transition-colors" onClick={() => { navigator.clipboard.writeText(`https://farmconnect.be/invite/${referralCode}`); showToast("Promotie-link gekopieerd!"); }}>
-                            <Share2 size={18} className="text-slate-400" /> {t('referral_copy')} Link
+                            <Share2 size={18} className="text-slate-400" /> {t('referral_copy')}
                         </motion.button>
                     </div>
                 </div>

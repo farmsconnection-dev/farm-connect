@@ -778,9 +778,12 @@ const App: React.FC = () => {
           ) : (
             <motion.button
               onClick={() => {
+                if (view === 'discover') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  return;
+                }
                 if (detailFarm) setDetailFarm(null);
-                if (view !== 'discover') setView('discover');
-                else window.scrollTo({ top: 0, behavior: 'smooth' });
+                setView('discover');
               }}
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
               className="flex items-center group transition-transform active:scale-95 cursor-pointer"
