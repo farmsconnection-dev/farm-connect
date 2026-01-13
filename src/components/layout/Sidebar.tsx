@@ -137,7 +137,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </div>
                 <div className="text-center mt-4 text-[10px] text-white/20 font-medium px-4 leading-relaxed">
                     © 2026 FarmConnect. Alle rechten voorbehouden.<br />
-                    Concept en ontwerp officieel geregistreerd onder i-DEPOT 156857 & [Vul je nieuwe nummer hier in].
+                    Concept en ontwerp officieel geregistreerd onder i-DEPOT 156857 & 156899.
                 </div>
             </div>
         </motion.div>
