@@ -28,6 +28,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ t, farms, setFarms, userEm
     // const isAdmin = ADMIN_EMAILS.includes(userEmail.toLowerCase());
     const isAdmin = true;
 
+    /*
+    // SUPABASE SYNC DISABLED - RELIES ON LOCAL STATE PERSISTENCE
+    // This prevents deleted farms from reappearing if the specific delete operation fails in RLS or if offline.
+    // The source of truth is now the 'farms' prop which is synced with localStorage.
+    
     useEffect(() => {
         if (isAdmin) {
             const fetchUnverified = async () => {
@@ -42,7 +47,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ t, farms, setFarms, userEm
                     if (error) throw error;
 
                     if (data) {
-                        setUnverifiedFarms(data as Farm[]);
+                       // Only merge new ones, don't overwrite blindly? 
+                       // For now we disable this to solve the "reappearing" issue.
+                       // setUnverifiedFarms(data as Farm[]);
                     }
                 } catch (err) {
                     console.error("Admin fetch error:", err);
@@ -51,9 +58,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ t, farms, setFarms, userEm
                     setIsLoading(false);
                 }
             };
-            fetchUnverified();
+            // fetchUnverified();
         }
-    }, []); // Run only once on mount
+    }, []); 
+    */
 
     const handleVerify = async (farmId: string) => {
         try {
