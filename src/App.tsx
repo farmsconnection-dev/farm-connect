@@ -918,6 +918,7 @@ const App: React.FC = () => {
             previousView={previousView}
             setIsManualModalOpen={setIsManualModalOpen}
             userType={userType}
+            showToast={showToast}
           />
         )}
         {view === 'farmer' && userType === 'farmer' && (

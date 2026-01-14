@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, MessageCircle, ChevronRight, Sparkles, HelpCircle, ChevronDown } from 'lucide-react';
+import { ChevronLeft, MessageCircle, ChevronRight, Sparkles, HelpCircle, ChevronDown, Copy, MessageSquarePlus } from 'lucide-react';
 import { ViewState, UserType } from '../types';
 
 interface SupportPageProps {
@@ -10,18 +10,71 @@ interface SupportPageProps {
     previousView: ViewState;
     setIsManualModalOpen: (isOpen: boolean) => void;
     userType: UserType;
+    showToast: (msg: string) => void;
 }
 
-export const SupportPage: React.FC<SupportPageProps> = ({ t, setView, previousView, setIsManualModalOpen, userType }) => {
+export const SupportPage: React.FC<SupportPageProps> = ({ t, setView, previousView, setIsManualModalOpen, userType, showToast }) => {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+    const handleCopyEmail = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigator.clipboard.writeText('support@farmconnect.be');
+        showToast('Email adres gekopieerd!');
+    };
 
     return (
         <motion.div key="support" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="h-screen w-full flex flex-col pt-24 px-4 sm:px-8 pb-10 max-w-4xl mx-auto overflow-y-auto scrollbar-hide">
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setView(previousView)} className="flex items-center gap-2 text-white/80 font-black text-xs uppercase tracking-widest mb-8"><ChevronLeft size={16} /> {t('cancel')}</motion.button>
             <h1 className="text-4xl font-black text-white mb-10 tracking-tighter drop-shadow-md">{t('menu_support')}</h1>
+
             <div className="space-y-4">
-                <motion.a href="mailto:support@farmconnect.be" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/20 flex items-center justify-between group transition-all"><div className="flex items-center gap-4"><div className="bg-blue-50 text-blue-500 p-3 rounded-2xl group-hover:bg-blue-500 group-hover:text-white transition-colors"><MessageCircle size={24} /></div><div><h3 className="font-black text-slate-800">{t('support_ask')}</h3><p className="text-xs text-slate-400 font-bold">{t('support_email')}</p></div></div><ChevronRight size={20} className="text-slate-300" /></motion.a>
-                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setIsManualModalOpen(true)} className="bg-forest p-6 rounded-3xl shadow-2xl flex items-center justify-between text-left group transition-all w-full border border-white/10"><div className="flex items-center gap-4 text-white"><div className="bg-mint text-forest p-3 rounded-2xl"><Sparkles size={24} /></div><div><h3 className="font-black">{t('support_guide_title')}</h3><p className="text-xs text-mint/60 font-bold">{t('support_guide_desc')}</p></div></div><ChevronRight size={20} className="text-mint/40" /></motion.button>
+                {/* Email Support Button with Copy */}
+                <div className="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/20 flex items-center justify-between group transition-all relative overflow-hidden">
+                    <a href="mailto:support@farmconnect.be" className="flex items-center gap-4 flex-1 z-10">
+                        <div className="bg-blue-50 text-blue-500 p-3 rounded-2xl group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                            <MessageCircle size={24} />
+                        </div>
+                        <div>
+                            <h3 className="font-black text-slate-800">{t('support_ask')}</h3>
+                            <p className="text-xs text-slate-400 font-bold">{t('support_email')}</p>
+                        </div>
+                    </a>
+                    <div className="flex items-center gap-2 z-10">
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={handleCopyEmail}
+                            className="p-2 bg-slate-100 text-slate-400 rounded-xl hover:bg-slate-200 hover:text-slate-600 transition-colors"
+                            title="Kopieer email adres"
+                        >
+                            <Copy size={20} />
+                        </motion.button>
+                        <ChevronRight size={20} className="text-slate-300" />
+                    </div>
+                </div>
+
+                {/* Feedback Button */}
+                <motion.a
+                    href="mailto:support@farmconnect.be?subject=Feedback%20FarmConnect&body=Ik%20heb%20volgende%20feedback%20voor%20FarmConnect%3A%0A%0A"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="bg-amber-100/80 backdrop-blur-xl p-6 rounded-3xl shadow-lg border border-amber-200/50 flex items-center justify-between group transition-all"
+                >
+                    <div className="flex items-center gap-4">
+                        <div className="bg-amber-500 text-white p-3 rounded-2xl shadow-md group-hover:scale-110 transition-transform">
+                            <MessageSquarePlus size={24} />
+                        </div>
+                        <div>
+                            <h3 className="font-black text-amber-900">Geef Feedback</h3>
+                            <p className="text-xs text-amber-700/60 font-bold">Help ons de app beter te maken!</p>
+                        </div>
+                    </div>
+                    <ChevronRight size={20} className="text-amber-400" />
+                </motion.a>
+
+                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setIsManualModalOpen(true)} className="bg-forest p-6 rounded-3xl shadow-2xl flex items-center justify-between text-left group transition-all w-full border border-white/10 mt-4"><div className="flex items-center gap-4 text-white"><div className="bg-mint text-forest p-3 rounded-2xl"><Sparkles size={24} /></div><div><h3 className="font-black">{t('support_guide_title')}</h3><p className="text-xs text-mint/60 font-bold">{t('support_guide_desc')}</p></div></div><ChevronRight size={20} className="text-mint/40" /></motion.button>
+
                 <div className="bg-white/80 backdrop-blur-xl p-8 rounded-apple shadow-xl border border-white/20 mt-12">
                     <h3 className="text-2xl font-black text-forest mb-8 flex items-center gap-3"><HelpCircle size={28} className="text-mint" />{t('faq_title')}</h3>
                     <div className="space-y-4">
