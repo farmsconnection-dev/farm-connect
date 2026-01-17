@@ -804,7 +804,8 @@ export const INITIAL_FARMS: Farm[] = [
       { id: 'p13', name: 'Pompoen', available: true, category: 'vegetables', image: 'https://images.unsplash.com/photo-1506806732259-39c2d4ad68b9?auto=format&fit=crop&q=80&w=400', price: '3.00', unit: 'stuk' }
     ],
     paymentMethods: ['cash', 'payconiq'],
-    lastStockUpdate: new Date().toISOString()
+    lastStockUpdate: new Date().toISOString(),
+    heeft_automaat: true
   },
   {
     id: '2',
@@ -910,6 +911,7 @@ export const INITIAL_FARMS: Farm[] = [
     ],
     paymentMethods: ['cash', 'payconiq'],
     lastStockUpdate: new Date().toISOString(),
+    heeft_automaat: true,
     followerCount: 189
   },
   {
@@ -993,6 +995,7 @@ export const INITIAL_FARMS: Farm[] = [
     ],
     paymentMethods: ['cash', 'payconiq'],
     lastStockUpdate: new Date().toISOString(),
+    heeft_automaat: true,
     followerCount: 156
   },
   {
@@ -1046,10 +1049,29 @@ export const INITIAL_FARMS: Farm[] = [
     ],
     paymentMethods: ['cash'],
     lastStockUpdate: new Date().toISOString(),
+    heeft_automaat: true,
     followerCount: 198
   },
   {
     id: '11',
+    name: "Aardbeienautomaat 'De Brink'",
+    address: 'Brinkstraat 12, 3840 Borgloon',
+    lat: 50.8025,
+    lng: 5.3456,
+    image: 'https://images.unsplash.com/photo-1464965911861-746a04b4b0ae?auto=format&fit=crop&q=80&w=800',
+    joinedDate: new Date().toISOString(),
+    schedule: MOCK_SCHEDULE_1, // Schedule is ignored if heeft_automaat is true in filter logic
+    products: [
+      { id: 'p111', name: 'Verse Aardbeien', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1464965911861-746a04b4b0ae?auto=format&fit=crop&q=80&w=400', price: '5.00', unit: '/500g' },
+      { id: 'p112', name: 'Aardbeienjam', available: true, category: 'fruit', image: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=400', price: '4.50', unit: '/pot' }
+    ],
+    paymentMethods: ['payconiq'],
+    lastStockUpdate: new Date().toISOString(),
+    heeft_automaat: true,
+    followerCount: 84
+  },
+  {
+    id: '12',
     name: 'Kaasboerderij De Gouden Koe',
     address: 'Kaasweg 18, 9200 Dendermonde',
     lat: 51.0282,
@@ -1066,14 +1088,33 @@ export const INITIAL_FARMS: Farm[] = [
       { day: 'zondag', isOpen: false, openTime: '', closeTime: '' }
     ],
     products: [
-      { id: 'p111', name: 'Goudse Kaas', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&q=80&w=400', price: '9.50', unit: '/kg' },
-      { id: 'p112', name: 'Brie', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1618164436241-4473940d1f5c?auto=format&fit=crop&q=80&w=400', price: '12.00', unit: '/kg' },
-      { id: 'p113', name: 'Verse Melk', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400', price: '1.30', unit: '/liter' },
-      { id: 'p114', name: 'Room', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&q=80&w=400', price: '3.50', unit: '/liter' }
+      { id: 'p121', name: 'Goudse Kaas', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&q=80&w=400', price: '9.50', unit: '/kg' },
+      { id: 'p122', name: 'Brie', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1618164436241-4473940d1f5c?auto=format&fit=crop&q=80&w=400', price: '12.00', unit: '/kg' },
+      { id: 'p123', name: 'Verse Melk', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400', price: '1.30', unit: '/liter' },
+      { id: 'p124', name: 'Room', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&q=80&w=400', price: '3.50', unit: '/liter' }
     ],
     paymentMethods: ['cash', 'payconiq'],
     lastStockUpdate: new Date().toISOString(),
+    heeft_automaat: true,
     followerCount: 334
+  },
+  {
+    id: '13',
+    name: "Melktap 'De Versheid'",
+    address: 'Veldstraat 42, 9000 Gent',
+    lat: 51.0500,
+    lng: 3.7303,
+    image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=800',
+    joinedDate: new Date().toISOString(),
+    schedule: MOCK_SCHEDULE_1,
+    products: [
+      { id: 'p131', name: 'Verse Melk (Tap)', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400', price: '1.00', unit: '/liter' },
+      { id: 'p132', name: 'Glazen Fles', available: true, category: 'other', image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&q=80&w=400', price: '2.00', unit: '/st.' }
+    ],
+    paymentMethods: ['payconiq'],
+    lastStockUpdate: new Date().toISOString(),
+    heeft_automaat: true,
+    followerCount: 125
   },
   {
     id: '12',
