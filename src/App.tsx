@@ -732,7 +732,7 @@ const App: React.FC = () => {
       <div className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex justify-between items-center z-[60] pointer-events-none">
         <div className="pointer-events-auto flex items-center h-full">
           {(view === 'landing' || view === 'register_farm') ? (
-            <div className="flex items-center gap-3 select-none pointer-events-none">
+            <div className={`items-center gap-3 select-none pointer-events-none ${view === 'landing' ? 'hidden sm:flex' : 'flex'}`}>
               <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white/50 overflow-hidden">
                 <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
               </div>
