@@ -73,7 +73,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
         }
 
         if (showOpenOnly || activeFilter === 'open') {
-            result = result.filter(f => getLiveStatus(f.schedule).label === 'OPEN');
+            result = result.filter(f => getLiveStatus(f.schedule).label === 'OPEN' || f.heeft_automaat === true);
         }
 
         if (activeFilter === 'nearby' && userLocation) {
