@@ -151,7 +151,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     />
                 </div>
 
-                {userProfile.isLoggedIn && userType !== 'guest' ? (
+                {userProfile.isLoggedIn ? (
                     <div>
                         <p className="font-bold text-white text-lg sm:text-xl mb-1">{userProfile.name}</p>
                         <p className="text-xs text-white/50 font-medium uppercase tracking-widest">{userType === 'farmer' ? t('btn_farmer') : t('btn_discoverer')}</p>
@@ -170,13 +170,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="p-6 border-t border-white/10">
                 <button
                     onClick={handleLogout}
-                    className={`w-full flex items-center gap-4 p-4 rounded-xl font-bold transition-colors ${userProfile.isLoggedIn && userType !== 'guest'
+                    className={`w-full flex items-center gap-4 p-4 rounded-xl font-bold transition-colors ${userProfile.isLoggedIn
                         ? 'text-red-400 hover:bg-red-500/10'
                         : 'text-slate-400 hover:bg-white/5'
                         }`}
                 >
-                    {userProfile.isLoggedIn && userType !== 'guest' ? <LogOut size={20} /> : <ArrowLeftCircle size={20} />}
-                    {userProfile.isLoggedIn && userType !== 'guest' ? t('logout') : "Terug naar Start"}
+                    {userProfile.isLoggedIn ? <LogOut size={20} /> : <ArrowLeftCircle size={20} />}
+                    {userProfile.isLoggedIn ? t('logout') : "Terug naar Start"}
                 </button>
                 <div className="mt-4 px-2">
                     <p className="text-[10px] text-mint/40 font-bold leading-tight uppercase tracking-wider">

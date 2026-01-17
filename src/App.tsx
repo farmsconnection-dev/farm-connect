@@ -79,13 +79,12 @@ const App: React.FC = () => {
     window.location.hash.includes('access_token') || window.location.hash.includes('error')
   );
   const [userProfile, setUserProfile] = useState<UserProfile>({
-    name: 'Gast Gebruiker',
+    name: 'Gebruiker',
     email: '',
     isLoggedIn: false
   });
 
-  // Ref to track if user explicitly chose Guest mode to prevent auto-login
-  const isGuestModeRef = useRef(sessionStorage.getItem('guest_mode') === 'true');
+
 
   // FORCE VIEW LOGIC (Recovery from hanging registration)
   useEffect(() => {
@@ -120,35 +119,22 @@ const App: React.FC = () => {
       if (session && !stayLoggedIn && !hasTabSession) {
         console.log("🔒 Non-persistent session detected: Clearing for fresh visit.");
         await supabase.auth.signOut();
-        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-        setUserType(null);
-        setView('landing');
       }
 
       // If we are logged in (either restored or just started), mark the tab as active
       if (session) {
         sessionStorage.setItem('fc_active_tab', 'true');
+      } else {
+        // Enforce redirect to landing if no session
+        setView('landing');
+        setIsAuthModalOpen(true);
       }
     };
 
     handlePersistence();
   }, []);
 
-  // BRUTE FORCE GUEST MODE ENFORCEMENT
-  useEffect(() => {
-    const isGuestPersistent = sessionStorage.getItem('guest_mode') === 'true';
-    if (isGuestPersistent) {
-      if (userType !== 'guest' || userProfile.name !== 'Gast Gebruiker') {
-        console.log("🛡️ Guest Mode Enforcement: Correcting state");
-        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-        setUserType('guest');
-      }
-      if (view === 'landing') {
-        console.log("🛡️ Guest Mode Enforcement: Correcting view to Discover");
-        setView('discover');
-      }
-    }
-  }, [userProfile.name, userType, view]);
+
 
   // Farms Data (Single Source of Truth)
   const [farms, setFarms] = useState<Farm[]>(() => {
@@ -370,22 +356,9 @@ const App: React.FC = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('🔐 Auth State Change:', event, session?.user?.email);
 
-      // Check if we should be in guest mode
-      const isGuestModePersistent = sessionStorage.getItem('guest_mode') === 'true';
+      console.log('🔐 Auth State Change:', event, session?.user?.email);
 
-      // IF GUEST MODE IS ON: Force sign out immediately if a session exists
-      if (session && isGuestModePersistent) {
-        console.log("🛡️ Shield activated: Killing persistent session for Guest");
-        supabase.auth.signOut();
-        setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-        setUserType('guest');
-        if (view === 'landing') setView('discover');
-        return;
-      }
-
-      // If user explicitly chose Guest mode (runtime flag), ignore auto-login signals
-      const isGuestMode = isGuestModeRef.current || isGuestModePersistent;
-      if (session && !isGuestMode) {
+      if (session) {
         const { email, user_metadata } = session.user;
         const name = user_metadata.full_name || email?.split('@')[0] || 'Gebruiker';
         const photoUrl = user_metadata.avatar_url;
@@ -400,13 +373,14 @@ const App: React.FC = () => {
 
         // CRITICAL FIX: Ensure user profile exists in DB
         try {
-          await supabase.from('user_profiles').upsert({
+          const { error: upsertError } = await supabase.from('user_profiles').upsert({
             id: session.user.id,
             email: email || '',
             name: name || 'User',
             photo_url: photoUrl,
             role: 'consumer'
           });
+          if (upsertError) throw upsertError;
         } catch (err) {
           console.error('Error syncing profile:', err);
         }
@@ -467,19 +441,13 @@ const App: React.FC = () => {
         setIsMenuOpen(false);
         setIsAuthLoading(false);
       } else if (event === 'SIGNED_OUT') {
-        const stillGuest = sessionStorage.getItem('guest_mode') === 'true';
-        if (stillGuest) {
-          setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-          setUserType('guest');
-          if (view === 'landing') setView('discover');
-        } else {
-          isGuestModeRef.current = false;
-          setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-          setUserType(null);
-          setView('landing');
-          localStorage.removeItem('pendingRole');
-          sessionStorage.removeItem('guest_mode');
-        }
+        setUserProfile({ name: 'Gebruiker', email: '', isLoggedIn: false });
+        setUserType(null);
+        setView('landing');
+        localStorage.removeItem('pendingRole');
+        sessionStorage.removeItem('guest_mode');
+        // Automatically show login modal on logout to landing
+        setIsAuthModalOpen(true);
       }
     });
 
@@ -583,24 +551,9 @@ const App: React.FC = () => {
     }, 50);
   };
 
-  const handleGuestContinue = async () => {
-    console.log("👤 Choosing Guest Mode...");
-    isGuestModeRef.current = true;
-    sessionStorage.setItem('guest_mode', 'true');
-    setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
-    setUserType('guest');
-    setView('discover');
-    setIsAuthModalOpen(false);
 
-    try {
-      await supabase.auth.signOut();
-    } catch (e) {
-      console.error("SignOut error:", e);
-    }
-  };
 
   const handleLogin = (email: string, name: string) => {
-    isGuestModeRef.current = false; // Reset guest flag
     sessionStorage.removeItem('guest_mode'); // Clear persisted preference
     setUserProfile({ name, email, photoUrl: 'https://picsum.photos/id/1005/100/100', isLoggedIn: true });
     if (pendingRole === 'farmer') {
@@ -617,14 +570,13 @@ const App: React.FC = () => {
   const handleLogout = async () => {
     console.log("🚪 Logging out / Returning to start...");
 
-    // 1. Reset guest flags immediately
-    isGuestModeRef.current = false;
+    // 1. Reset flags immediately
     sessionStorage.removeItem('guest_mode');
     localStorage.removeItem('fc_stay_logged_in');
     sessionStorage.removeItem('fc_active_tab');
 
     // 2. Clear state
-    setUserProfile({ name: 'Gast Gebruiker', email: '', isLoggedIn: false });
+    setUserProfile({ name: 'Gebruiker', email: '', isLoggedIn: false });
     setUserType(null);
     setView('landing');
     setFavorites(new Set());
@@ -1009,7 +961,6 @@ const App: React.FC = () => {
           onClose={() => setIsAuthModalOpen(false)}
           pendingRole={pendingRole}
           handleLogin={handleLogin}
-          handleGuestContinue={handleGuestContinue}
           onRegisterNewFarm={() => {
             setIsAuthModalOpen(false);
             setView('register_farm');
@@ -1018,27 +969,8 @@ const App: React.FC = () => {
           showToast={showToast}
         />
       )}</AnimatePresence>
-      <AnimatePresence>{isLoginPromptOpen && (
-        <LoginPromptModal
-          onClose={() => setIsLoginPromptOpen(false)}
-          onLoginDiscoverer={() => {
-            setUserProfile({ name: 'Lander D.', email: 'lander@example.com', photoUrl: 'https://picsum.photos/id/1005/100/100', isLoggedIn: true });
-            setUserType('discoverer');
-            setView('discover');
-            setIsLoginPromptOpen(false);
-            showToast("Welkom terug, Lander!");
-          }}
-          onLoginFarmer={() => {
-            setUserProfile({ name: 'Boer Jan', email: 'jan@hoeve.be', photoUrl: 'https://picsum.photos/id/1025/100/100', isLoggedIn: true });
-            setUserType('farmer');
-            setView('farmer');
-            setIsLoginPromptOpen(false);
-            showToast("Welkom op je dashboard, Jan!");
-          }}
-          t={t}
-        />
-      )}</AnimatePresence>
-      <AnimatePresence>{isSeasonCalendarOpen && (
+
+      <AnimatePresence>{isSeasonCalendarOpen && userProfile.isLoggedIn && (
         <SeasonCalendarModal
           isOpen={isSeasonCalendarOpen}
           onClose={() => setIsSeasonCalendarOpen(false)}
