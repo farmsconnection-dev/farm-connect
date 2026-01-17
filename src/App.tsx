@@ -426,7 +426,9 @@ const App: React.FC = () => {
                   setUserType('discoverer');
                   setView('discover');
                 } else if (event === 'SIGNED_IN') {
-                  setIsRoleSelectionOpen(true);
+                  // Default to discoverer instead of showing modal to avoid extra clicks
+                  setUserType('discoverer');
+                  setView('discover');
                 }
               }
             }
