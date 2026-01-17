@@ -317,35 +317,31 @@ const App: React.FC = () => {
 
   // Supabase Auth Listener - voor Google OAuth
 
-  const checkFarmerVerification = async (email: string) => {
-    console.log('🔍 Checking farmer verification for:', email);
+  const checkFarmerVerification = async (email: string, retries = 3) => {
+    console.log(`🔍 Checking farmer verification for: ${email} (Attempts left: ${retries})`);
     try {
-      // Check if farmer has a farm using email
       const { data: farmData, error } = await supabase
         .from('farms')
-        .select('is_verified')
+        .select('is_verified, id')
         .eq('owner_email', email);
 
       if (error) {
         console.error('❌ Error fetching farm:', error);
-        showToast('Fout bij ophalen boerderij gegevens');
         return;
       }
 
       const myFarm = farmData?.[0];
-      console.log('🌾 Farm found:', myFarm);
-
-      if (!myFarm) {
-        // No farm found - redirect to registration
-        console.log('⚠️ No farm found, redirecting to register');
-        setView('register_farm');
-      } else {
-        // Farm found - allow access to dashboard regardless of verification status
-        // The dashboard will show a banner if not verified
-        console.log('✅ Farm found, verifying status:', myFarm.is_verified);
+      if (myFarm) {
+        console.log('✅ Farm found, redirecting to dashboard');
         setIsFarmerVerified(myFarm.is_verified ?? false);
         setUserType('farmer');
         setView('farmer');
+      } else if (retries > 0) {
+        console.log('⏳ No farm found yet, retrying in 2 seconds...');
+        setTimeout(() => checkFarmerVerification(email, retries - 1), 2000);
+      } else {
+        console.log('⚠️ No farm found after retries, staying on registration');
+        setView('register_farm');
       }
     } catch (err) {
       console.error('❌ Unexpected error in checkFarmerVerification:', err);

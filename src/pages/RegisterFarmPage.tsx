@@ -130,7 +130,6 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
             console.log('🚀 Starting Supabase RAW FETCH insert...', insertData);
 
             // GEBRUIK RAW FETCH OM CLIENT ISSUES TE OMZEILEN
-            // Dit is de meest robuuste manier om data op te slaan als de client hangt
             const restUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms`;
 
             const response = await fetch(restUrl, {
@@ -139,7 +138,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                     'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
                     'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
                     'Content-Type': 'application/json',
-                    'Prefer': 'return=minimal' // We hoeven geen data terug, alleen status 201
+                    'Prefer': 'return=minimal'
                 },
                 body: JSON.stringify(insertData)
             });
@@ -153,27 +152,14 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
             }
 
             console.log('✅ Farm registered successfully via Raw Fetch!');
+            clearTimeout(timeout);
 
-            // FORCE REDIRECT - BYPASS CLIENT HANGING
-            // We doen een harde reload naar de dashboard pagina om client state te resetten
-            // en te voorkomen dat we wachten op hangende async checks
-            window.location.href = window.location.origin + '?view=farmer'; // Of een manier om de view state te zetten
-            // Omdat we SPA routing hebben, is href=/dashboard misschien niet genoeg als route niet bestaat.
-            // App.tsx kijkt naar userType en view.
-            // Hard refresh is veiligst.
+            // Succesvol geregistreerd -> ga naar dashboard
+            onSuccess();
 
-            // We zetten local storage om 'farmer' view te forceren na reload
-            localStorage.setItem('force_view', 'farmer');
-            window.location.reload();
-
-            // Alternatief: als onSuccess direct view state zou zetten in App.tsx...
-            // Maar onSuccess zit nu vast in de hangende checkFarmerVerification.
-            // Dus we negeren onSuccess prop en doen het zelf.            
-            // onSuccess(); <--- DEZE HANGT
-
+        } catch (err) {
             clearTimeout(timeout);
             console.error('❌ Error registering farm:', err);
-            console.error('Error details:', JSON.stringify(err, null, 2));
 
             // More helpful error messages
             let errorMessage = err.message || 'Onbekende fout';
