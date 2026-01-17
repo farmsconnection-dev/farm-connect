@@ -183,7 +183,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => setIsPrimaryFiltersOpen(!isPrimaryFiltersOpen)}
-                                className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20`}
+                                className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20`}
                             >
                                 <Filter size={16} /> Snel-filters <ChevronDown size={14} className={`transition-transform ${isPrimaryFiltersOpen ? 'rotate-180' : ''}`} />
                             </motion.button>
@@ -200,7 +200,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
                                             onClick={() => setShowOpenOnly(!showOpenOnly)}
-                                            className={`w-full px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${showOpenOnly ? 'bg-emerald-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
+                                            className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${showOpenOnly ? 'bg-emerald-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
                                         >
                                             <div className={`p-1.5 rounded-lg ${showOpenOnly ? 'bg-white/20' : 'bg-emerald-500/20 text-emerald-500'}`}>
                                                 <Clock size={14} />
@@ -212,7 +212,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
                                             onClick={() => setActiveFilter(activeFilter === 'nearby' ? 'all' : 'nearby')}
-                                            className={`w-full px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeFilter === 'nearby' ? 'bg-purple-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
+                                            className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeFilter === 'nearby' ? 'bg-purple-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
                                         >
                                             <div className={`p-1.5 rounded-lg ${activeFilter === 'nearby' ? 'bg-white/20' : 'bg-purple-500/20 text-purple-500'}`}>
                                                 <Navigation size={14} />
@@ -224,7 +224,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
                                             onClick={() => setShow24_7Only(!show24_7Only)}
-                                            className={`w-full px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${show24_7Only ? 'bg-blue-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
+                                            className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${show24_7Only ? 'bg-blue-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
                                         >
                                             <div className={`p-1.5 rounded-lg ${show24_7Only ? 'bg-white/20' : 'bg-blue-500/20 text-blue-500'}`}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -256,7 +256,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
 
                             const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
                             return (
-                                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass}`}>
+                                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass}`}>
                                     <span className={activeFilter === cat ? 'text-current' : colorClass}>{getFilterIcon(cat)}</span>
                                     {t(`filter_${cat}`)}
                                 </motion.button>
@@ -356,7 +356,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                                 scale: 14,
                                             }}
                                             label={{
-                                                text: (activeFilter !== 'all' && activeFilter !== 'open' && activeFilter !== 'nearby')
+                                                text: show24_7Only ? '🏧' : (activeFilter !== 'all' && activeFilter !== 'open' && activeFilter !== 'nearby')
                                                     ? getFilterIcon(activeFilter)
                                                     : getFarmCategoryIcon(farm),
                                                 fontSize: '22px',
