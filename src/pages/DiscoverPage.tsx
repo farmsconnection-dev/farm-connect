@@ -45,7 +45,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [selectedFarm, setSelectedFarm] = useState<Farm | null>(null);
 
-    const filterList = ['all', 'fruit', 'vegetables', 'dairy', 'meat', 'eggs', 'honey', 'nuts', 'nearby'];
+    const filterList = ['all', 'fruit', 'vegetables', 'dairy', 'meat', 'eggs', 'honey', 'nuts'];
 
     const searchSuggestions = useMemo(() => {
         if (!searchQuery.trim()) return [];
@@ -179,7 +179,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                     <div className="flex gap-2 flex-wrap">
                         <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setShowOpenOnly(!showOpenOnly)} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${showOpenOnly ? 'bg-emerald-500 text-white' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`}><Clock size={16} />{t('filter_open_now')}</motion.button>
 
-                        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setActiveFilter(activeFilter === 'nearby' ? 'all' : 'nearby')} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeFilter === 'nearby' ? 'bg-purple-500 text-white' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`}><Navigation size={16} />In de buurt</motion.button>
+                        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setActiveFilter(activeFilter === 'nearby' ? 'all' : 'nearby')} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeFilter === 'nearby' ? 'bg-purple-500 text-white' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`}><Navigation size={16} />Dichtbij</motion.button>
 
                         <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setShow24_7Only(!show24_7Only)} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${show24_7Only ? 'bg-blue-500 text-white' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
