@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, MessageCircle, ChevronRight, Sparkles, HelpCircle, ChevronDown, Copy, MessageSquarePlus } from 'lucide-react';
+import { ChevronLeft, MessageCircle, ChevronRight, Sparkles, HelpCircle, ChevronDown, Copy } from 'lucide-react';
 import { ViewState, UserType } from '../types';
 
 interface SupportPageProps {
@@ -53,25 +53,6 @@ export const SupportPage: React.FC<SupportPageProps> = ({ t, setView, previousVi
                         <ChevronRight size={20} className="text-slate-300" />
                     </div>
                 </div>
-
-                {/* Feedback Button */}
-                <motion.a
-                    href="mailto:support@farmconnect.be?subject=Feedback%20FarmConnect&body=Ik%20heb%20volgende%20feedback%20voor%20FarmConnect%3A%0A%0A"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="bg-amber-100/80 backdrop-blur-xl p-6 rounded-3xl shadow-lg border border-amber-200/50 flex items-center justify-between group transition-all"
-                >
-                    <div className="flex items-center gap-4">
-                        <div className="bg-amber-500 text-white p-3 rounded-2xl shadow-md group-hover:scale-110 transition-transform">
-                            <MessageSquarePlus size={24} />
-                        </div>
-                        <div>
-                            <h3 className="font-black text-amber-900">Geef Feedback</h3>
-                            <p className="text-xs text-amber-700/60 font-bold">Help ons de app beter te maken!</p>
-                        </div>
-                    </div>
-                    <ChevronRight size={20} className="text-amber-400" />
-                </motion.a>
 
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setIsManualModalOpen(true)} className="bg-forest p-6 rounded-3xl shadow-2xl flex items-center justify-between text-left group transition-all w-full border border-white/10 mt-4"><div className="flex items-center gap-4 text-white"><div className="bg-mint text-forest p-3 rounded-2xl"><Sparkles size={24} /></div><div><h3 className="font-black">{t('support_guide_title')}</h3><p className="text-xs text-mint/60 font-bold">{t('support_guide_desc')}</p></div></div><ChevronRight size={20} className="text-mint/40" /></motion.button>
 

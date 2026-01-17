@@ -1117,7 +1117,7 @@ const App: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsFeedbackOpen(true)}
-          className="fixed bottom-6 right-6 z-[100] bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 font-bold transition-all border-2 border-white/20"
+          className="fixed bottom-6 left-6 z-[100] bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 font-bold transition-all border-2 border-white/20"
         >
           <MessageCircle size={24} />
           <span className="hidden sm:inline">Feedback</span>

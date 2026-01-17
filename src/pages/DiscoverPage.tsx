@@ -172,35 +172,47 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                         <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setIsMapView(true)} className={`px-4 py-2 rounded-xl flex items-center gap-2 text-sm font-bold transition-all ${isMapView ? 'bg-forest text-mint shadow-md' : 'text-slate-500 hover:bg-white/50'}`}><MapIcon size={18} />{t('view_map')}</motion.button>
                     </div>
                 </div>
-                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setShowOpenOnly(!showOpenOnly)} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${showOpenOnly ? 'bg-emerald-500 text-white' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`}><Clock size={16} />{t('filter_open_now')}</motion.button>
-                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setShow24_7Only(!show24_7Only)} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${show24_7Only ? 'bg-blue-500 text-white' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                            <line x1="9" y1="9" x2="15" y2="9" />
-                            <line x1="9" y1="15" x2="15" y2="15" />
-                            <circle cx="12" cy="12" r="1" />
-                        </svg>
-                        24/7 Automaten
-                    </motion.button>
-                    {filterList.map(cat => {
-                        const activeColor = getCategoryColor(cat);
-                        // Force specific colors on text/icon for each category
-                        const colorClass = cat === 'fruit' ? 'text-red-500' :
-                            cat === 'vegetables' ? 'text-green-500' :
-                                cat === 'dairy' ? 'text-blue-400' :
-                                    cat === 'meat' ? 'text-orange-700' :
-                                        cat === 'eggs' ? 'text-yellow-500' :
-                                            cat === 'honey' ? 'text-amber-500' : 'text-white';
 
-                        const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
-                        return (
-                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass}`}>
-                                <span className={activeFilter === cat ? 'text-current' : colorClass}>{getFilterIcon(cat)}</span>
-                                {t(`filter_${cat}`)}
-                            </motion.button>
-                        );
-                    })}
+                {/* Filter Section - Two Rows */}
+                <div className="space-y-2">
+                    {/* Row 1: Primary Filters (Nu Open, In de buurt, 24/7 Automaten) */}
+                    <div className="flex gap-2 flex-wrap">
+                        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setShowOpenOnly(!showOpenOnly)} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${showOpenOnly ? 'bg-emerald-500 text-white' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`}><Clock size={16} />{t('filter_open_now')}</motion.button>
+
+                        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setActiveFilter(activeFilter === 'nearby' ? 'all' : 'nearby')} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeFilter === 'nearby' ? 'bg-purple-500 text-white' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`}><Navigation size={16} />In de buurt</motion.button>
+
+                        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setShow24_7Only(!show24_7Only)} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${show24_7Only ? 'bg-blue-500 text-white' : 'bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20'}`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                <line x1="9" y1="9" x2="15" y2="9" />
+                                <line x1="9" y1="15" x2="15" y2="15" />
+                                <circle cx="12" cy="12" r="1" />
+                            </svg>
+                            24/7 Automaten
+                        </motion.button>
+                    </div>
+
+                    {/* Row 2: Category Filters */}
+                    <div className="flex gap-2 flex-wrap">
+                        {filterList.map(cat => {
+                            const activeColor = getCategoryColor(cat);
+                            // Force specific colors on text/icon for each category
+                            const colorClass = cat === 'fruit' ? 'text-red-500' :
+                                cat === 'vegetables' ? 'text-green-500' :
+                                    cat === 'dairy' ? 'text-blue-400' :
+                                        cat === 'meat' ? 'text-orange-700' :
+                                            cat === 'eggs' ? 'text-yellow-500' :
+                                                cat === 'honey' ? 'text-amber-500' : 'text-white';
+
+                            const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
+                            return (
+                                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass}`}>
+                                    <span className={activeFilter === cat ? 'text-current' : colorClass}>{getFilterIcon(cat)}</span>
+                                    {t(`filter_${cat}`)}
+                                </motion.button>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
             <div className="flex-1 overflow-hidden relative bg-white/5 backdrop-blur-xl rounded-apple shadow-2xl border border-white/10">
