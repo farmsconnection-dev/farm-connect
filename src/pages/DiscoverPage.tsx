@@ -242,8 +242,8 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                         </div>
                     </div>
 
-                    {/* Row 2: Category Filters */}
-                    <div className="flex gap-2 flex-wrap">
+                    {/* Row 2: Category Filters - Horizontal Scroll */}
+                    <div className="flex gap-2 overflow-x-auto pb-3 -mb-2 scroll-smooth">
                         {filterList.map(cat => {
                             const activeColor = getCategoryColor(cat);
                             // Force specific colors on text/icon for each category
