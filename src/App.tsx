@@ -34,6 +34,7 @@ import { AiAdviceModal } from './components/modals/AiAdviceModal';
 import { SeasonCalendarModal } from './components/modals/SeasonCalendarModal';
 import { ImageModal } from './components/modals/ImageModal';
 import { ProductFactsModal } from './components/modals/ProductFactsModal';
+import { FeedbackModal } from './components/modals/FeedbackModal';
 
 // --- PAGES ---
 import { LandingPage } from './pages/LandingPage';
@@ -194,6 +195,7 @@ const App: React.FC = () => {
   const [isLoginPromptOpen, setIsLoginPromptOpen] = useState(false);
   const [isProductFactsOpen, setIsProductFactsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<string>('');
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   const [toast, setToast] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -1104,6 +1106,30 @@ const App: React.FC = () => {
           onAdd={handleRegisterFarm}
           t={t}
           showToast={showToast}
+        />
+      )}</AnimatePresence>
+
+      {/* Floating Feedback Button */}
+      {view !== 'landing' && (
+        <motion.button
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsFeedbackOpen(true)}
+          className="fixed bottom-6 right-6 z-[100] bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 font-bold transition-all border-2 border-white/20"
+        >
+          <MessageCircle size={24} />
+          <span className="hidden sm:inline">Feedback</span>
+        </motion.button>
+      )}
+
+      {/* Feedback Modal */}
+      <AnimatePresence>{isFeedbackOpen && (
+        <FeedbackModal
+          isOpen={isFeedbackOpen}
+          onClose={() => setIsFeedbackOpen(false)}
+          googleSheetsUrl="https://script.google.com/macros/s/AKfycbzSTfq5OOqMuGu_5SWYM1G9LF9re9fm22Tg9nkXC4wwXtonroh9PqzwujdRVWhp4Beg3w/exec"
         />
       )}</AnimatePresence>
 
