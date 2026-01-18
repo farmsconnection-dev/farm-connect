@@ -439,20 +439,11 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                             onClick={() => setSelectedFarm(farm)}
                                             icon={{
                                                 path: google.maps.SymbolPath.CIRCLE,
-                                                fillColor: isDairy ? markerColor : 'transparent',
-                                                fillOpacity: isDairy ? 1 : 0,
-                                                strokeColor: isDairy ? '#60a5fa' : 'transparent',
-                                                strokeWeight: isDairy ? 3 : 0,
-                                                scale: 14,
-                                            }}
-                                            label={{
-                                                text: show24_7Only ? '🏧' : (activeFilter !== 'all' && activeFilter !== 'open' && activeFilter !== 'nearby')
-                                                    ? getFilterIcon(activeFilter)
-                                                    : getFarmCategoryIcon(farm),
-                                                fontSize: '22px',
-                                                color: 'white',
-                                                fontWeight: 'bold',
-                                                fontFamily: 'Arial, sans-serif'
+                                                fillColor: markerColor,
+                                                fillOpacity: 1,
+                                                strokeColor: '#ffffff',
+                                                strokeWeight: 2,
+                                                scale: 10,
                                             }}
                                         />
                                     );
