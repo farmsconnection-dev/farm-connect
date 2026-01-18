@@ -896,6 +896,7 @@ const App: React.FC = () => {
             previousView={previousView}
             setIsManualModalOpen={setIsManualModalOpen}
             userType={userType}
+            isLoggedIn={userProfile.isLoggedIn}
             showToast={showToast}
           />
         )}

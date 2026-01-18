@@ -10,10 +10,11 @@ interface SupportPageProps {
     previousView: ViewState;
     setIsManualModalOpen: (isOpen: boolean) => void;
     userType: UserType;
+    isLoggedIn: boolean;
     showToast: (msg: string) => void;
 }
 
-export const SupportPage: React.FC<SupportPageProps> = ({ t, setView, previousView, setIsManualModalOpen, userType, showToast }) => {
+export const SupportPage: React.FC<SupportPageProps> = ({ t, setView, previousView, setIsManualModalOpen, userType, isLoggedIn, showToast }) => {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
 
     const handleCopyEmail = (e: React.MouseEvent) => {
@@ -54,7 +55,25 @@ export const SupportPage: React.FC<SupportPageProps> = ({ t, setView, previousVi
                     </div>
                 </div>
 
-                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setIsManualModalOpen(true)} className="bg-forest p-6 rounded-3xl shadow-2xl flex items-center justify-between text-left group transition-all w-full border border-white/10 mt-4"><div className="flex items-center gap-4 text-white"><div className="bg-mint text-forest p-3 rounded-2xl"><Sparkles size={24} /></div><div><h3 className="font-black">{t('support_guide_title')}</h3><p className="text-xs text-mint/60 font-bold">{t('support_guide_desc')}</p></div></div><ChevronRight size={20} className="text-mint/40" /></motion.button>
+                {userType === 'farmer' && isLoggedIn && (
+                    <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setIsManualModalOpen(true)}
+                        className="bg-forest p-6 rounded-3xl shadow-2xl flex items-center justify-between text-left group transition-all w-full border border-white/10 mt-4"
+                    >
+                        <div className="flex items-center gap-4 text-white">
+                            <div className="bg-mint text-forest p-3 rounded-2xl">
+                                <Sparkles size={24} />
+                            </div>
+                            <div>
+                                <h3 className="font-black">{t('support_guide_title')}</h3>
+                                <p className="text-xs text-mint/60 font-bold">{t('support_guide_desc')}</p>
+                            </div>
+                        </div>
+                        <ChevronRight size={20} className="text-mint/40" />
+                    </motion.button>
+                )}
 
                 <div className="bg-white/80 backdrop-blur-xl p-8 rounded-apple shadow-xl border border-white/20 mt-12">
                     <h3 className="text-2xl font-black text-forest mb-8 flex items-center gap-3"><HelpCircle size={28} className="text-mint" />{t('faq_title')}</h3>
