@@ -955,12 +955,12 @@ const App: React.FC = () => {
           <RegisterFarmPage
             email={userProfile.email}
             userId={userProfile.id}
-            onSuccess={() => {
-              console.log("🚀 Immediate redirect to dashboard after registration");
+            onSuccess={(farmEmail) => {
+              console.log("🚀 Immediate redirect to dashboard after registration for:", farmEmail);
               setUserType('farmer');
               setIsFarmerVerified(false); // Initially unverified
               setView('farmer');
-              checkFarmerVerification(userProfile.email); // Sync data in background
+              checkFarmerVerification(farmEmail); // Sync data in background
             }}
             onLogout={handleLogout}
             lang={lang}

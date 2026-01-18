@@ -7,14 +7,14 @@ import { supabase } from '../lib/supabase';
 interface RegisterFarmPageProps {
     email: string;
     userId?: string;
-    onSuccess: () => void;
+    onSuccess: (email: string) => void;
     onLogout: () => void;
     lang: string;
     t: (key: string) => string;
     initialName?: string; // New prop for claim link
 }
 
-export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userId, onSuccess, onLogout, lang, t, initialName = '' }) => {
+export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authEmail, userId, onSuccess, onLogout, lang, t, initialName = '' }) => {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: initialName,
@@ -114,7 +114,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                 phone: formData.phone || formData.email,
                 lat: formData.lat,
                 lng: formData.lng,
-                owner_email: email, // Use authenticated user's email
+                owner_email: formData.email || authEmail, // Use form email first
                 products: []
             };
 
@@ -156,7 +156,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
             clearTimeout(timeout);
 
             // Succesvol geregistreerd -> ga naar dashboard
-            onSuccess();
+            onSuccess(formData.email || authEmail);
 
         } catch (err) {
             clearTimeout(timeout);
