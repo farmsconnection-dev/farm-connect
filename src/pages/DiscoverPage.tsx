@@ -336,17 +336,16 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                         }
                                     };
 
-                                    // Determine marker color based on active filter or farm's primary category
+                                    // Determine marker color and check if it's dairy for special border
                                     let markerColor: string;
+                                    const primaryCategoryForMarker = Object.entries(categoryCounts)
+                                        .sort((a, b) => b[1] - a[1])[0]?.[0] || 'all';
+                                    const isDairy = activeFilter === 'dairy' || (activeFilter === 'all' && primaryCategoryForMarker === 'dairy');
 
                                     if (activeFilter !== 'all' && activeFilter !== 'open' && activeFilter !== 'nearby') {
-                                        // Use the active filter's color
                                         markerColor = getColorForCategory(activeFilter);
                                     } else {
-                                        // Use farm's most common category color
-                                        const primaryCategory = Object.entries(categoryCounts)
-                                            .sort((a, b) => b[1] - a[1])[0]?.[0] || 'all';
-                                        markerColor = getColorForCategory(primaryCategory);
+                                        markerColor = getColorForCategory(primaryCategoryForMarker);
                                     }
 
                                     return (
@@ -358,8 +357,8 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                                 path: google.maps.SymbolPath.CIRCLE,
                                                 fillColor: markerColor,
                                                 fillOpacity: 1,
-                                                strokeColor: '#ffffff',
-                                                strokeWeight: 3,
+                                                strokeColor: isDairy ? '#60a5fa' : 'transparent',
+                                                strokeWeight: isDairy ? 3 : 0,
                                                 scale: 14,
                                             }}
                                             label={{
