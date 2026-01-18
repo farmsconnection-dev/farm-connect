@@ -35,6 +35,30 @@ const googleMapsOptions = {
     ]
 };
 
+const CITY_COORDINATES: Record<string, { lat: number, lng: number }> = {
+    'gent': { lat: 51.0543, lng: 3.7174 },
+    'antwerpen': { lat: 51.2194, lng: 4.4025 },
+    'brussel': { lat: 50.8503, lng: 4.3517 },
+    'bruxelles': { lat: 50.8503, lng: 4.3517 },
+    'brugge': { lat: 51.2093, lng: 3.2247 },
+    'leuven': { lat: 50.8798, lng: 4.7005 },
+    'hasselt': { lat: 50.9307, lng: 5.3325 },
+    'namen': { lat: 50.4674, lng: 4.8719 },
+    'namur': { lat: 50.4674, lng: 4.8719 },
+    'luik': { lat: 50.6326, lng: 5.5797 },
+    'liege': { lat: 50.6326, lng: 5.5797 },
+    'mechelen': { lat: 51.0259, lng: 4.4773 },
+    'kortrijk': { lat: 50.8280, lng: 3.2649 },
+    'roeselare': { lat: 50.9445, lng: 3.1249 },
+    'ieper': { lat: 50.8510, lng: 2.8857 },
+    'aalst': { lat: 50.9378, lng: 4.0410 },
+    'dendermonde': { lat: 51.0312, lng: 4.1019 },
+    'sint-niklaas': { lat: 51.1647, lng: 4.1394 },
+    'genk': { lat: 50.9655, lng: 5.5008 },
+    'oostende': { lat: 51.2154, lng: 2.9270 },
+    'knokke': { lat: 51.3409, lng: 3.2878 },
+};
+
 export const DiscoverPage: React.FC<DiscoverPageProps> = ({
     t, farms, isLoaded, loadError, userLocation, setDetailFarm, toggleFavorite, favorites, handleRouteClick,
     searchQuery, setSearchQuery, userProfile, lang
@@ -53,14 +77,33 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
         if (!searchQuery.trim()) return [];
         const query = searchQuery.toLowerCase();
         const suggestions = new Set<string>();
+
+        // Add matching cities first
+        Object.keys(CITY_COORDINATES).forEach(city => {
+            if (city.includes(query)) suggestions.add(city.charAt(0).toUpperCase() + city.slice(1));
+        });
+
         farms.forEach(farm => {
             if (farm.name.toLowerCase().includes(query)) suggestions.add(farm.name);
+            if (farm.address.toLowerCase().includes(query)) {
+                // Try to extract city from address if possible
+                const parts = farm.address.split(',');
+                const cityPart = parts[parts.length - 1]?.trim() || farm.address;
+                suggestions.add(cityPart);
+            }
             farm.products.forEach(p => {
                 if (p.name.toLowerCase().includes(query)) suggestions.add(p.name);
             });
         });
         return Array.from(suggestions).slice(0, 5);
     }, [searchQuery, farms]);
+
+    // Detect if search is a city
+    const searchCityCoords = useMemo(() => {
+        if (!searchQuery) return null;
+        const query = searchQuery.toLowerCase().trim();
+        return CITY_COORDINATES[query] || null;
+    }, [searchQuery]);
 
     const filteredFarms = useMemo(() => {
         let result = farms;
@@ -99,15 +142,29 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
 
         if (searchQuery) {
             const query = searchQuery.toLowerCase();
-            result = result.filter(f =>
-                f.name.toLowerCase().includes(query) ||
-                f.products.some(p => p.name.toLowerCase().includes(query))
-            );
+            const cityCoords = CITY_COORDINATES[query];
+
+            if (cityCoords) {
+                // If searching for a city, show all farms but prioritized by distance to city later
+                // and potentially restrict to a broad region if needed, but for now we just show all
+                // matched results. Actually, if it's a city, we might want to show farms in that city specifically.
+                result = result.filter(f =>
+                    f.address.toLowerCase().includes(query) ||
+                    // Also include farms within 20km of the searched city
+                    calculateDistance(cityCoords.lat, cityCoords.lng, f.lat, f.lng) <= 25
+                );
+            } else {
+                result = result.filter(f =>
+                    f.name.toLowerCase().includes(query) ||
+                    f.address.toLowerCase().includes(query) ||
+                    f.products.some(p => p.name.toLowerCase().includes(query))
+                );
+            }
         }
 
 
-        // Calculate distance and sort (use Brussels center as default if no user location)
-        const referenceLocation = userLocation || { lat: 50.8503, lng: 4.3517 }; // Brussels center
+        // Calculate distance and sort (use search city, user location, or Brussels center)
+        const referenceLocation = searchCityCoords || userLocation || { lat: 50.8503, lng: 4.3517 }; // Brussels center
         result = result.map(f => ({
             ...f,
             distance: calculateDistance(referenceLocation.lat, referenceLocation.lng, f.lat, f.lng)
@@ -321,7 +378,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                 ) : (
                     <div className="absolute inset-0 rounded-apple overflow-hidden border-4 border-white/10 shadow-2xl bg-slate-100 min-h-[500px] h-full">
                         {isLoaded ? (
-                            <GoogleMap mapContainerStyle={mapContainerStyle} center={userLocation || defaultCenter} zoom={11} options={googleMapsOptions}>
+                            <GoogleMap mapContainerStyle={mapContainerStyle} center={searchCityCoords || userLocation || defaultCenter} zoom={searchCityCoords ? 12 : 11} options={googleMapsOptions}>
                                 {userLocation && <MarkerF position={userLocation} label="👋" />}
                                 {filteredFarms.map(farm => {
                                     // Determine most common category
