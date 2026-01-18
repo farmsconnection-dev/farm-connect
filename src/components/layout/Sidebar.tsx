@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { X, HelpCircle, TrendingUp, Box, Heart, Users, Compass, Calendar, Leaf, LogIn, LogOut, User, ShieldCheck, ArrowLeftCircle, Store, Tractor, Edit } from 'lucide-react';
+import { X, HelpCircle, TrendingUp, Box, Heart, Users, Compass, Calendar, Leaf, LogIn, LogOut, User, ShieldCheck, ArrowLeftCircle, Store, Tractor, Edit, ChevronDown, ChevronRight } from 'lucide-react';
 import { UserType, UserProfile, ViewState } from '../../types';
 
 interface MenuItem {
@@ -9,6 +9,7 @@ interface MenuItem {
     label: string;
     icon: React.ReactNode;
     action?: () => void;
+    subItems?: MenuItem[];
 }
 
 interface SidebarProps {
@@ -30,6 +31,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     isOpen, onClose, view, setView, userType, userProfile, setUserProfile,
     handleLogout, handleLogin, setIsSeasonCalendarOpen, setIsReferralModalOpen, t
 }) => {
+    const [expandedItems, setExpandedItems] = React.useState<Set<string>>(new Set(['inventory_group']));
 
     // File upload logic for profile picture
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -73,9 +75,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
         if (userType === 'farmer') {
             const farmerItems = [
                 { id: 'farmer', label: 'Dashboard', icon: <TrendingUp size={20} /> },
-                { id: 'my_farm', label: 'Mijn Boerderij', icon: <Tractor size={20} /> },
-                { id: 'vending', label: 'Mijn Automaten', icon: <Store size={20} /> },
-                { id: 'inventory', label: t('menu_inventory'), icon: <Box size={20} /> },
+                {
+                    id: 'inventory_group',
+                    label: t('menu_inventory'),
+                    icon: <Box size={20} />,
+                    subItems: [
+                        { id: 'my_farm', label: 'Mijn Boerderij', icon: <Tractor size={18} /> },
+                        { id: 'vending', label: 'Mijn Automaten', icon: <Store size={18} /> },
+                        { id: 'inventory', label: 'Mijn Producten', icon: <Box size={18} /> },
+                    ]
+                },
                 { id: 'favorites', label: t('menu_favorites'), icon: <Heart size={20} /> },
 
                 { id: 'calendar', label: t('menu_calendar'), icon: <Calendar size={20} />, action: () => setIsSeasonCalendarOpen(true) },
@@ -160,12 +169,67 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <button onClick={handleLogin} className="w-full bg-forest text-mint py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg mt-2"><LogIn size={16} /> {t('login')}</button>
                 )}
             </div>
-            <div className="flex-1 overflow-y-auto p-4 space-y-2">
-                {menuItems.map(item => (
-                    <button key={item.id} onClick={() => { if (item.action) item.action(); else setView(item.id as ViewState); onClose(); }} className={`w-full flex items-center gap-4 p-3 sm:p-4 rounded-xl font-bold transition-all text-white hover:bg-white/10 ${view === item.id ? 'bg-white/10 text-amber-400' : ''}`}>
-                        <span className={view === item.id ? 'text-amber-400' : 'text-mint'}>{item.icon}</span> {item.label}
-                    </button>
-                ))}
+            <div className="flex-1 overflow-y-auto p-4 space-y-1">
+                {menuItems.map(item => {
+                    const hasSubItems = item.subItems && item.subItems.length > 0;
+                    const isExpanded = expandedItems.has(item.id);
+                    const isActive = view === item.id || (item.subItems?.some(s => s.id === view));
+
+                    return (
+                        <div key={item.id} className="space-y-1">
+                            <button
+                                onClick={() => {
+                                    if (hasSubItems) {
+                                        setExpandedItems(prev => {
+                                            const next = new Set(prev);
+                                            if (next.has(item.id)) next.delete(item.id);
+                                            else next.add(item.id);
+                                            return next;
+                                        });
+                                    } else {
+                                        if (item.action) item.action();
+                                        else setView(item.id as ViewState);
+                                        onClose();
+                                    }
+                                }}
+                                className={`w-full flex items-center justify-between p-3 sm:p-4 rounded-2xl font-bold transition-all text-white hover:bg-white/10 ${view === item.id ? 'bg-white/10 text-amber-400 shadow-inner' : ''}`}
+                            >
+                                <div className="flex items-center gap-4">
+                                    <span className={view === item.id ? 'text-amber-400' : 'text-mint'}>{item.icon}</span>
+                                    <span>{item.label}</span>
+                                </div>
+                                {hasSubItems && (
+                                    <motion.div animate={{ rotate: isExpanded ? 180 : 0 }}>
+                                        <ChevronDown size={18} className="text-white/40" />
+                                    </motion.div>
+                                )}
+                            </button>
+
+                            {hasSubItems && isExpanded && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    className="pl-12 space-y-1 overflow-hidden"
+                                >
+                                    {item.subItems.map(sub => (
+                                        <button
+                                            key={sub.id}
+                                            onClick={() => {
+                                                if (sub.action) sub.action();
+                                                else setView(sub.id as ViewState);
+                                                onClose();
+                                            }}
+                                            className={`w-full flex items-center gap-3 p-3 rounded-xl text-sm font-bold transition-all hover:bg-white/5 ${view === sub.id ? 'text-amber-400 bg-white/5' : 'text-white/70'}`}
+                                        >
+                                            <span className={view === sub.id ? 'text-amber-400' : 'text-white/30'}>{sub.icon}</span>
+                                            {sub.label}
+                                        </button>
+                                    ))}
+                                </motion.div>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
             <div className="p-6 border-t border-white/10">
                 <button
