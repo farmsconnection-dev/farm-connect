@@ -66,7 +66,13 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
         let result = farms;
 
         // IMPORTANT: Only show verified farms to public, BUT always show user's own farm
-        result = result.filter(f => f.is_verified !== false || (userProfile?.id && f.owner_id === userProfile.id));
+        result = result.filter(f => {
+            if (f.is_verified === true) return true;
+            if (userProfile?.id && f.owner_id === userProfile.id) return true;
+            // Preserve mock farms for demo purposes (IDs 1-25)
+            if (f.id && !isNaN(parseInt(f.id)) && parseInt(f.id) <= 25) return true;
+            return false;
+        });
 
         // Filter for 24/7 automaten
         if (show24_7Only) {
