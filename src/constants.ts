@@ -1499,7 +1499,7 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "broccoli": broccoli,
   "pompoen": pumpkin,
   "uien": "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?auto=format&fit=crop&q=80&w=400",
-  "witloof": "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=400",
+  "witloof": "https://images.unsplash.com/photo-1628151241199-6f3453303867?auto=format&fit=crop&q=80&w=400",
   "spruitjes": "https://images.unsplash.com/photo-1438118907704-7718ee9a191a?auto=format&fit=crop&q=80&w=400",
   "asperges": "https://images.unsplash.com/photo-1515471209610-dae1c92d8777?auto=format&fit=crop&q=80&w=400",
   "spinazie": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=400",
