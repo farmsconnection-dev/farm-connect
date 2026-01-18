@@ -254,6 +254,67 @@ export const DICTIONARY: TranslationDictionary = {
     de: "Melden Sie sich an, um Ihre Favoriten zu speichern."
   },
   login_for_more: { nl: "Log in voor meer", fr: "Connectez-vous pour plus", en: "Login for more", de: "Anmelden voor meer" },
+  welcome_back: { nl: "Welkom terug", fr: "Bon retour", en: "Welcome back", de: "Willkommen zurück" },
+  farmer_dashboard_invite_earn: { nl: "Nodig uit & Verdien €20", fr: "Invite & Gagne 20 €", en: "Invite & Earn €20", de: "Einladen & 20 € verdienen" },
+  farmer_dashboard_initiative_text: {
+    nl: "Bedankt dat je deel uitmaakt van dit initiatief. Samen maken we een vuist voor eerlijke prijzen en kortere ketens.",
+    fr: "Merci de faire partie de cette initiative. Ensemble, nous luttons pour des prix équitables et des circuits courts.",
+    en: "Thank you for being part of this initiative. Together we stand for fair prices and shorter chains.",
+    de: "Danke, dass Sie Teil dieser Initiative sind. Gemeinsam setzen wir uns für faire Preise und kürzere Ketten ein."
+  },
+  verification_pending_banner: { nl: "Verificatie In Behandeling", fr: "Vérification en cours", en: "Verification Pending", de: "Verifizierung läuft" },
+  verification_pending_desc: {
+    nl: "Je profiel is nog niet publiek zichtbaar. We verifiëren je gegevens binnen 24 uur. In de tussentijd kun je alvast je profiel en producten volledig invullen.",
+    fr: "Votre profil n'est pas encore visible. Nous vérifions vos données dans les 24h. En attendant, complétez votre profil.",
+    en: "Your profile is not yet publicly visible. We verify your details within 24 hours. In the meantime, you can complete your profile.",
+    de: "Ihr Profil ist noch nicht öffentlich sichtbar. Wir prüfen Ihre Daten innerhalb von 24h. In der Zwischenzeit können Sie Ihr Profil vervollständigen."
+  },
+  verified_farm: { nl: "Geverifieerde Boerderij", fr: "Ferme Vérifiée", en: "Verified Farm", de: "Verifizierter Bauernhof" },
+  verified_farm_desc: {
+    nl: "Je profiel is geverifieerd en volledig zichtbaar voor consumenten! Je bent goed bezig.",
+    fr: "Votre profil est vérifié et visible ! Bon travail.",
+    en: "Your profile is verified and fully visible to consumers! You're doing great.",
+    de: "Ihr Profil ist verifiziert und für Verbraucher sichtbar! Sie machen das großartig."
+  },
+  share_farm_title: { nl: "Deel je Boerderij", fr: "Partagez votre ferme", en: "Share your Farm", de: "Teilen Sie Ihren Bauernhof" },
+  share_farm_desc: {
+    nl: "Laat de wereld weten waar ze verse, eerlijke producten kunnen vinden. Zonder de boer geen eten! 🌾",
+    fr: "Faites savoir au monde où trouver des produits frais. Sans agriculteur, pas de nourriture ! 🌾",
+    en: "Let the world know where to find fresh, honest products. No farmer, no food! 🌾",
+    de: "Lassen Sie die Welt wissen, wo sie frische Produkte finden kann. Ohne Bauer kein Essen! 🌾"
+  },
+  share_farm_preview: { nl: "PREVIEW VAN JE BERICHT:", fr: "APERÇU DE VOTRE MESSAGE :", en: "PREVIEW OF YOUR MESSAGE:", de: "VORSCHAU IHRER NACHRICHT:" },
+  share_farm_msg: {
+    nl: "Ontdek je boerderij! Verse producten, eerlijke prijzen, rechtstreeks van de boer. Zonder de boer geen eten! 🚜🥬",
+    fr: "Découvrez votre ferme ! Produits frais, prix justes, direct du producteur. Sans agriculteur, pas de nourriture ! 🚜🥬",
+    en: "Discover your farm! Fresh products, fair prices, direct from the farmer. No farmer, no food! 🚜🥬",
+    de: "Entdecken Sie Ihren Bauernhof! Frische Produkte, faire Preise, direkt vom Bauern. Ohne Bauer kein Essen! 🚜🥬"
+  },
+  copy_link: { nl: "KOPIEER LINK", fr: "COPIER LE LIEN", en: "COPY LINK", de: "LINK KOPIEREN" },
+  share_on_facebook: { nl: "DEEL OP FACEBOOK", fr: "PARTAGER SUR FACEBOOK", en: "SHARE ON FACEBOOK", de: "AUF FACEBOOK TEILEN" },
+  status_update_title: { nl: "Status Update", fr: "Mise à jour du statut", en: "Status Update", de: "Status-Update" },
+  status_update_desc: {
+    nl: "Deel een tijdelijke actie of boodschap met je klanten. Deze verschijnt prominent op je boerderijkaart.",
+    fr: "Partagez une action ou un message temporaire avec vos clients.",
+    en: "Share a temporary action or message with your customers. This appears prominently on your farm map.",
+    de: "Teilen Sie eine temporäre Aktion oder Nachricht mit Ihren Kunden."
+  },
+  status_update_label: { nl: "BOODSCHAP", fr: "MESSAGE", en: "MESSAGE", de: "NACHRICHT" },
+  status_update_placeholder: { nl: "Bijv: Verse aardbeien nu beschikbaar! 🍓", fr: "Ex: Fraises fraîches disponibles ! 🍓", en: "E.g.: Fresh strawberries now available! 🍓", de: "Z.B.: Frische Erdbeeren jetzt verfügbar! 🍓" },
+  status_update_valid_label: { nl: "GELDIG VOOR", fr: "VALABLE POUR", en: "VALID FOR", de: "GÜLTIG FÜR" },
+  status_update_publish: { nl: "PUBLICEER", fr: "PUBLIER", en: "PUBLISH", de: "VERÖFFENTLICHEN" },
+  status_update_days: { nl: "dag", fr: "jour", en: "day", de: "Tag" },
+  status_update_days_plural: { nl: "dagen", fr: "jours", en: "days", de: "Tage" },
+  active_status: { nl: "Actieve Status", fr: "Statut Actif", en: "Active Status", de: "Aktiver Status" },
+  expires_on: { nl: "Vervalt op:", fr: "Expire le :", en: "Expires on:", de: "Läuft ab am:" },
+  no_farm_registered: { nl: "Je hebt nog geen boerderij geregistreerd", fr: "Aucune ferme enregistrée", en: "No farm registered yet", de: "Noch kein Bauernhof registriert" },
+  no_farm_desc: {
+    nl: "Zet jezelf vandaag nog op de kaart en laat de buurt zien waar hun eten vandaan komt!",
+    fr: "Mettez votre ferme sur la carte aujourd'hui !",
+    en: "Put yourself on the map today and show the neighborhood where their food comes from!",
+    de: "Setzen Sie sich noch heute auf die Karte!"
+  },
+  register_now: { nl: "Registreer Nu", fr: "Inscrivez-vous", en: "Register Now", de: "Jetzt registrieren" },
   // New Functional Translations
   in_stock: { nl: "In Voorraad", fr: "En Stock", en: "In Stock", de: "Auf Lager" },
   sold_out: { nl: "Op = Op", fr: "Épuisé", en: "Sold Out", de: "Ausverkauft" },

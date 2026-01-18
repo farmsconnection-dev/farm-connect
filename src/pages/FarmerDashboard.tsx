@@ -210,7 +210,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         <div className="flex-1 text-center md:text-left">
                             <div className="flex flex-wrap items-center gap-4 md:gap-8 mb-2 justify-center md:justify-start">
                                 <h1 className="text-4xl md:text-5xl font-black text-white drop-shadow-lg m-0">
-                                    Welkom terug, {(!myFarm || myFarm.id === '1') ? userProfile.name.split(' ')[0] : myFarm.name}! 👋
+                                    {t('welcome_back')}, {(!myFarm || myFarm.id === '1') ? userProfile.name.split(' ')[0] : myFarm.name}! 👋
                                 </h1>
                                 <motion.button
                                     whileHover={{ scale: 1.05 }}
@@ -218,24 +218,14 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                     onClick={() => setIsReferralModalOpen(true)}
                                     className="bg-amber-400 text-amber-900 text-xs sm:text-sm px-4 py-2 rounded-full font-black uppercase tracking-wide shadow-lg hover:bg-amber-300 transition-colors flex items-center gap-2 border-2 border-amber-200"
                                 >
-                                    <Gift size={16} /> Nodig uit & Verdien €20
+                                    <Gift size={16} /> {t('farmer_dashboard_invite_earn')}
                                 </motion.button>
                             </div>
-                            <p className="text-emerald-100 text-lg font-medium mb-6 max-w-2xl leading-relaxed">Bedankt dat je deel uitmaakt van dit initiatief. Samen maken we een vuist voor eerlijke prijzen en kortere ketens.</p>
+                            <p className="text-emerald-100 text-lg font-medium mb-6 max-w-2xl leading-relaxed">{t('farmer_dashboard_initiative_text')}</p>
 
 
                         </div>
 
-                        {(!myFarm || myFarm.id === '1') && (
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => setIsAddFarmOpen(true)}
-                                className="bg-white text-forest px-8 py-4 rounded-2xl font-black uppercase tracking-wide shadow-xl flex items-center gap-2 whitespace-nowrap"
-                            >
-                                <Store size={20} /> Registreer mijn boerderij
-                            </motion.button>
-                        )}
                     </div>
                 </div>
 
@@ -254,11 +244,11 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                 <MapPin size={32} className="text-emerald-100" />
                             </div>
                             <div className="flex-1">
-                                <h3 className="text-xl font-black text-white mb-2">Je hebt nog geen boerderij geregistreerd</h3>
-                                <p className="text-emerald-100/90 text-lg">Zet jezelf vandaag nog op de kaart en laat de buurt zien waar hun eten vandaan komt!</p>
+                                <h3 className="text-xl font-black text-white mb-2">{t('no_farm_registered')}</h3>
+                                <p className="text-emerald-100/90 text-lg">{t('no_farm_desc')}</p>
                             </div>
                             <button onClick={() => setIsAddFarmOpen(true)} className="bg-white text-emerald-800 px-6 py-3 rounded-xl font-black uppercase text-sm shadow-lg hover:bg-emerald-50 transition-colors">
-                                Registreer Nu
+                                {t('register_now')}
                             </button>
                         </div>
                     </motion.div>
@@ -270,8 +260,8 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                     initial={{ scale: 0.95, opacity: 0, y: -10 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     className={`relative p-6 rounded-3xl shadow-lg overflow-hidden border-2 ${isVerified
-                            ? 'bg-gradient-to-r from-emerald-500 to-green-600 border-emerald-400'
-                            : 'bg-gradient-to-r from-amber-500 to-orange-500 border-amber-300'
+                        ? 'bg-gradient-to-r from-emerald-500 to-green-600 border-emerald-400'
+                        : 'bg-gradient-to-r from-amber-500 to-orange-500 border-amber-300'
                         }`}
                 >
                     <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -282,18 +272,18 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                             <h3 className="text-lg font-black text-white mb-1 flex items-center gap-2">
                                 {isVerified ? (
                                     <>
-                                        <ShieldCheck size={18} /> Geverifieerde Boerderij
+                                        <ShieldCheck size={18} /> {t('verified_farm')}
                                     </>
                                 ) : (
                                     <>
-                                        <AlertTriangle size={18} /> Verificatie In Behandeling
+                                        <AlertTriangle size={18} /> {t('verification_pending_banner')}
                                     </>
                                 )}
                             </h3>
                             <p className={`text-sm leading-relaxed ${isVerified ? 'text-emerald-50' : 'text-amber-100'}`}>
                                 {isVerified
-                                    ? "Je profiel is geverifieerd en volledig zichtbaar voor consumenten! Je bent goed bezig."
-                                    : "Je profiel is nog niet publiek zichtbaar. We verifiëren je gegevens binnen 24 uur. In de tussentijd kun je alvast je profiel en producten volledig invullen."
+                                    ? t('verified_farm_desc')
+                                    : t('verification_pending_desc')
                                 }
                             </p>
                         </div>
@@ -316,11 +306,10 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">
                                 <Share2 size={20} className="text-white" />
-                                <h3 className="text-lg font-black text-white">Deel je Boerderij</h3>
+                                <h3 className="text-lg font-black text-white">{t('share_farm_title')}</h3>
                             </div>
                             <p className="text-blue-100 text-sm leading-relaxed max-w-md">
-                                Laat de wereld weten waar ze verse, eerlijke producten kunnen vinden.
-                                <span className="font-bold"> Zonder de boer geen eten!</span> 🌾
+                                {t('share_farm_desc')}
                             </p>
                         </div>
 
@@ -334,7 +323,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                                 </svg>
-                                Deel op Facebook
+                                {t('share_on_facebook')}
                             </motion.button>
 
                             <motion.button
@@ -344,15 +333,15 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                 className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-5 py-3 rounded-xl font-bold uppercase text-xs flex items-center gap-2 border border-white/30 transition-colors"
                             >
                                 <Copy size={16} />
-                                Kopieer Link
+                                {t('copy_link')}
                             </motion.button>
                         </div>
                     </div>
 
                     <div className="mt-4 p-3 bg-white/10 backdrop-blur-md rounded-xl border border-white/20">
-                        <p className="text-[10px] font-black text-white/60 uppercase tracking-widest mb-1">Preview van je bericht:</p>
+                        <p className="text-[10px] font-black text-white/60 uppercase tracking-widest mb-1">{t('share_farm_preview')}</p>
                         <p className="text-sm text-white italic">
-                            🌾 Ontdek {myFarm?.name || 'je boerderij'}! Verse producten, eerlijke prijzen, rechtstreeks van de boer. Zonder de boer geen eten! 🚜🥬
+                            🌾 {t('share_farm_msg').replace('je boerderij', myFarm?.name || 'je boerderij')}
                         </p>
                     </div>
 
@@ -434,18 +423,18 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                 {/* STATUS UPDATE SECTION */}
                 <div className="bg-white/80 backdrop-blur-xl p-8 rounded-apple shadow-xl border border-white/20">
                     <h3 className="text-2xl font-bold text-forest mb-6 flex items-center gap-3">
-                        <TrendingUp size={28} className="text-orange-500" /> Status Update
+                        <TrendingUp size={28} className="text-orange-500" /> {t('status_update_title')}
                     </h3>
                     <p className="text-sm text-slate-600 mb-6">
-                        Deel een tijdelijke actie of boodschap met je klanten. Deze verschijnt prominent op je boerderijkaart.
+                        {t('status_update_desc')}
                     </p>
 
                     <div className="space-y-4">
                         <div>
-                            <label className="text-xs font-black text-slate-400 uppercase ml-2 mb-2 block">Boodschap</label>
+                            <label className="text-xs font-black text-slate-400 uppercase ml-2 mb-2 block">{t('status_update_label')}</label>
                             <input
                                 type="text"
-                                placeholder="Bijv: Verse aardbeien nu beschikbaar! 🍓"
+                                placeholder={t('status_update_placeholder')}
                                 className="w-full bg-slate-50 px-4 py-3 rounded-2xl outline-none ring-2 ring-transparent focus:ring-orange-500/20 transition-all font-bold text-slate-700"
                                 value={statusMessage}
                                 onChange={(e) => setStatusMessage(e.target.value)}
@@ -454,17 +443,17 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="text-xs font-black text-slate-400 uppercase ml-2 mb-2 block">Geldig voor</label>
+                                <label className="text-xs font-black text-slate-400 uppercase ml-2 mb-2 block">{t('status_update_valid_label')}</label>
                                 <select
                                     className="w-full bg-slate-50 px-4 py-3 rounded-2xl outline-none ring-2 ring-transparent focus:ring-orange-500/20 transition-all font-bold text-slate-700"
                                     value={statusDuration}
                                     onChange={(e) => setStatusDuration(e.target.value)}
                                 >
-                                    <option value="1">1 dag</option>
-                                    <option value="2">2 dagen</option>
-                                    <option value="3">3 dagen</option>
-                                    <option value="5">5 dagen</option>
-                                    <option value="7">7 dagen</option>
+                                    <option value="1">1 {t('status_update_days')}</option>
+                                    <option value="2">2 {t('status_update_days_plural')}</option>
+                                    <option value="3">3 {t('status_update_days_plural')}</option>
+                                    <option value="5">5 {t('status_update_days_plural')}</option>
+                                    <option value="7">7 {t('status_update_days_plural')}</option>
                                 </select>
                             </div>
 
@@ -491,13 +480,13 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                                                 setFarms(prev => prev.map(f => f.id === myFarm.id ? updatedFarm : f));
                                             }
 
-                                            showToast(`Status update gepubliceerd voor ${days} dag${days > 1 ? 'en' : ''}!`);
+                                            showToast(`${t('status_update_title')} gepubliceerd!`);
                                             setStatusMessage(''); // Clear input
                                         }
                                     }}
                                     className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-2xl font-black uppercase text-sm shadow-lg whitespace-nowrap"
                                 >
-                                    Publiceer
+                                    {t('status_update_publish')}
                                 </motion.button>
                             </div>
                         </div>
@@ -506,10 +495,10 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                             <div className="mt-4 p-4 bg-orange-50 border-2 border-orange-200 rounded-2xl">
                                 <div className="flex items-start justify-between gap-4">
                                     <div className="flex-1">
-                                        <p className="text-xs font-black text-orange-600 uppercase mb-1">Actieve Status</p>
+                                        <p className="text-xs font-black text-orange-600 uppercase mb-1">{t('active_status')}</p>
                                         <p className="text-sm font-bold text-orange-900">{myFarm.statusUpdate.message}</p>
                                         <p className="text-xs text-orange-600 mt-1">
-                                            Vervalt op: {new Date(myFarm.statusUpdate.expiresAt).toLocaleDateString('nl-NL')}
+                                            {t('expires_on')} {new Date(myFarm.statusUpdate.expiresAt).toLocaleDateString()}
                                         </p>
                                     </div>
                                     <motion.button
