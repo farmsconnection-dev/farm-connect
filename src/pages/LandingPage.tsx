@@ -19,7 +19,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ t, handleRoleSelect, l
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             </div>
             <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center justify-between h-full pt-4 pb-6 md:pt-8 md:pb-8">
-                <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }} className="flex flex-col items-center text-center flex-1 justify-center -mt-24">
+                <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }} className="flex flex-col items-center text-center flex-1 justify-center -mt-40">
                     <motion.div
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
