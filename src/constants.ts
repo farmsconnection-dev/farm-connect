@@ -1462,6 +1462,59 @@ export const INITIAL_FARMS: Farm[] = [
     paymentMethods: ['cash', 'payconiq'],
     lastStockUpdate: new Date().toISOString(),
     followerCount: 387
+  },
+  {
+    id: 'honey-nuts-1',
+    name: "Imkerij 't Gouden Honingraat",
+    address: 'Honingstraat 25, 3300 Tienen',
+    lat: 50.8077,
+    lng: 4.9384,
+    image: 'https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&q=80&w=800',
+    joinedDate: '2024-05-10',
+    schedule: [
+      { day: 'maandag', isOpen: false, openTime: '', closeTime: '' },
+      { day: 'dinsdag', isOpen: true, openTime: '14:00', closeTime: '18:00' },
+      { day: 'woensdag', isOpen: true, openTime: '14:00', closeTime: '18:00' },
+      { day: 'donderdag', isOpen: true, openTime: '14:00', closeTime: '18:00' },
+      { day: 'vrijdag', isOpen: true, openTime: '14:00', closeTime: '18:00' },
+      { day: 'zaterdag', isOpen: true, openTime: '10:00', closeTime: '16:00' },
+      { day: 'zondag', isOpen: false, openTime: '', closeTime: '' }
+    ],
+    products: [
+      { id: 'h1', name: 'Acacia Honing', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=400', price: '8.50', unit: '/pot 500g' },
+      { id: 'h2', name: 'Bloesemhoning', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&q=80&w=400', price: '7.50', unit: '/pot 500g' },
+      { id: 'h3', name: 'Honingraat', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&q=80&w=400', price: '12.00', unit: '/stuk' }
+    ],
+    paymentMethods: ['cash', 'payconiq'],
+    lastStockUpdate: new Date().toISOString(),
+    followerCount: 92
+  },
+  {
+    id: 'nuts-1',
+    name: 'Notenboomgaard De Kraker',
+    address: 'Notenweg 8, 3500 Hasselt',
+    lat: 50.9307,
+    lng: 5.3325,
+    image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&q=80&w=800',
+    joinedDate: '2024-06-15',
+    schedule: [
+      { day: 'maandag', isOpen: true, openTime: '09:00', closeTime: '17:00' },
+      { day: 'dinsdag', isOpen: true, openTime: '09:00', closeTime: '17:00' },
+      { day: 'woensdag', isOpen: true, openTime: '09:00', closeTime: '17:00' },
+      { day: 'donderdag', isOpen: true, openTime: '09:00', closeTime: '17:00' },
+      { day: 'vrijdag', isOpen: true, openTime: '09:00', closeTime: '18:00' },
+      { day: 'zaterdag', isOpen: true, openTime: '09:00', closeTime: '16:00' },
+      { day: 'zondag', isOpen: false, openTime: '', closeTime: '' }
+    ],
+    products: [
+      { id: 'n1', name: 'Verse Walnoten', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1596627670783-f8a846152a1d?auto=format&fit=crop&q=80&w=400', price: '6.50', unit: '/kg' },
+      { id: 'n2', name: 'Hazelnoten', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1509356391480-2a29da758223?auto=format&fit=crop&q=80&w=400', price: '7.50', unit: '/kg' },
+      { id: 'n3', name: 'Amandelen', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1508736793122-f516e3ba5569?auto=format&fit=crop&q=80&w=400', price: '9.00', unit: '/kg' },
+      { id: 'h4', name: 'Honing', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=400', price: '8.00', unit: '/pot 500g' }
+    ],
+    paymentMethods: ['cash', 'payconiq'],
+    lastStockUpdate: new Date().toISOString(),
+    followerCount: 67
   }
 ];
 
@@ -1654,24 +1707,3 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "bramen": blackberries,
   "blauwbessen": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&q=80&w=400"
 };
-
-// Add Mock Farm with Nuts & Honey
-INITIAL_FARMS.push({
-  id: 'mock-honey-nuts',
-  name: "Rucher Douce Ruche & Noix",
-  image: "https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&q=80&w=800",
-  lat: 50.2597,
-  lng: 4.9126,
-  address: "Rue Grande 100, 5500 Dinant",
-  phone: "0499 11 22 33",
-  schedule: MOCK_SCHEDULE_1,
-  joinedDate: new Date().toISOString(),
-  followerCount: 88,
-  products: [
-    { id: 'h1', name: 'Acacia Honing', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=400', price: '8.00', unit: 'pot 500g' },
-    { id: 'n1', name: 'Verse Walnoten', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1596627670783-f8a846152a1d?auto=format&fit=crop&q=80&w=400', price: '6.00', unit: 'kg' },
-    { id: 'n2', name: 'Hazelnoten', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1509356391480-2a29da758223?auto=format&fit=crop&q=80&w=400', price: '7.50', unit: 'kg' }
-  ],
-  paymentMethods: ['cash', 'payconiq'],
-  lastStockUpdate: new Date().toISOString()
-});
