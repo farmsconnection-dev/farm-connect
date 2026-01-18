@@ -366,8 +366,8 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                             onClick={() => setSelectedFarm(farm)}
                                             icon={{
                                                 path: google.maps.SymbolPath.CIRCLE,
-                                                fillColor: markerColor,
-                                                fillOpacity: 1,
+                                                fillColor: isDairy ? markerColor : 'transparent',
+                                                fillOpacity: isDairy ? 1 : 0,
                                                 strokeColor: isDairy ? '#60a5fa' : 'transparent',
                                                 strokeWeight: isDairy ? 3 : 0,
                                                 scale: 14,
