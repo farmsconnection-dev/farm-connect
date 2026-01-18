@@ -797,25 +797,27 @@ const App: React.FC = () => {
           )}
         </div>
         <div className="flex items-center gap-2 sm:gap-3 pointer-events-auto">
-          <div className="relative">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setIsLangOpen(!isLangOpen)}
-              className={`${view === 'landing' ? 'bg-white/10 text-white border-white/10' : 'bg-forest/90 text-white border-forest/20'} backdrop-blur-xl px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-full shadow-lg font-black text-[10px] sm:text-xs flex items-center gap-1 border hover:bg-opacity-80 transition-all`}
-            >
-              {lang.toUpperCase()} <ChevronDown size={14} className={`transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
-            </motion.button>
-            <AnimatePresence>
-              {isLangOpen && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute right-0 mt-2 w-20 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-1 z-[9999]">
-                  {(['nl', 'fr', 'en', 'de'] as Language[]).map((l) => (
-                    <motion.button key={l} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => { setLang(l); setIsLangOpen(false); }} className={`w-full text-center py-2 rounded-xl text-xs font-bold ${lang === l ? 'bg-forest text-mint' : 'text-slate-600 hover:bg-slate-50'}`}>{l.toUpperCase()}</motion.button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          {!isMenuOpen && (
+            <div className="relative">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setIsLangOpen(!isLangOpen)}
+                className={`${view === 'landing' ? 'bg-white/10 text-white border-white/10' : 'bg-forest/90 text-white border-forest/20'} backdrop-blur-xl px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-full shadow-lg font-black text-[10px] sm:text-xs flex items-center gap-1 border hover:bg-opacity-80 transition-all`}
+              >
+                {lang.toUpperCase()} <ChevronDown size={14} className={`transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
+              </motion.button>
+              <AnimatePresence>
+                {isLangOpen && (
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute right-0 mt-2 w-20 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-1 z-[9999]">
+                    {(['nl', 'fr', 'en', 'de'] as Language[]).map((l) => (
+                      <motion.button key={l} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => { setLang(l); setIsLangOpen(false); }} className={`w-full text-center py-2 rounded-xl text-xs font-bold ${lang === l ? 'bg-forest text-mint' : 'text-slate-600 hover:bg-slate-50'}`}>{l.toUpperCase()}</motion.button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
           {view !== 'landing' && (
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -834,7 +836,7 @@ const App: React.FC = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMenuOpen(false)} className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[90]" />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMenuOpen(false)} className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[190]" />
             <Sidebar
               isOpen={isMenuOpen}
               onClose={() => setIsMenuOpen(false)}

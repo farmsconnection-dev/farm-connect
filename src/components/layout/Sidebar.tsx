@@ -116,11 +116,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-y-0 right-0 z-[100] w-[85vw] sm:w-80 max-w-[320px] bg-emerald-900/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col text-white rounded-l-[32px] overflow-hidden"
+            className="fixed inset-y-0 right-0 z-[200] w-[85vw] sm:w-80 max-w-[320px] bg-emerald-900/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col text-white rounded-l-[32px] overflow-hidden"
         >
-            <div className="p-6 sm:p-8 flex items-center justify-end">
-                <button onClick={onClose} className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors text-amber-400"><X size={24} /></button>
+            <div className="absolute top-4 right-4 z-[210]">
+                <button
+                    onClick={onClose}
+                    className="p-3 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 transition-all text-amber-400 border border-white/10 shadow-lg active:scale-95"
+                    aria-label="Sluit menu"
+                >
+                    <X size={24} />
+                </button>
             </div>
+
+            <div className="p-6 sm:p-8 flex items-center justify-end h-20" />
             <div className="px-6 sm:px-8 pb-8 flex flex-col items-center text-center border-b border-white/10 mb-4 -mt-6">
                 <div className="relative group">
                     <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-apple bg-white/10 border-4 border-white/20 shadow-xl overflow-hidden mb-4 p-2 flex items-center justify-center relative">
