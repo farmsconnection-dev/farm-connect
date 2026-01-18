@@ -65,14 +65,22 @@ export const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2
 };
 
 export const isNew = (dateStr: string) => {
-    const joined = new Date(dateStr);
-    const now = new Date();
-    const diffTime = Math.abs(now.getTime() - joined.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays <= 14;
+    if (!dateStr) return false;
+    try {
+        const joined = new Date(dateStr);
+        const now = new Date();
+        const diffTime = Math.abs(now.getTime() - joined.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays <= 14;
+    } catch {
+        return false;
+    }
 };
 
 export const getLiveStatus = (schedule: DaySchedule[]) => {
+    if (!schedule || !Array.isArray(schedule)) {
+        return { label: 'GESLOTEN', color: 'bg-red-500 text-white' };
+    }
     const now = new Date();
     const days = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
     const currentDay = days[now.getDay()];
@@ -95,6 +103,9 @@ export const getLiveStatus = (schedule: DaySchedule[]) => {
 
 
 export const getFarmCategoryIcon = (farm: Farm) => {
+    if (!farm.products || !Array.isArray(farm.products) || farm.products.length === 0) {
+        return '🏡';
+    }
     // Count categories to find most common
     const categoryCounts: Record<string, number> = {};
     farm.products.forEach(p => {

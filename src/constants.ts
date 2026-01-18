@@ -1117,7 +1117,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 125
   },
   {
-    id: '12',
+    id: '14',
     name: 'Pompoenboerderij Herfstgoud',
     address: 'Pompoenlaan 25, 2300 Turnhout',
     lat: 51.3227,
@@ -1143,7 +1143,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 167
   },
   {
-    id: '13',
+    id: '15',
     name: 'Gemengde Hoeve De Vier Seizoenen',
     address: 'Seizoenweg 50, 1500 Halle',
     lat: 50.7344,
@@ -1171,7 +1171,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 512
   },
   {
-    id: '14',
+    id: '16',
     name: 'Fruithoeve Het Appelparadijs',
     address: 'Boomgaardlaan 42, 3300 Tienen',
     lat: 50.8073,
@@ -1189,7 +1189,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 234
   },
   {
-    id: '15',
+    id: '17',
     name: 'Varkensboerderij De Roze Weide',
     address: 'Varkensstraat 7, 3700 Tongeren',
     lat: 50.7808,
@@ -1207,7 +1207,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 156
   },
   {
-    id: '16',
+    id: '18',
     name: 'Honingboerderij De Gouden Bij',
     address: 'Bijenweg 12, 2400 Mol',
     lat: 51.1917,
@@ -1225,7 +1225,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 289
   },
   {
-    id: '17',
+    id: '19',
     name: 'Geitenboerderij De Witte Geit',
     address: 'Geitenpad 33, 3800 Sint-Truiden',
     lat: 50.8167,
@@ -1243,7 +1243,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 178
   },
   {
-    id: '18',
+    id: '20',
     name: 'Aspergehoeve De Witte Goud',
     address: 'Aspergenlaan 55, 3500 Hasselt',
     lat: 50.9307,
@@ -1261,7 +1261,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 421
   },
   {
-    id: '19',
+    id: '21',
     name: 'Schapenboerderij Het Wollige Veld',
     address: 'Schapenweg 19, 8900 Ieper',
     lat: 50.8513,
@@ -1279,7 +1279,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 267
   },
   {
-    id: '20',
+    id: '22',
     name: 'Notenboomgaard De Hazelnoot',
     address: 'Notenlaan 77, 1500 Halle',
     lat: 50.7344,
@@ -1297,7 +1297,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 145
   },
   {
-    id: '21',
+    id: '23',
     name: 'Kruidenhoeve De Groene Apotheek',
     address: 'Kruidenstraat 24, 9200 Dendermonde',
     lat: 51.0292,
@@ -1315,7 +1315,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 312
   },
   {
-    id: '22',
+    id: '24',
     name: 'Paddenstoelenkwekerij De Champignon',
     address: 'Paddenstoelweg 8, 2300 Turnhout',
     lat: 51.3227,
@@ -1333,7 +1333,7 @@ export const INITIAL_FARMS: Farm[] = [
     followerCount: 203
   },
   {
-    id: '23',
+    id: '25',
     name: 'Bessenplantage De Rode Vrucht',
     address: 'Bessenweg 66, 3600 Genk',
     lat: 50.9658,
