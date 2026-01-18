@@ -284,6 +284,13 @@ export const DICTIONARY: TranslationDictionary = {
   vending_machine_other_placeholder: { nl: "Bijv. Langs de N60 of Kerkplein 5", fr: "Ex. Le long de la N60", en: "e.g. Along the highway or Main Square 5", de: "z.B. An der Hauptstraße" },
   submit_registration: { nl: "Registratie Versturen", fr: "Envoyer l'inscription", en: "Submit Registration", de: "Registrierung absenden" },
   cancel_logout: { nl: "Annuleren en uitloggen", fr: "Annuler et se déconnecter", en: "Cancel and logout", de: "Abbrechen und abmelden" },
+  verification_title: { nl: "Aanvraag In Behandeling", fr: "Demande en cours", en: "Verification Pending", de: "Verifizierung läuft" },
+  verification_desc: { nl: "Bedankt voor je registratie! Om de kwaliteit van Farm Connect te waarborgen, controleren wij handmatig of je daadwerkelijk een boerderij bent.", fr: "Merci pour votre inscription ! Nous vérifions manuellement chaque ferme.", en: "Thank you for registering! To ensure quality, we manually verify every farm profile.", de: "Vielen Dank für Ihre Registrierung! Um die Qualität zu sichern, verifizieren wir jeden Bauernhof manuell." },
+  verification_next_steps: { nl: "Wat gebeurt er nu?", fr: "Quels sont les prochaines étapes ?", en: "What happens next?", de: "Was passiert als Nächstes?" },
+  verification_step_1: { nl: "We controleren je bedrijfsgegevens", fr: "Nous vérifions vos données", en: "We verify your business details", de: "Wir prüfen Ihre Betriebsdaten" },
+  verification_step_2: { nl: "We bellen je eventueel op voor verificatie", fr: "Nous pourrions vous appeler", en: "We might give you a call", de: "Wir rufen Sie eventuell an" },
+  verification_step_3: { nl: "Binnen 24u krijg je toegang tot je dashboard", fr: "Accès au tableau de bord sous 24h", en: "Access to your dashboard within 24h", de: "Zugriff auf Ihr Dashboard innerhalb von 24 Stunden" },
+  verification_logout: { nl: "Uitloggen en later terugkomen", fr: "Se déconnecter et revenir plus tard", en: "Logout and return later", de: "Abmelden und später wiederkommen" },
   // Harvest Advice Tips
   tip_1: {
     nl: "Zet je populairste product op ooghoogte in je hoevewinkel voor meer verkoop.",

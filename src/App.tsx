@@ -949,7 +949,7 @@ const App: React.FC = () => {
           />
         )}
         {view === 'verification_pending' && (
-          <VerificationPendingPage onLogout={handleLogout} />
+          <VerificationPendingPage onLogout={handleLogout} t={t} />
         )}
         {view === 'register_farm' && (
           <RegisterFarmPage
