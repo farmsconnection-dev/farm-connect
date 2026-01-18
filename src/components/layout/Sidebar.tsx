@@ -42,9 +42,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
         if (file && setUserProfile) {
             const reader = new FileReader();
             reader.onloadend = () => {
+                const photoUrl = reader.result as string;
+                // Save to localStorage for persistence
+                localStorage.setItem('userProfilePhoto', photoUrl);
                 setUserProfile({
                     ...userProfile,
-                    photoUrl: reader.result as string
+                    photoUrl
                 });
             };
             reader.readAsDataURL(file);
@@ -247,7 +250,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     );
                 })}
             </div>
-            <div className="p-6 border-t border-white/10">
+            <div className="p-4 pt-3 border-t border-white/10">
                 <button
                     onClick={handleLogout}
                     className={`w-full flex items-center gap-4 p-4 rounded-xl font-bold transition-colors ${userProfile.isLoggedIn

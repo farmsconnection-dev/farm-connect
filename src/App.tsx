@@ -78,10 +78,15 @@ const App: React.FC = () => {
   const [isAuthLoading, setIsAuthLoading] = useState(() =>
     window.location.hash.includes('access_token') || window.location.hash.includes('error')
   );
-  const [userProfile, setUserProfile] = useState<UserProfile>({
-    name: 'Gebruiker',
-    email: '',
-    isLoggedIn: false
+  const [userProfile, setUserProfile] = useState<UserProfile>(() => {
+    // Load saved profile photo from localStorage
+    const savedPhoto = localStorage.getItem('userProfilePhoto');
+    return {
+      name: 'Gebruiker',
+      email: '',
+      isLoggedIn: false,
+      photoUrl: savedPhoto || undefined
+    };
   });
 
 
