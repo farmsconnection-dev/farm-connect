@@ -1069,7 +1069,7 @@ const App: React.FC = () => {
           className="fixed bottom-6 left-6 z-[100] bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 font-bold transition-all border-2 border-white/20"
         >
           <MessageCircle size={24} />
-          <span className="hidden sm:inline">Feedback</span>
+          <span className="hidden sm:inline">{t('feedback_title')}</span>
         </motion.button>
       )}
 
@@ -1079,6 +1079,7 @@ const App: React.FC = () => {
           isOpen={isFeedbackOpen}
           onClose={() => setIsFeedbackOpen(false)}
           googleSheetsUrl="https://script.google.com/macros/s/AKfycbzSTfq5OOqMuGu_5SWYM1G9LF9re9fm22Tg9nkXC4wwXtonroh9PqzwujdRVWhp4Beg3w/exec"
+          t={t}
         />
       )}</AnimatePresence>
 

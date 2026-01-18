@@ -7,9 +7,10 @@ interface FeedbackModalProps {
     isOpen: boolean;
     onClose: () => void;
     googleSheetsUrl: string;
+    t: (key: string) => string;
 }
 
-export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose, googleSheetsUrl }) => {
+export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose, googleSheetsUrl, t }) => {
     const [feedback, setFeedback] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
@@ -95,8 +96,8 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose, g
                             >
                                 <CheckCircle2 size={64} className="text-white mb-4" />
                             </motion.div>
-                            <h3 className="text-2xl font-bold text-white">Bedankt!</h3>
-                            <p className="text-emerald-100 mt-2">Je feedback is verstuurd</p>
+                            <h3 className="text-2xl font-bold text-white">{t('feedback_success_title')}</h3>
+                            <p className="text-emerald-100 mt-2">{t('feedback_success_text')}</p>
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -108,8 +109,8 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose, g
                             <MessageCircle size={28} className="text-emerald-400" />
                         </div>
                         <div>
-                            <h2 className="text-2xl font-black text-white tracking-tight">Feedback</h2>
-                            <p className="text-emerald-200/70 text-sm">Deel je ervaring met ons</p>
+                            <h2 className="text-2xl font-black text-white tracking-tight">{t('feedback_title')}</h2>
+                            <p className="text-emerald-200/70 text-sm">{t('feedback_subtitle')}</p>
                         </div>
                     </div>
                 </div>
@@ -119,7 +120,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose, g
                     <textarea
                         value={feedback}
                         onChange={(e) => setFeedback(e.target.value)}
-                        placeholder="Wat vind je van Farm Connect? Suggesties, bugs, of complimenten zijn welkom!"
+                        placeholder={t('feedback_placeholder')}
                         className="w-full h-40 bg-white/10 border-2 border-white/20 rounded-2xl p-4 text-white placeholder-white/40 focus:outline-none focus:border-emerald-400 transition-colors resize-none"
                         disabled={isSubmitting}
                     />
@@ -133,7 +134,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose, g
                             className="flex-1 py-3 px-6 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold transition-colors"
                             disabled={isSubmitting}
                         >
-                            Annuleer
+                            {t('cancel')}
                         </motion.button>
                         <motion.button
                             whileHover={{ scale: 1.02 }}
@@ -149,12 +150,12 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose, g
                                         transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                                         className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                                     />
-                                    Versturen...
+                                    {t('sending')}
                                 </>
                             ) : (
                                 <>
                                     <Send size={18} />
-                                    Verstuur
+                                    {t('send')}
                                 </>
                             )}
                         </motion.button>
