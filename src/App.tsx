@@ -326,28 +326,40 @@ const App: React.FC = () => {
   const checkFarmerVerification = async (email: string, retries = 3) => {
     console.log(`🔍 Checking farmer verification for: ${email} (Attempts left: ${retries})`);
     try {
-      const { data: farmData, error } = await supabase
-        .from('farms')
-        .select('is_verified, id')
-        .eq('owner_email', email);
+      // Use raw fetch for better consistency during registration flow
+      const rawUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms?owner_email=eq.${encodeURIComponent(email)}&select=*`;
+      const response = await fetch(rawUrl, {
+        headers: {
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+        }
+      });
 
-      if (error) {
-        console.error('❌ Error fetching farm:', error);
-        return;
-      }
+      if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
 
-      const myFarm = farmData?.[0];
+      const userFarms = await response.json();
+      const myFarm = userFarms?.[0];
+
       if (myFarm) {
-        console.log('✅ Farm found, redirecting to dashboard');
+        console.log('✅ Farm found, syncing to state');
         setIsFarmerVerified(myFarm.is_verified ?? false);
+
+        // Sync to global farms list so dashboard isn't empty
+        setFarms(prev => {
+          const exists = prev.some(f => f.id === myFarm.id);
+          if (exists) return prev;
+          return [myFarm, ...prev];
+        });
+
         setUserType('farmer');
         setView('farmer');
       } else if (retries > 0) {
         console.log('⏳ No farm found yet, retrying in 2 seconds...');
         setTimeout(() => checkFarmerVerification(email, retries - 1), 2000);
       } else {
-        console.log('⚠️ No farm found after retries, staying on registration');
-        setView('register_farm');
+        console.warn('⚠️ No farm found after retries.');
+        // If we haven't redirected yet, we stay on registration. 
+        // But usually onSuccess handles the immediate redirect.
       }
     } catch (err) {
       console.error('❌ Unexpected error in checkFarmerVerification:', err);
@@ -356,8 +368,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('🔐 Auth State Change:', event, session?.user?.email);
-
       console.log('🔐 Auth State Change:', event, session?.user?.email);
 
       if (session) {
@@ -945,9 +955,16 @@ const App: React.FC = () => {
           <RegisterFarmPage
             email={userProfile.email}
             userId={userProfile.id}
-            onSuccess={() => checkFarmerVerification(userProfile.email)}
+            onSuccess={() => {
+              console.log("🚀 Immediate redirect to dashboard after registration");
+              setUserType('farmer');
+              setIsFarmerVerified(false); // Initially unverified
+              setView('farmer');
+              checkFarmerVerification(userProfile.email); // Sync data in background
+            }}
             onLogout={handleLogout}
             lang={lang}
+            t={t}
             initialName={claimName}
           />
         )}

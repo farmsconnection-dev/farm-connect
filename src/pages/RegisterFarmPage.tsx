@@ -10,10 +10,11 @@ interface RegisterFarmPageProps {
     onSuccess: () => void;
     onLogout: () => void;
     lang: string;
+    t: (key: string) => string;
     initialName?: string; // New prop for claim link
 }
 
-export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userId, onSuccess, onLogout, initialName = '' }) => {
+export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userId, onSuccess, onLogout, lang, t, initialName = '' }) => {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: initialName,
@@ -187,14 +188,14 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                         <Tractor size={32} />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-black text-slate-800">Registreer je Boerderij</h1>
-                        <p className="text-slate-500 font-medium">Start met verkopen op Farm Connect</p>
+                        <h1 className="text-2xl font-black text-slate-800">{t('register_farm_title')}</h1>
+                        <p className="text-slate-500 font-medium">{t('register_farm_subtitle')}</p>
                     </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Naam Boerderij</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{t('farm_name')}</label>
                         <div className="relative">
                             <Tractor className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                             <input
@@ -203,13 +204,13 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                 value={formData.name}
                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
                                 className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-emerald-500 focus:outline-none font-bold text-slate-700"
-                                placeholder="Hoe heet je boerderij?"
+                                placeholder={t('farm_name_placeholder')}
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">E-mailadres</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{t('email_label')}</label>
                         <div className="relative">
                             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                             <input
@@ -218,13 +219,13 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                 value={formData.email}
                                 onChange={e => setFormData({ ...formData, email: e.target.value })}
                                 className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-emerald-500 focus:outline-none font-bold text-slate-700"
-                                placeholder="jandeboer@hoeve.be"
+                                placeholder={t('email_placeholder')}
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Adres</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{t('address_label')}</label>
                         <div className="relative">
                             <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                             <input
@@ -234,14 +235,14 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                 value={formData.address}
                                 onChange={e => setFormData({ ...formData, address: e.target.value })}
                                 className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-emerald-500 focus:outline-none font-bold text-slate-700"
-                                placeholder="Begin met typen voor suggesties..."
+                                placeholder={t('address_placeholder')}
                             />
                         </div>
-                        <p className="text-xs text-slate-400 mt-1">📍 Selecteer je adres uit de suggesties voor nauwkeurige locatie</p>
+                        <p className="text-xs text-slate-400 mt-1">{t('address_hint')}</p>
                     </div>
 
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Telefoonnummer (voor verificatie)</label>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{t('phone_label')}</label>
                         <div className="relative">
                             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                             <input
@@ -249,7 +250,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                 value={formData.phone}
                                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
                                 className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-emerald-500 focus:outline-none font-bold text-slate-700"
-                                placeholder="Op welk nummer kunnen we je bereiken?"
+                                placeholder={t('phone_placeholder')}
                             />
                         </div>
                     </div>
@@ -264,15 +265,15 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                 {formData.heeft_automaat && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                             </div>
                             <div className="flex-1">
-                                <p className="text-sm font-black text-slate-700">Ik heb een automaat (24/7)</p>
-                                <p className="text-xs text-slate-400 font-medium">Klanten kunnen ook buiten openingsuren kopen</p>
+                                <p className="text-sm font-black text-slate-700">{t('vending_machine_title')}</p>
+                                <p className="text-xs text-slate-400 font-medium">{t('vending_machine_subtitle')}</p>
                             </div>
                         </div>
 
                         {/* Automaat Locatie (alleen zichtbaar als automaat is aangevinkt) */}
                         {formData.heeft_automaat && (
                             <div className="mt-4 pt-4 border-t border-emerald-100 space-y-3">
-                                <p className="text-xs font-bold text-slate-500 uppercase">Waar staat de automaat?</p>
+                                <p className="text-xs font-bold text-slate-500 uppercase">{t('vending_machine_location_q')}</p>
 
                                 <label className="flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-emerald-50">
                                     <input
@@ -282,7 +283,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                         onChange={() => setFormData({ ...formData, automaat_locatie: 'hoeve', automaat_adres: '' })}
                                         className="w-4 h-4 text-emerald-500"
                                     />
-                                    <span className="text-sm font-bold text-slate-700">Op het hoeve-adres</span>
+                                    <span className="text-sm font-bold text-slate-700">{t('vending_machine_at_farm')}</span>
                                 </label>
 
                                 <label className="flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-emerald-50">
@@ -293,7 +294,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                         onChange={() => setFormData({ ...formData, automaat_locatie: 'anders' })}
                                         className="w-4 h-4 text-emerald-500"
                                     />
-                                    <span className="text-sm font-bold text-slate-700">Op een andere locatie</span>
+                                    <span className="text-sm font-bold text-slate-700">{t('vending_machine_other_location')}</span>
                                 </label>
 
                                 {formData.automaat_locatie === 'anders' && (
@@ -304,7 +305,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                                             value={formData.automaat_adres || ''}
                                             onChange={e => setFormData({ ...formData, automaat_adres: e.target.value })}
                                             className="w-full px-4 py-3 bg-slate-50 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:outline-none font-bold text-slate-700 text-sm"
-                                            placeholder="Bijv. Langs de N60 of Kerkplein 5"
+                                            placeholder={t('vending_machine_other_placeholder')}
                                         />
                                     </div>
                                 )}
@@ -317,12 +318,12 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email, userI
                         disabled={loading}
                         className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black py-4 rounded-xl shadow-lg shadow-emerald-200 transform active:scale-95 transition-all flex items-center justify-center gap-2"
                     >
-                        {loading ? <Loader2 className="animate-spin" /> : <><Save size={20} /> Registratie Versturen</>}
+                        {loading ? <Loader2 className="animate-spin" /> : <><Save size={20} /> {t('submit_registration')}</>}
                     </button>
                 </form>
 
                 <button onClick={onLogout} className="mt-6 w-full text-center text-slate-400 text-sm font-bold hover:text-slate-600">
-                    Annuleren en uitloggen
+                    {t('cancel_logout')}
                 </button>
             </motion.div >
         </div >
