@@ -132,7 +132,6 @@ const App: React.FC = () => {
           if (view === 'landing') setView('discover');
         } else {
           setView('landing');
-          setIsAuthModalOpen(true);
         }
       }
     };
@@ -460,8 +459,7 @@ const App: React.FC = () => {
         setView('landing');
         localStorage.removeItem('pendingRole');
         sessionStorage.removeItem('guest_mode');
-        // Automatically show login modal on logout to landing
-        setIsAuthModalOpen(true);
+        // Automatically return to landing on logout
       }
     });
 
