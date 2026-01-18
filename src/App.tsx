@@ -125,9 +125,15 @@ const App: React.FC = () => {
       if (session) {
         sessionStorage.setItem('fc_active_tab', 'true');
       } else {
-        // Enforce redirect to landing if no session
-        setView('landing');
-        setIsAuthModalOpen(true);
+        // Enforce redirect to landing if no session, UNLESS guest mode is active
+        const isGuest = sessionStorage.getItem('guest_mode') === 'true';
+        if (isGuest) {
+          setUserType('discoverer');
+          if (view === 'landing') setView('discover');
+        } else {
+          setView('landing');
+          setIsAuthModalOpen(true);
+        }
       }
     };
 
@@ -565,6 +571,14 @@ const App: React.FC = () => {
     setIsMenuOpen(false);
   };
 
+  const handleContinueAsGuest = () => {
+    sessionStorage.setItem('guest_mode', 'true');
+    setUserType('discoverer');
+    setView('discover');
+    setIsAuthModalOpen(false);
+    showToast('🚜 Je bent nu als gast bezig.');
+  };
+
   const handleLogout = async () => {
     console.log("🚪 Logging out / Returning to start...");
 
@@ -965,10 +979,11 @@ const App: React.FC = () => {
           }}
           t={t}
           showToast={showToast}
+          onContinueAsGuest={handleContinueAsGuest}
         />
       )}</AnimatePresence>
 
-      <AnimatePresence>{isSeasonCalendarOpen && userProfile.isLoggedIn && (
+      <AnimatePresence>{isSeasonCalendarOpen && (
         <SeasonCalendarModal
           isOpen={isSeasonCalendarOpen}
           onClose={() => setIsSeasonCalendarOpen(false)}
