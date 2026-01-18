@@ -272,7 +272,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                         initial={{ opacity: 0, scale: 0.95, y: -10 }}
                                         animate={{ opacity: 1, scale: 1, y: 0 }}
                                         exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                                        className="fixed sm:absolute left-4 sm:left-0 top-[180px] sm:top-full mt-2 w-64 sm:w-56 bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20 p-3 sm:p-2 z-[9999] space-y-1"
+                                        className="fixed sm:absolute left-4 sm:left-0 top-[180px] sm:top-full mt-2 w-64 sm:w-56 bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20 p-3 sm:p-2 z-[10000] space-y-1"
                                     >
                                         <motion.button
                                             whileHover={{ scale: 1.02 }}
