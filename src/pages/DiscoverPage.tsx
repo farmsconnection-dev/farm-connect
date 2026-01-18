@@ -129,8 +129,8 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
     };
 
     return (
-        <motion.div key="discover" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="h-[100dvh] w-full flex flex-col pt-24 px-4 sm:px-8 pb-4 max-w-7xl mx-auto">
-            <div className="sticky top-0 z-30 pt-4 pb-2 bg-gradient-to-b from-transparent to-transparent space-y-4">
+        <motion.div key="discover" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="h-[100dvh] w-full flex flex-col pt-20 px-4 sm:px-8 pb-4 max-w-7xl mx-auto">
+            <div className="sticky top-0 z-[100] pt-4 pb-2 bg-gradient-to-b from-transparent to-transparent space-y-4">
                 <div className="relative group z-50">
                     <div className="absolute inset-y-0 left-3 flex items-center text-slate-400 group-focus-within:text-slate-600"><Search size={16} /></div>
                     <input
@@ -186,7 +186,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                 </div>
 
                 {/* Filter Section - Consolidated on One Line */}
-                <div className="flex items-center gap-2 pb-4 relative">
+                <div className="flex items-center gap-2 pb-4 relative z-50">
                     {/* Primary Filters Dropdown - Fixed to prevent clipping */}
                     <div className="relative shrink-0">
                         <motion.button
@@ -201,10 +201,10 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                         <AnimatePresence>
                             {isPrimaryFiltersOpen && (
                                 <motion.div
-                                    initial={{ opacity: 0, scale: 0.9, originY: 0 }}
-                                    animate={{ opacity: 1, scale: 1, originY: 0 }}
-                                    exit={{ opacity: 0, scale: 0.9, originY: 0 }}
-                                    className="absolute left-0 mt-2 w-56 bg-emerald-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-2 z-[9999] space-y-1"
+                                    initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                                    className="absolute left-0 top-full mt-2 w-56 bg-slate-900 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20 p-2 z-[1000] space-y-1"
                                 >
                                     <motion.button
                                         whileHover={{ scale: 1.02 }}
