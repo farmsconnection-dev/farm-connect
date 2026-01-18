@@ -186,8 +186,8 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                 </div>
 
                 {/* Filter Section - Consolidated on One Line */}
-                <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-hide">
-                    {/* Primary Filters Dropdown */}
+                <div className="flex items-center gap-2 pb-4 relative">
+                    {/* Primary Filters Dropdown - Fixed to prevent clipping */}
                     <div className="relative shrink-0">
                         <motion.button
                             whileHover={{ scale: 1.02 }}
@@ -201,15 +201,18 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                         <AnimatePresence>
                             {isPrimaryFiltersOpen && (
                                 <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 10 }}
+                                    initial={{ opacity: 0, scale: 0.9, originY: 0 }}
+                                    animate={{ opacity: 1, scale: 1, originY: 0 }}
+                                    exit={{ opacity: 0, scale: 0.9, originY: 0 }}
                                     className="absolute left-0 mt-2 w-56 bg-emerald-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-2 z-[9999] space-y-1"
                                 >
                                     <motion.button
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
-                                        onClick={() => setShowOpenOnly(!showOpenOnly)}
+                                        onClick={() => {
+                                            setShowOpenOnly(!showOpenOnly);
+                                            setIsPrimaryFiltersOpen(false);
+                                        }}
                                         className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${showOpenOnly ? 'bg-emerald-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
                                     >
                                         <div className={`p-1.5 rounded-lg ${showOpenOnly ? 'bg-white/20' : 'bg-emerald-500/20 text-emerald-500'}`}>
@@ -221,7 +224,10 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                     <motion.button
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
-                                        onClick={() => setActiveFilter(activeFilter === 'nearby' ? 'all' : 'nearby')}
+                                        onClick={() => {
+                                            setActiveFilter(activeFilter === 'nearby' ? 'all' : 'nearby');
+                                            setIsPrimaryFiltersOpen(false);
+                                        }}
                                         className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeFilter === 'nearby' ? 'bg-purple-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
                                     >
                                         <div className={`p-1.5 rounded-lg ${activeFilter === 'nearby' ? 'bg-white/20' : 'bg-purple-500/20 text-purple-500'}`}>
@@ -233,7 +239,10 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                     <motion.button
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
-                                        onClick={() => setShow24_7Only(!show24_7Only)}
+                                        onClick={() => {
+                                            setShow24_7Only(!show24_7Only);
+                                            setIsPrimaryFiltersOpen(false);
+                                        }}
                                         className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${show24_7Only ? 'bg-blue-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
                                     >
                                         <div className={`p-1.5 rounded-lg ${show24_7Only ? 'bg-white/20' : 'bg-blue-500/20 text-blue-500'}`}>
@@ -251,24 +260,26 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                         </AnimatePresence>
                     </div>
 
-                    {/* Category Filters */}
-                    {filterList.map(cat => {
-                        const activeColor = getCategoryColor(cat);
-                        const colorClass = cat === 'fruit' ? 'text-red-500' :
-                            cat === 'vegetables' ? 'text-green-500' :
-                                cat === 'dairy' ? 'text-blue-400' :
-                                    cat === 'meat' ? 'text-orange-700' :
-                                        cat === 'eggs' ? 'text-yellow-500' :
-                                            cat === 'honey' ? 'text-amber-500' : 'text-white';
+                    {/* Category Filters - Scrollable Part */}
+                    <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide flex-1">
+                        {filterList.map(cat => {
+                            const activeColor = getCategoryColor(cat);
+                            const colorClass = cat === 'fruit' ? 'text-red-500' :
+                                cat === 'vegetables' ? 'text-green-500' :
+                                    cat === 'dairy' ? 'text-blue-400' :
+                                        cat === 'meat' ? 'text-orange-700' :
+                                            cat === 'eggs' ? 'text-yellow-500' :
+                                                cat === 'honey' ? 'text-amber-500' : 'text-white';
 
-                        const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
-                        return (
-                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass} shrink-0`}>
-                                <span className={activeFilter === cat ? 'text-current' : colorClass}>{getFilterIcon(cat)}</span>
-                                {t(`filter_${cat}`)}
-                            </motion.button>
-                        );
-                    })}
+                            const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
+                            return (
+                                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass} shrink-0`}>
+                                    <span className={activeFilter === cat ? 'text-current' : colorClass}>{getFilterIcon(cat)}</span>
+                                    {t(`filter_${cat}`)}
+                                </motion.button>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
             <div className="flex-1 overflow-hidden relative bg-white/5 backdrop-blur-xl rounded-apple shadow-2xl border border-white/10">
