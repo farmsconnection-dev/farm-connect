@@ -2,8 +2,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { X, Calendar, Leaf, Sprout, Carrot } from 'lucide-react';
-import { SEASONAL_DATA, FALLBACK_PRODUCT_IMAGE } from '../../constants';
+import { SEASONAL_DATA } from '../../constants';
 import { getSeasonalImage } from '../../utils/helpers';
+import { translateProduct } from '../../utils/translations';
 
 interface SeasonCalendarModalProps {
     isOpen: boolean;
@@ -11,9 +12,10 @@ interface SeasonCalendarModalProps {
     t: (key: string) => string;
     handleSeasonalItemClick: (itemText: string) => void;
     currentMonthIndex: number;
+    lang: string;
 }
 
-// Translation helpers
+// Translation helper for months (can be moved to translations.ts if needed more broadly)
 const translateMonth = (month: string, t: (key: string) => string): string => {
     const monthMap: Record<string, string> = {
         'Januari': t('month_january'),
@@ -32,14 +34,7 @@ const translateMonth = (month: string, t: (key: string) => string): string => {
     return monthMap[month] || month;
 };
 
-const translateProduct = (product: string, t: (key: string) => string): string => {
-    const productKey = `product_${product.toLowerCase()}`;
-    const translated = t(productKey);
-    // If translation not found, return original
-    return translated.startsWith('product_') ? product : translated;
-};
-
-export const SeasonCalendarModal: React.FC<SeasonCalendarModalProps> = ({ isOpen, onClose, t, handleSeasonalItemClick, currentMonthIndex }) => {
+export const SeasonCalendarModal: React.FC<SeasonCalendarModalProps> = ({ isOpen, onClose, t, handleSeasonalItemClick, currentMonthIndex, lang }) => {
     if (!isOpen) return null;
     return (
         <div className="fixed inset-0 z-[200] bg-emerald-950/90 backdrop-blur-2xl flex flex-col overflow-hidden" onClick={(e) => { e.stopPropagation(); onClose(); }}>
@@ -85,7 +80,7 @@ export const SeasonCalendarModal: React.FC<SeasonCalendarModalProps> = ({ isOpen
                                         <div className="w-12 h-12 rounded-full bg-white/10 overflow-hidden border border-white/10 shadow-inner shrink-0 relative flex items-center justify-center">
                                             <img src={getSeasonalImage(item)} alt={item} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" />
                                         </div>
-                                        <span className={`font-bold text-base ${isCurrentMonth ? 'text-white' : 'text-white/60 group-hover:text-white'}`}>{translateProduct(item, t)}</span>
+                                        <span className={`font-bold text-base ${isCurrentMonth ? 'text-white' : 'text-white/60 group-hover:text-white'}`}>{translateProduct(item, lang)}</span>
                                     </motion.div>
                                 ))}
                             </div>

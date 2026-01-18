@@ -21,6 +21,7 @@ interface DiscoverPageProps {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     userProfile?: UserProfile;
+    lang: string;
 }
 
 const mapContainerStyle = { width: '100%', height: '100%' };
@@ -36,7 +37,7 @@ const googleMapsOptions = {
 
 export const DiscoverPage: React.FC<DiscoverPageProps> = ({
     t, farms, isLoaded, loadError, userLocation, setDetailFarm, toggleFavorite, favorites, handleRouteClick,
-    searchQuery, setSearchQuery, userProfile
+    searchQuery, setSearchQuery, userProfile, lang
 }) => {
     const [activeFilter, setActiveFilter] = useState<'all' | 'open' | 'fruit' | 'vegetables' | 'dairy' | 'nearby'>('all');
     const [isMapView, setIsMapView] = useState(false);
@@ -74,7 +75,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
 
         if (showOpenOnly || activeFilter === 'open') {
             result = result.filter(f => {
-                const isOpen = getLiveStatus(f.schedule).label === 'OPEN';
+                const isOpen = getLiveStatus(f.schedule).label === 'open_now';
                 if (!show24_7Only) return isOpen;
                 return isOpen || f.heeft_automaat === true;
             });
@@ -178,95 +179,90 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                     </div>
                 </div>
 
-                {/* Filter Section - Two Rows */}
-                <div className="space-y-4">
-                    {/* Row 1: Primary Filters Dropdown & Toggle Button */}
-                    <div className="flex gap-2 items-center">
-                        <div className="relative">
-                            <motion.button
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => setIsPrimaryFiltersOpen(!isPrimaryFiltersOpen)}
-                                className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20`}
-                            >
-                                <Filter size={16} /> Snel-filters <ChevronDown size={14} className={`transition-transform ${isPrimaryFiltersOpen ? 'rotate-180' : ''}`} />
-                            </motion.button>
+                {/* Filter Section - Consolidated on One Line */}
+                <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-hide">
+                    {/* Primary Filters Dropdown */}
+                    <div className="relative shrink-0">
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => setIsPrimaryFiltersOpen(!isPrimaryFiltersOpen)}
+                            className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20`}
+                        >
+                            <Filter size={16} /> {t('fast_filters')} <ChevronDown size={14} className={`transition-transform ${isPrimaryFiltersOpen ? 'rotate-180' : ''}`} />
+                        </motion.button>
 
-                            <AnimatePresence>
-                                {isPrimaryFiltersOpen && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: 10 }}
-                                        className="absolute left-0 mt-2 w-56 bg-emerald-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-2 z-[9999] space-y-1"
+                        <AnimatePresence>
+                            {isPrimaryFiltersOpen && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                    className="absolute left-0 mt-2 w-56 bg-emerald-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-2 z-[9999] space-y-1"
+                                >
+                                    <motion.button
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        onClick={() => setShowOpenOnly(!showOpenOnly)}
+                                        className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${showOpenOnly ? 'bg-emerald-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
                                     >
-                                        <motion.button
-                                            whileHover={{ scale: 1.02 }}
-                                            whileTap={{ scale: 0.98 }}
-                                            onClick={() => setShowOpenOnly(!showOpenOnly)}
-                                            className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${showOpenOnly ? 'bg-emerald-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
-                                        >
-                                            <div className={`p-1.5 rounded-lg ${showOpenOnly ? 'bg-white/20' : 'bg-emerald-500/20 text-emerald-500'}`}>
-                                                <Clock size={14} />
-                                            </div>
-                                            {t('filter_open_now')}
-                                        </motion.button>
+                                        <div className={`p-1.5 rounded-lg ${showOpenOnly ? 'bg-white/20' : 'bg-emerald-500/20 text-emerald-500'}`}>
+                                            <Clock size={14} />
+                                        </div>
+                                        {t('filter_open_now')}
+                                    </motion.button>
 
-                                        <motion.button
-                                            whileHover={{ scale: 1.02 }}
-                                            whileTap={{ scale: 0.98 }}
-                                            onClick={() => setActiveFilter(activeFilter === 'nearby' ? 'all' : 'nearby')}
-                                            className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeFilter === 'nearby' ? 'bg-purple-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
-                                        >
-                                            <div className={`p-1.5 rounded-lg ${activeFilter === 'nearby' ? 'bg-white/20' : 'bg-purple-500/20 text-purple-500'}`}>
-                                                <Navigation size={14} />
-                                            </div>
-                                            Dichtbij
-                                        </motion.button>
+                                    <motion.button
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        onClick={() => setActiveFilter(activeFilter === 'nearby' ? 'all' : 'nearby')}
+                                        className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${activeFilter === 'nearby' ? 'bg-purple-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
+                                    >
+                                        <div className={`p-1.5 rounded-lg ${activeFilter === 'nearby' ? 'bg-white/20' : 'bg-purple-500/20 text-purple-500'}`}>
+                                            <Navigation size={14} />
+                                        </div>
+                                        Dichtbij
+                                    </motion.button>
 
-                                        <motion.button
-                                            whileHover={{ scale: 1.02 }}
-                                            whileTap={{ scale: 0.98 }}
-                                            onClick={() => setShow24_7Only(!show24_7Only)}
-                                            className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${show24_7Only ? 'bg-blue-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
-                                        >
-                                            <div className={`p-1.5 rounded-lg ${show24_7Only ? 'bg-white/20' : 'bg-blue-500/20 text-blue-500'}`}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                                    <line x1="9" y1="9" x2="15" y2="9" />
-                                                    <line x1="9" y1="15" x2="15" y2="15" />
-                                                    <circle cx="12" cy="12" r="1" />
-                                                </svg>
-                                            </div>
-                                            24/7 Automaten
-                                        </motion.button>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
+                                    <motion.button
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        onClick={() => setShow24_7Only(!show24_7Only)}
+                                        className={`w-full px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold flex items-center gap-3 transition-all ${show24_7Only ? 'bg-blue-500 text-white' : 'text-white/70 hover:bg-white/10'}`}
+                                    >
+                                        <div className={`p-1.5 rounded-lg ${show24_7Only ? 'bg-white/20' : 'bg-blue-500/20 text-blue-500'}`}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                                <line x1="9" y1="9" x2="15" y2="9" />
+                                                <line x1="9" y1="15" x2="15" y2="15" />
+                                                <circle cx="12" cy="12" r="1" />
+                                            </svg>
+                                        </div>
+                                        24/7 Automaten
+                                    </motion.button>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
 
-                    {/* Row 2: Category Filters - Horizontal Scroll */}
-                    <div className="flex gap-2 overflow-x-auto pb-3 -mb-2 scroll-smooth">
-                        {filterList.map(cat => {
-                            const activeColor = getCategoryColor(cat);
-                            // Force specific colors on text/icon for each category
-                            const colorClass = cat === 'fruit' ? 'text-red-500' :
-                                cat === 'vegetables' ? 'text-green-500' :
-                                    cat === 'dairy' ? 'text-blue-400' :
-                                        cat === 'meat' ? 'text-orange-700' :
-                                            cat === 'eggs' ? 'text-yellow-500' :
-                                                cat === 'honey' ? 'text-amber-500' : 'text-white';
+                    {/* Category Filters */}
+                    {filterList.map(cat => {
+                        const activeColor = getCategoryColor(cat);
+                        const colorClass = cat === 'fruit' ? 'text-red-500' :
+                            cat === 'vegetables' ? 'text-green-500' :
+                                cat === 'dairy' ? 'text-blue-400' :
+                                    cat === 'meat' ? 'text-orange-700' :
+                                        cat === 'eggs' ? 'text-yellow-500' :
+                                            cat === 'honey' ? 'text-amber-500' : 'text-white';
 
-                            const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
-                            return (
-                                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass}`}>
-                                    <span className={activeFilter === cat ? 'text-current' : colorClass}>{getFilterIcon(cat)}</span>
-                                    {t(`filter_${cat}`)}
-                                </motion.button>
-                            );
-                        })}
-                    </div>
+                        const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
+                        return (
+                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass} shrink-0`}>
+                                <span className={activeFilter === cat ? 'text-current' : colorClass}>{getFilterIcon(cat)}</span>
+                                {t(`filter_${cat}`)}
+                            </motion.button>
+                        );
+                    })}
                 </div>
             </div>
             <div className="flex-1 overflow-hidden relative bg-white/5 backdrop-blur-xl rounded-apple shadow-2xl border border-white/10">
@@ -288,6 +284,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                             favorites={favorites}
                                             handleRouteClick={handleRouteClick}
                                             t={t}
+                                            lang={lang}
                                         />
                                     </motion.div>
                                 ))}

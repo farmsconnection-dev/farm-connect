@@ -79,12 +79,20 @@ export const isNew = (dateStr: string) => {
 
 export const getLiveStatus = (schedule: DaySchedule[]) => {
     if (!schedule || !Array.isArray(schedule)) {
-        return { label: 'GESLOTEN', color: 'bg-red-500 text-white' };
+        return { label: 'closed', color: 'bg-red-500 text-white' };
     }
     const now = new Date();
-    const days = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
-    const currentDay = days[now.getDay()];
-    const todaySchedule = schedule.find(s => s.day === currentDay);
+    // Support both Dutch and English day names from data
+    const daysNl = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
+    const daysEn = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+
+    const currentDayNl = daysNl[now.getDay()];
+    const currentDayEn = daysEn[now.getDay()];
+
+    const todaySchedule = schedule.find(s =>
+        s.day.toLowerCase() === currentDayNl ||
+        s.day.toLowerCase() === currentDayEn
+    );
 
     if (todaySchedule?.isOpen) {
         const currentTime = now.getHours() * 100 + now.getMinutes();
@@ -94,10 +102,10 @@ export const getLiveStatus = (schedule: DaySchedule[]) => {
         const closeTime = closeH * 100 + closeM;
 
         if (currentTime >= openTime && currentTime < closeTime) {
-            return { label: 'OPEN', color: 'bg-emerald-500 text-white' };
+            return { label: 'open_now', color: 'bg-emerald-500 text-white' };
         }
     }
-    return { label: 'GESLOTEN', color: 'bg-red-500 text-white' };
+    return { label: 'closed', color: 'bg-red-500 text-white' };
 };
 
 

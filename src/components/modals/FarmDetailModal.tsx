@@ -4,6 +4,8 @@ import { X, Heart, MapPin, Navigation, Leaf, Clock } from 'lucide-react';
 import { ProductImage } from '../shared/ProductImage';
 import { Farm } from '../../types';
 
+import { translateProduct } from '../../utils/translations';
+
 interface FarmDetailModalProps {
     farm: Farm;
     onClose: () => void;
@@ -11,9 +13,10 @@ interface FarmDetailModalProps {
     toggleFavorite: (id: string) => void;
     isFavorite: boolean;
     handleRouteClick: (farm: Farm) => void;
+    lang: string;
 }
 
-export const FarmDetailModal: React.FC<FarmDetailModalProps> = ({ farm, onClose, t, toggleFavorite, isFavorite, handleRouteClick }) => (
+export const FarmDetailModal: React.FC<FarmDetailModalProps> = ({ farm, onClose, t, toggleFavorite, isFavorite, handleRouteClick, lang }) => (
     <div className="fixed inset-0 z-[300] flex justify-end pointer-events-none">
         <div className="absolute inset-0 bg-black/20 backdrop-blur-sm pointer-events-auto" onClick={onClose} />
         <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="w-full max-w-md bg-white h-full shadow-2xl pointer-events-auto overflow-y-auto relative flex flex-col">
@@ -50,7 +53,7 @@ export const FarmDetailModal: React.FC<FarmDetailModalProps> = ({ farm, onClose,
                                 <img src={p.image} className="w-full h-full object-cover rounded-xl" alt={p.name} />
                             </div>
                             <div className="flex-1">
-                                <p className="font-extrabold text-slate-800 text-lg leading-tight mb-1">{p.name}</p>
+                                <p className="font-extrabold text-slate-800 text-lg leading-tight mb-1">{translateProduct(p.name, lang)}</p>
                                 {p.price && <p className="text-sm font-bold text-slate-400">€{p.price} {p.unit}</p>}
                             </div>
                             {p.available ? (
@@ -68,12 +71,15 @@ export const FarmDetailModal: React.FC<FarmDetailModalProps> = ({ farm, onClose,
 
                 <h3 className="font-black text-lg text-slate-800 mb-4 flex items-center gap-2"><Clock size={20} className="text-blue-500" /> {t('opening_hours')}</h3>
                 <div className="space-y-2 bg-slate-50 p-6 rounded-[2rem] border border-slate-100">
-                    {farm.schedule?.map((s: any) => (
-                        <div key={s.day} className="flex justify-between text-sm py-1">
-                            <span className="capitalize text-slate-500 font-bold">{s.day}</span>
-                            <span className={`font-bold ${s.isOpen ? 'text-slate-800' : 'text-slate-300'}`}>{s.isOpen ? `${s.openTime} - ${s.closeTime}` : t('closed')}</span>
-                        </div>
-                    ))}
+                    {farm.schedule?.map((s: any) => {
+                        const dayKey = `day_${s.day.toLowerCase().slice(0, 3)}`;
+                        return (
+                            <div key={s.day} className="flex justify-between text-sm py-1">
+                                <span className="capitalize text-slate-500 font-bold">{t(dayKey)}</span>
+                                <span className={`font-bold ${s.isOpen ? 'text-slate-800' : 'text-slate-300'}`}>{s.isOpen ? `${s.openTime} - ${s.closeTime}` : t('closed')}</span>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </motion.div>

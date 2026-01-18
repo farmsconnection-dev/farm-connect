@@ -105,6 +105,7 @@ export const DICTIONARY: TranslationDictionary = {
   filter_nuts: { nl: "Noten", fr: "Noix", en: "Nuts", de: "Nüsse" },
   filter_route: { nl: "Route", fr: "Itinéraire", en: "Route", de: "Route" },
   filter_open_now: { nl: "Nu Open", fr: "Ouvert", en: "Open Now", de: "Jetzt offen" },
+  fast_filters: { nl: "Snel-filters", fr: "Filtres rapides", en: "Fast Filters", de: "Schnellfilter" },
   start_route: { nl: "Start Route", fr: "Démarrer", en: "Start Route", de: "Route starten" },
   btn_route: { nl: "Route", fr: "Itinéraire", en: "Route", de: "Route" },
   products: { nl: "Producten", fr: "Produits", en: "Products", de: "Produkte" },
@@ -142,6 +143,9 @@ export const DICTIONARY: TranslationDictionary = {
   faq_privacy_a: { nl: "Wij verkopen nooit uw data aan derden. Al uw gegevens worden beveiligd opgeslagen volgens de GDPR-richtlijnen.", fr: "Nous ne vendons jamais vos données. Conformité RGPD.", en: "We never sell your data. GDPR compliant.", de: "Wir verkaufen Ihre Daten niemals. DSGVO-konform." },
   faq_switch_q: { nl: "Kan ik tussen accounts wisselen?", fr: "Puis-je changer de compte ?", en: "Can I switch accounts?", de: "Kann ich das Konto wechseln?" },
   faq_switch_a: { nl: "Ja, u kunt via het menu eenvoudig schakelen tussen uw rol als boer en als ontdekker zonder opnieuw in te loggen.", fr: "Oui, basculez facilement via le menu.", en: "Yes, switch easily via the menu.", de: "Ja, wechseln Sie einfach über das Menü." },
+  did_you_know: { nl: "Wist je dat?", fr: "Le saviez-vous ?", en: "Did you know?", de: "Wussten Sie schon?" },
+  fact_fresh_from_land: { nl: "Vers van het land", fr: "Frais du champ", en: "Fresh from the field", de: "Frisch vom Feld" },
+  fact_default_text: { nl: "Ontdek de passie achter {product} van onze lokale boeren.", fr: "Découvrez la passion derrière {product} de nos agriculteurs locaux.", en: "Discover the passion behind {product} from our local farmers.", de: "Entdecken Sie die Leidenschaft hinter {product} von unseren lokalen Bauern." },
   welcome_discoverer: { nl: "Welkom, Ontdekker!", fr: "Bienvenue, Explorateur !", en: "Welcome, Discoverer!", de: "Willkommen, Entdecker!" },
   referral_title: { nl: "Nodig een collega-boer uit", fr: "Invitez un collègue", en: "Invite a colleague", de: "Laden Sie einen Kollegen ein" },
   referral_desc: { nl: "Nodig een collega uit voor een jaarabonnement en ontvang €20 direct cash op je rekening.", fr: "Invitez un collègue pour un abonnement annuel et recevez 20 € cash directement sur votre compte.", en: "Invite a colleague for an annual subscription and receive €20 direct cash on your account.", de: "Laden Sie einen Kollegen zu einem Jahresabonnement ein und erhalten Sie 20 € Bargeld direkt auf Ihr Konto." },
@@ -386,13 +390,9 @@ export const DICTIONARY: TranslationDictionary = {
   product_pompoen: { nl: "Pompoen", fr: "Citrouille", en: "Pumpkin", de: "Kürbis" },
 
   // Product facts fallback
-  fact_fresh_from_land: { nl: "Vers van het Land", fr: "Frais de la Terre", en: "Fresh from the Land", de: "Frisch vom Land" },
-  fact_default_text: {
-    nl: "{product} zijn heerlijk vers en vol smaak! Rechtstreeks van de boer naar jouw bord. Seizoensproducten smaken het best en zijn het gezondst.",
-    fr: "{product} sont délicieusement frais et pleins de saveur ! Directement de la ferme à votre assiette. Les produits de saison ont le meilleur goût et sont les plus sains.",
-    en: "{product} are deliciously fresh and full of flavor! Straight from the farm to your plate. Seasonal products taste best and are the healthiest.",
-    de: "{product} sind köstlich frisch und voller Geschmack! Direkt vom Bauernhof auf Ihren Teller. Saisonale Produkte schmecken am besten und sind am gesündesten."
-  },
+  fact_did_you_know: { nl: "Wist je dat?", fr: "Le saviez-vous ?", en: "Did you know?", de: "Wussten Sie schon?" },
+  fact_fresh_from_land_fallback: { nl: "Vers van het land", fr: "Frais du champ", en: "Fresh from the field", de: "Frisch vom Feld" },
+  fact_default_text_fallback: { nl: "Ontdek de passie achter {product} van onze lokale boeren.", fr: "Découvrez la passion derrière {product} de nos agriculteurs locaux.", en: "Discover the passion behind {product} from our local farmers.", de: "Entdecken Sie die Leidenschaft hinter {product} von unseren lokalen Bauern." },
 
   // Missing translations from audit
   no_farms_found: { nl: "Geen boerderijen gevonden", fr: "Aucune ferme trouvée", en: "No farms found", de: "Keine Bauernhöfe gefunden" },
@@ -420,6 +420,19 @@ export const DICTIONARY: TranslationDictionary = {
   distance: { nl: "Afstand", fr: "Distance", en: "Distance", de: "Entfernung" },
   current_balance: { nl: "Huidig Saldo", fr: "Solde Actuel", en: "Current Balance", de: "Aktuelles Guthaben" },
   premium_platform: { nl: "Premium Belgisch Boerderij Platform", fr: "Plateforme Agricole Belge Premium", en: "Premium Belgian Farm Direct Platform", de: "Premium Belgische Bauernhof-Plattform" },
+
+  // About Page
+  about_since: { nl: "Sinds 2026", fr: "Depuis 2026", en: "Since 2026", de: "Seit 2026" },
+  about_scroll: { nl: "Scrol om te ontdekken", fr: "Défiler pour découvrir", en: "Scroll to discover", de: "Scrollen zum Entdecken" },
+  about_story_title: { nl: "Waarom ik Farm Connect startte", fr: "Pourquoi j'ai lancé Farm Connect", en: "Why I started Farm Connect", de: "Warum ich Farm Connect gestartet habe" },
+  about_story_quote: { nl: "\"De regels zijn absurd. De quota's verstikkend. En de prijzen oneerlijk.\"", fr: "\"Les règles sont absurdes. Les quotas étouffants. Et les prix injustes.\"", en: "\"The rules are absurd. The quotas are stifling. And the prices are unfair.\"", de: "\"Die Regeln sind absurd. Die Quoten sind erstickend. Und die Preise sind ungerecht.\"" },
+  about_story_text_1: { nl: "Ik zag van dichtbij hoe de industrie de touwtjes in handen heeft. Zij bepalen de prijs, niet de kwaliteit. Boeren worden gedwongen om groter te worden of te stoppen. De menselijke maat is weg.", fr: "J'ai vu de près comment l'industrie tire les ficelles. Ils décident du prix, pas de la qualité. Les agriculteurs sont obligés de s'agrandir ou d'arrêter. La dimension humaine a disparu.", en: "I saw firsthand how the industry pulls the strings. They decide the price, not the quality. Farmers are forced to scale up or quit. The human scale is gone.", de: "Ich habe aus nächster Nähe gesehen, wie die Industrie die Fäden in der Hand hält. Sie bestimmen den Preis, nicht die Qualität. Die Landwirte sind gezwungen, größer zu werden oder aufzuhören. Das menschliche Maß ist weg." },
+  about_story_text_2: { nl: "Ik startte Farm Connect met één simpele missie: De macht teruggeven aan de boer. Door consumenten rechtstreeks te verbinden met de bron, snijden we de industrie eruit. Zo krijgt de boer weer wat hij verdient: respect én een eerlijke prijs.", fr: "J'ai lancé Farm Connect avec une mission simple : redonner le pouvoir aux agriculteurs. En connectant directement les consommateurs à la source, nous éliminons l'industrie. Ainsi, l'agriculteur reçoit ce qu'il mérite : du respect et un prix juste.", en: "I started Farm Connect with one simple mission: Giving the power back to the farmer. By connecting consumers directly to the source, we cut out the industry. This way, the farmer receives what they deserve: respect and a fair price.", de: "Ich habe Farm Connect mit einer einfachen Mission gestartet: Den Landwirten die Macht zurückzugeben. Indem wir die Verbraucher direkt mit der Quelle verbinden, schalten wir die Industrie aus. So bekommt der Landwirt wieder, was er verdient: Respekt und einen fairen Preis." },
+  about_foundation_text: { nl: "Door zijn kennis, passie en harde werk hebben wij elke dag vers eten op tafel. Wij geloven in direct respect voor de maker: een eerbetoon aan het fundament van onze voedselketen.", fr: "Grâce à son savoir-faire, sa passion et son travail acharné, nous avons de la nourriture fraîche sur la table tous les jours. Nous croyons au respect direct pour le producteur : un hommage au fondement de notre chaîne alimentaire.", en: "Through their knowledge, passion, and hard work, we have fresh food on our table every day. We believe in direct respect for the maker: a tribute to the foundation of our food chain.", de: "Durch ihr Wissen, ihre Leidenschaft und ihre harte Arbeit haben wir jeden Tag frisches Essen auf dem Tisch. Wir glauben an den direkten Respekt für den Erzeuger: eine Hommage an das Fundament unserer Nahrungskette." },
+  about_fair_price_text: { nl: "Wij garanderen dat de boer een eerlijke prijs krijgt voor zijn harde werk. Geen onnodige tussenschakels, maar directe waarde voor de maker.", fr: "Nous garantissons que l'agriculteur reçoit un prix juste pour son travail acharné. Pas d'intermédiaires inutiles, mais une valeur directe pour le producteur.", en: "We guarantee that the farmer receives a fair price for their hard work. No unnecessary intermediaries, but direct value for the maker.", de: "Wir garantieren, dass der Landwirt einen fairen Preis für seine harte Arbeit erhält. Keine unnötigen Zwischenhändler, sondern direkter Wert für den Erzeuger." },
+  about_closing_quote: { nl: "\"Wij zetten de boer terug in het hart van onze gemeenschap.\"", fr: "\"Nous remettons l'agriculteur au cœur de notre communauté.\"", en: "\"We put the farmer back at the heart of our community.\"", de: "\"Wir stellen den Landwirt wieder in den Mittelpunkt unserer Gemeinschaft.\"" },
+
+  // Re-added for About Page icons/headers
   fair_price: { nl: "Eerlijke Prijs", fr: "Prix Équitable", en: "Fair Price", de: "Fairer Preis" },
   no_farmer_no_food: { nl: "Zonder de boer, geen eten", fr: "Sans le fermier, pas de nourriture", en: "No farmer, no food", de: "Ohne Bauern kein Essen" },
 

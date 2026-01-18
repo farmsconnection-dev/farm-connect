@@ -4,16 +4,18 @@ import { motion } from 'framer-motion';
 import { X, Lightbulb } from 'lucide-react';
 import { MeteorCard } from '../shared/MeteorCard';
 import { PRODUCT_FACTS } from '../../constants';
+import { translateProduct } from '../../utils/translations';
 
 interface ProductFactsModalProps {
     isOpen: boolean;
     onClose: () => void;
     productName: string;
     t: (key: string) => string;
+    lang: string;
 }
 
 // Helper function to get translated fact
-const getProductFact = (productName: string, t: (key: string) => string) => {
+const getProductFact = (productName: string, t: (key: string) => string, lang: string) => {
     const lowerName = productName.toLowerCase();
     const factKey = `fact_${lowerName}`;
     const titleKey = `fact_${lowerName}_title`;
@@ -26,25 +28,27 @@ const getProductFact = (productName: string, t: (key: string) => string) => {
         return { title, fact };
     }
 
+    const localizedName = translateProduct(productName, lang);
+
     // Fallback to simple PRODUCT_FACTS map if available
     if (PRODUCT_FACTS[lowerName]) {
         return {
-            title: `${productName} - Wist je dat?`,
+            title: `${localizedName} - ${t('did_you_know')}`,
             fact: PRODUCT_FACTS[lowerName]
         };
     }
 
     // Default Fallback
     return {
-        title: `${productName} - ${t('fact_fresh_from_land')}`,
-        fact: t('fact_default_text').replace('{product}', productName)
+        title: `${localizedName} - ${t('fact_fresh_from_land')}`,
+        fact: t('fact_default_text').replace('{product}', localizedName)
     };
 };
 
-export const ProductFactsModal: React.FC<ProductFactsModalProps> = ({ isOpen, onClose, productName, t }) => {
+export const ProductFactsModal: React.FC<ProductFactsModalProps> = ({ isOpen, onClose, productName, t, lang }) => {
     if (!isOpen) return null;
 
-    const facts = getProductFact(productName, t);
+    const facts = getProductFact(productName, t, lang);
 
     return (
         <div className="fixed inset-0 z-[400] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md" onClick={onClose}>

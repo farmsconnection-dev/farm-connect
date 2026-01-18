@@ -24,8 +24,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
                 mediaSrc={barnImg}
                 bgImageSrc={harvestImg}
                 title={t('about_banner_title')}
-                date="Sinds 2026"
-                scrollToExpand="Scrol om te ontdekken"
+                date={t('about_since')}
+                scrollToExpand={t('about_scroll')}
                 textBlend={true}
             >
                 <div className="max-w-4xl mx-auto pt-10 pb-20 px-4">
@@ -41,15 +41,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
                     <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 mb-16 border border-white/10 shadow-2xl">
                         <div className="flex flex-col md:flex-row gap-8 md:items-center">
                             <div className="flex-1">
-                                <h2 className="text-3xl md:text-4xl font-black text-white mb-6">Waarom ik Farm Connect startte</h2>
+                                <h2 className="text-3xl md:text-4xl font-black text-white mb-6">{t('about_story_title')}</h2>
                                 <p className="text-white/95 text-xl leading-relaxed mb-6 font-medium italic pl-4 border-l-4 border-emerald-500">
-                                    "De regels zijn absurd. De quota's verstikkend. En de prijzen oneerlijk."
+                                    {t('about_story_quote')}
                                 </p>
                                 <p className="text-white/90 text-lg leading-relaxed mb-4">
-                                    Ik zag van dichtbij hoe de industrie de touwtjes in handen heeft. Zij bepalen de prijs, niet de kwaliteit. Boeren worden gedwongen om groter te worden of te stoppen. De menselijke maat is weg.
+                                    {t('about_story_text_1')}
                                 </p>
                                 <p className="text-white/90 text-lg leading-relaxed">
-                                    Ik startte Farm Connect met één simpele missie: <strong>De macht teruggeven aan de boer.</strong> Door consumenten rechtstreeks te verbinden met de bron, snijden we de industrie eruit. Zo krijgt de boer weer wat hij verdient: respect én een eerlijke prijs.
+                                    {t('about_story_text_2')}
                                 </p>
                                 <div className="mt-6 flex items-center gap-3">
                                     <div className="h-0.5 w-12 bg-emerald-500"></div>
@@ -69,7 +69,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
                                 <ShieldCheck size={32} className="text-red-500 mb-4 drop-shadow-md" />
                                 <h2 className="text-xl font-black text-white mb-2 drop-shadow-md">{t('no_farmer_no_food')}</h2>
                                 <p className="text-white text-sm font-medium leading-relaxed drop-shadow-md">
-                                    Door zijn kennis, passie en harde werk hebben wij elke dag vers eten op tafel. Wij geloven in direct respect voor de maker: een eerbetoon aan het fundament van onze voedselketen.
+                                    {t('about_foundation_text')}
                                 </p>
                             </div>
                         </motion.div>
@@ -82,8 +82,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
                                 <Leaf size={32} className="text-green-500 mb-4 drop-shadow-md" />
                                 <h2 className="text-xl font-black text-white mb-2 drop-shadow-md">{t('fair_price')}</h2>
                                 <p className="text-white text-sm font-medium leading-relaxed drop-shadow-md">
-                                    Wij garanderen dat de boer een eerlijke prijs krijgt voor zijn harde werk.
-                                    Geen onnodige tussenschakels, maar directe waarde voor de maker.
+                                    {t('about_fair_price_text')}
                                 </p>
                             </div>
                         </motion.div>
@@ -91,7 +90,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ t, setView }) => {
 
                     <div className="text-center mb-16 px-4">
                         <p className="text-2xl md:text-3xl font-serif italic text-white drop-shadow-md leading-relaxed">
-                            "Wij zetten de boer terug in het hart van onze gemeenschap."
+                            {t('about_closing_quote')}
                         </p>
                     </div>
 

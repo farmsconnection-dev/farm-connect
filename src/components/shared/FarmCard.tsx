@@ -5,6 +5,7 @@ import { MapPin, Clock, Navigation, Heart } from 'lucide-react';
 import { ProductImage } from './ProductImage';
 import { Farm } from '../../types';
 import { getLiveStatus, isNew, getFilterIcon } from '../../utils/helpers';
+import { translateProduct } from '../../utils/translations';
 
 interface FarmCardProps {
     farm: Farm;
@@ -13,9 +14,10 @@ interface FarmCardProps {
     favorites: Set<string>;
     handleRouteClick: (farm: Farm) => void;
     t: (key: string) => string;
+    lang: string;
 }
 
-export const FarmCard: React.FC<FarmCardProps> = ({ farm, setDetailFarm, toggleFavorite, favorites, handleRouteClick, t }) => {
+export const FarmCard: React.FC<FarmCardProps> = ({ farm, setDetailFarm, toggleFavorite, favorites, handleRouteClick, t, lang }) => {
     const live = getLiveStatus(farm.schedule || []);
     const topProducts = farm.products.slice(0, 3);
     const categories = Array.from(new Set(farm.products.map(p => p.category))).slice(0, 3);
@@ -42,7 +44,7 @@ export const FarmCard: React.FC<FarmCardProps> = ({ farm, setDetailFarm, toggleF
                 {/* Status Badge */}
                 <div className="absolute top-1.5 left-1.5 z-10">
                     <div className={`px-1.5 py-0.5 rounded-md text-[8px] font-bold uppercase tracking-wide ${live.color === 'bg-emerald-500 text-white' ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
-                        {live.label}
+                        {t(live.label)}
                     </div>
                 </div>
 
@@ -134,7 +136,7 @@ export const FarmCard: React.FC<FarmCardProps> = ({ farm, setDetailFarm, toggleF
                         {topProducts.map((product, idx) => (
                             <span key={idx} className="text-[9px] font-semibold text-slate-600 whitespace-nowrap flex items-center gap-1">
                                 {product.in_vending_machine && <span title="Beschikbaar in automaat">📦</span>}
-                                {product.name} <span className="text-emerald-600">€{product.price}</span>
+                                {translateProduct(product.name, lang)} <span className="text-emerald-600">€{product.price}</span>
                             </span>
                         ))}
                     </div>

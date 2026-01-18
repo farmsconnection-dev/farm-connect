@@ -14,10 +14,11 @@ interface FavoritesPageProps {
     setDetailFarm: (farm: Farm | null) => void;
     toggleFavorite: (id: string) => void;
     handleRouteClick: (farm: Farm) => void;
+    lang: string;
 }
 
 export const FavoritesPage: React.FC<FavoritesPageProps> = ({
-    t, setView, favorites, farms, setDetailFarm, toggleFavorite, handleRouteClick
+    t, setView, favorites, farms, setDetailFarm, toggleFavorite, handleRouteClick, lang
 }) => {
 
     const favoriteFarms = farms.filter(f => favorites.has(f.id) && f.is_verified !== false);
@@ -59,6 +60,7 @@ export const FavoritesPage: React.FC<FavoritesPageProps> = ({
                             favorites={favorites}
                             toggleFavorite={toggleFavorite}
                             handleRouteClick={handleRouteClick}
+                            lang={lang}
                         />
                     ))}
                 </div>

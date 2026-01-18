@@ -862,6 +862,7 @@ const App: React.FC = () => {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             userProfile={userProfile}
+            lang={lang}
           />
         )}
         {view === 'favorites' && (
@@ -873,6 +874,7 @@ const App: React.FC = () => {
             setDetailFarm={handleSetDetailFarm}
             toggleFavorite={toggleFavorite}
             handleRouteClick={handleRouteClick}
+            lang={lang}
           />
         )}
 
@@ -990,6 +992,7 @@ const App: React.FC = () => {
           t={t}
           handleSeasonalItemClick={handleSeasonalItemClick}
           currentMonthIndex={currentMonthIndex}
+          lang={lang}
         />
       )}</AnimatePresence>
       <AnimatePresence>{isProductFactsOpen && (
@@ -1011,6 +1014,7 @@ const App: React.FC = () => {
           toggleFavorite={toggleFavorite}
           isFavorite={favorites.has(detailFarm?.id)}
           handleRouteClick={handleRouteClick}
+          lang={lang}
         />
       )}</AnimatePresence>
       <AnimatePresence>{isAiAdviceModalOpen && (
