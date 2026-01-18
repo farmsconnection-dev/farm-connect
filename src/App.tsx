@@ -759,9 +759,12 @@ const App: React.FC = () => {
         <div className="pointer-events-auto flex items-center h-full">
           {(view === 'landing' || view === 'register_farm') ? (
             <div className={`items-center gap-3 select-none pointer-events-none ${view === 'landing' ? 'hidden sm:flex' : 'flex'}`}>
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white/50 overflow-hidden">
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white/50 overflow-hidden pointer-events-auto"
+              >
                 <img src={logo} alt="Farm Connect" className="w-full h-full object-cover scale-[1.6]" />
-              </div>
+              </motion.div>
               <h1 className={`text-2xl font-black tracking-tight drop-shadow-md ${view === 'landing' ? 'text-white' : 'text-slate-800'}`}>
                 Farm <span className="text-amber-500">Connect</span>
               </h1>

@@ -378,7 +378,13 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                 ) : (
                     <div className="absolute inset-0 rounded-apple overflow-hidden border-4 border-white/10 shadow-2xl bg-slate-100 min-h-[500px] h-full">
                         {isLoaded ? (
-                            <GoogleMap mapContainerStyle={mapContainerStyle} center={searchCityCoords || userLocation || defaultCenter} zoom={searchCityCoords ? 12 : 11} options={googleMapsOptions}>
+                            <GoogleMap
+                                mapContainerStyle={mapContainerStyle}
+                                center={searchCityCoords || userLocation || defaultCenter}
+                                zoom={searchCityCoords ? 12 : 11}
+                                options={googleMapsOptions}
+                                onClick={() => setDetailFarm(null)}
+                            >
                                 {userLocation && <MarkerF position={userLocation} label="👋" />}
                                 {filteredFarms.map(farm => {
                                     // Determine most common category
