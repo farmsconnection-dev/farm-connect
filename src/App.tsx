@@ -376,8 +376,36 @@ const App: React.FC = () => {
 
       if (session) {
         const { email, user_metadata } = session.user;
-        const name = user_metadata.full_name || email?.split('@')[0] || 'Gebruiker';
-        const photoUrl = user_metadata.avatar_url;
+        let name = user_metadata.full_name || email?.split('@')[0] || 'Gebruiker';
+        let photoUrl = user_metadata.avatar_url;
+
+        // Try to fetch user profile from database to get saved name
+        try {
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('name, photo_url')
+            .eq('id', session.user.id)
+            .single();
+
+          if (profile) {
+            // Use database name if available (user may have updated it)
+            if (profile.name && profile.name !== 'User') {
+              name = profile.name;
+            }
+            // Use database photo if available
+            if (profile.photo_url) {
+              photoUrl = profile.photo_url;
+            }
+          }
+        } catch (err) {
+          console.log('Profile not found in DB, will create one');
+        }
+
+        // Also check localStorage for saved photo
+        const savedPhoto = localStorage.getItem('userProfilePhoto');
+        if (savedPhoto && !photoUrl) {
+          photoUrl = savedPhoto;
+        }
 
         setUserProfile({
           name,
