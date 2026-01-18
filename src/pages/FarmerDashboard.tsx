@@ -293,62 +293,8 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                     </div>
                 </motion.div>
 
+
                 {/* COMPACT REFERRAL - MOVED TO MENU */}
-
-                {/* SOCIAL SHARE SECTION */}
-                <motion.div
-                    initial={{ scale: 0.95, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.15 }}
-                    className="relative bg-gradient-to-r from-blue-600 to-blue-700 p-6 rounded-3xl shadow-lg overflow-hidden"
-                >
-                    <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                        <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                                <Share2 size={20} className="text-white" />
-                                <h3 className="text-lg font-black text-white">{t('share_farm_title')}</h3>
-                            </div>
-                            <p className="text-blue-100 text-sm leading-relaxed max-w-md">
-                                {t('share_farm_desc')}
-                            </p>
-                        </div>
-
-                        <div className="flex gap-3 flex-wrap">
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={shareFacebookProfile}
-                                className="bg-[#1877F2] hover:bg-[#166FE5] text-white px-5 py-3 rounded-xl font-bold uppercase text-xs flex items-center gap-2 shadow-lg transition-colors"
-                            >
-                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                                </svg>
-                                {t('share_on_facebook')}
-                            </motion.button>
-
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={copyProfileLink}
-                                className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-5 py-3 rounded-xl font-bold uppercase text-xs flex items-center gap-2 border border-white/30 transition-colors"
-                            >
-                                <Copy size={16} />
-                                {t('copy_link')}
-                            </motion.button>
-                        </div>
-                    </div>
-
-                    <div className="mt-4 p-3 bg-white/10 backdrop-blur-md rounded-xl border border-white/20">
-                        <p className="text-[10px] font-black text-white/60 uppercase tracking-widest mb-1">{t('share_farm_preview')}</p>
-                        <p className="text-sm text-white italic">
-                            🌾 {t('share_farm_msg').replace('je boerderij', myFarm?.name || 'je boerderij')}
-                        </p>
-                    </div>
-
-                    <div className="absolute -right-8 -bottom-8 text-white/5 pointer-events-none">
-                        <Share2 size={120} />
-                    </div>
-                </motion.div>
 
                 {/* EXPANDED STATS */}
                 <div>
@@ -406,6 +352,61 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
                     {/* ROUTES & CONVERSION STATS REMOVED (Coming Soon) */}
                 </div>
+
+                {/* SOCIAL SHARE SECTION */}
+                <motion.div
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.15 }}
+                    className="relative bg-gradient-to-r from-blue-600 to-blue-700 p-6 rounded-3xl shadow-lg overflow-hidden"
+                >
+                    <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                                <Share2 size={20} className="text-white" />
+                                <h3 className="text-lg font-black text-white">{t('share_farm_title')}</h3>
+                            </div>
+                            <p className="text-blue-100 text-sm leading-relaxed max-w-md">
+                                {t('share_farm_desc')}
+                            </p>
+                        </div>
+
+                        <div className="flex gap-3 flex-wrap">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={shareFacebookProfile}
+                                className="bg-[#1877F2] hover:bg-[#166FE5] text-white px-5 py-3 rounded-xl font-bold uppercase text-xs flex items-center gap-2 shadow-lg transition-colors"
+                            >
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                </svg>
+                                {t('share_on_facebook')}
+                            </motion.button>
+
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={copyProfileLink}
+                                className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-5 py-3 rounded-xl font-bold uppercase text-xs flex items-center gap-2 border border-white/30 transition-colors"
+                            >
+                                <Copy size={16} />
+                                {t('copy_link')}
+                            </motion.button>
+                        </div>
+                    </div>
+
+                    <div className="mt-4 p-3 bg-white/10 backdrop-blur-md rounded-xl border border-white/20">
+                        <p className="text-[10px] font-black text-white/60 uppercase tracking-widest mb-1">{t('share_farm_preview')}</p>
+                        <p className="text-sm text-white italic">
+                            🌾 {t('share_farm_msg').replace('je boerderij', myFarm?.name || 'je boerderij')}
+                        </p>
+                    </div>
+
+                    <div className="absolute -right-8 -bottom-8 text-white/5 pointer-events-none">
+                        <Share2 size={120} />
+                    </div>
+                </motion.div>
 
                 {/* SUBSCRIPTION SECTION */}
                 {myFarm && (
