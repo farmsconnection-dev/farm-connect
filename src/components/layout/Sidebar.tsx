@@ -52,9 +52,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
     };
 
     const menuItems = useMemo((): MenuItem[] => {
-        // ADMIN EMAIL - Vervang met je echte email!
-        // ADMIN EMAIL - Vervang met je echte email!
-        const ADMIN_EMAIL = 'farmsconnection@gmail.com';
+        // ADMIN EMAIL - Now from environment variable for better security
+        // Fallback to hardcoded value for backward compatibility
+        const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'farmsconnection@gmail.com';
+
         // Only allow admin access for specific email
         const isAdmin = userProfile.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 

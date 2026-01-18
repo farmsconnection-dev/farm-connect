@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Tractor, MapPin, Phone, Save, Loader2, Mail } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { sanitizeFormData, validateEmail, validatePhone, MAX_LENGTHS } from '../utils/security';
 
 interface RegisterFarmPageProps {
     email: string;
@@ -85,94 +86,109 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authE
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Basic presence validation
         if (!formData.name || !formData.address || !formData.email) {
             alert('Vul alle verplichte velden in (naam, e-mail en adres).');
             return;
         }
 
-        setLoading(true);
-
-        // Timeout after 15 seconds
-        const timeout = setTimeout(() => {
-            setLoading(false);
-            alert('Registratie duurt te lang. Probeer opnieuw of check je internetverbinding.');
-        }, 15000);
-
+        // Sanitize and validate all inputs
         try {
-            console.log('🚜 Submitting farm registration...', {
+            const sanitized = sanitizeFormData({
                 name: formData.name,
                 address: formData.address,
-                authEmail: email, // from props (logged in user)
-                formEmail: formData.email,
-                userId
+                phone: formData.phone,
+                email: formData.email
             });
 
-            // Build insert data with only essential fields first
-            const insertData: any = {
-                name: formData.name,
-                address: formData.address,
-                phone: formData.phone || formData.email,
-                lat: formData.lat,
-                lng: formData.lng,
-                owner_email: formData.email || authEmail, // Use form email first
-                products: []
-            };
+            setLoading(true);
 
-            // Add optional fields if they have values
-            if (userId) insertData.owner_id = userId;
-            if (formData.heeft_automaat !== undefined) insertData.heeft_automaat = formData.heeft_automaat;
-            if (formData.heeft_automaat && formData.automaat_locatie) {
-                insertData.automaat_locatie = formData.automaat_locatie;
+            // Timeout after 15 seconds
+            const timeout = setTimeout(() => {
+                setLoading(false);
+                alert('Registratie duurt te lang. Probeer opnieuw of check je internetverbinding.');
+            }, 15000);
+
+            try {
+                console.log('🚜 Submitting farm registration...', {
+                    name: sanitized.name,
+                    address: sanitized.address,
+                    authEmail: authEmail, // from props (logged in user)
+                    formEmail: sanitized.email,
+                    userId
+                });
+
+                // Build insert data with sanitized values
+                const insertData: any = {
+                    name: sanitized.name,
+                    address: sanitized.address,
+                    phone: sanitized.phone || sanitized.email,
+                    lat: formData.lat,
+                    lng: formData.lng,
+                    owner_email: sanitized.email || authEmail, // Use form email first
+                    products: []
+                };
+
+                // Add optional fields if they have values
+                if (userId) insertData.owner_id = userId;
+                if (formData.heeft_automaat !== undefined) insertData.heeft_automaat = formData.heeft_automaat;
+                if (formData.heeft_automaat && formData.automaat_locatie) {
+                    insertData.automaat_locatie = formData.automaat_locatie;
+                }
+                if (formData.automaat_locatie === 'anders' && formData.automaat_adres) {
+                    insertData.automaat_adres = formData.automaat_adres;
+                }
+
+                console.log('🚀 Starting Supabase RAW FETCH insert...', insertData);
+
+                // GEBRUIK RAW FETCH OM CLIENT ISSUES TE OMZEILEN
+                const restUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms`;
+
+                const response = await fetch(restUrl, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(insertData)
+                });
+
+                console.log('🏁 Raw Fetch status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ Raw Fetch Error Body:', errorText);
+                    throw new Error(`Server reageerde met status ${response.status}: ${errorText}`);
+                }
+
+                console.log('✅ Farm registered successfully via Raw Fetch!');
+                clearTimeout(timeout);
+
+                // Succesvol geregistreerd -> ga naar dashboard
+                onSuccess(formData.email || authEmail);
+
+            } catch (err) {
+                clearTimeout(timeout);
+                console.error('❌ Error registering farm:', err);
+
+                // More helpful error messages
+                let errorMessage = err.message || 'Onbekende fout';
+                if (err.code === '42501' || err.message?.includes('policy')) {
+                    errorMessage = 'Toegang geweigerd. Zorg dat je bent ingelogd met hetzelfde e-mailadres.';
+                } else if (err.code === '23505') {
+                    errorMessage = 'Deze boerderij bestaat al.';
+                }
+
+                alert(`Er ging iets mis: ${errorMessage}`);
+            } finally {
+                setLoading(false);
             }
-            if (formData.automaat_locatie === 'anders' && formData.automaat_adres) {
-                insertData.automaat_adres = formData.automaat_adres;
-            }
-
-            console.log('🚀 Starting Supabase RAW FETCH insert...', insertData);
-
-            // GEBRUIK RAW FETCH OM CLIENT ISSUES TE OMZEILEN
-            const restUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms`;
-
-            const response = await fetch(restUrl, {
-                method: 'POST',
-                headers: {
-                    'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-                    'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-                    'Content-Type': 'application/json',
-                    'Prefer': 'return=minimal'
-                },
-                body: JSON.stringify(insertData)
-            });
-
-            console.log('🏁 Raw Fetch status:', response.status);
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('❌ Raw Fetch Error Body:', errorText);
-                throw new Error(`Server reageerde met status ${response.status}: ${errorText}`);
-            }
-
-            console.log('✅ Farm registered successfully via Raw Fetch!');
-            clearTimeout(timeout);
-
-            // Succesvol geregistreerd -> ga naar dashboard
-            onSuccess(formData.email || authEmail);
-
-        } catch (err) {
-            clearTimeout(timeout);
-            console.error('❌ Error registering farm:', err);
-
-            // More helpful error messages
-            let errorMessage = err.message || 'Onbekende fout';
-            if (err.code === '42501' || err.message?.includes('policy')) {
-                errorMessage = 'Toegang geweigerd. Zorg dat je bent ingelogd met hetzelfde e-mailadres.';
-            } else if (err.code === '23505') {
-                errorMessage = 'Deze boerderij bestaat al.';
-            }
-
-            alert(`Er ging iets mis: ${errorMessage}`);
-        } finally {
-            setLoading(false);
+        } catch (validationError) {
+            // Handle validation/sanitization errors
+            alert(validationError.message || 'Ongeldige invoer. Controleer je gegevens.');
         }
     };
 
