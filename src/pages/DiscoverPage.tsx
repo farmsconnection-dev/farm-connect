@@ -242,9 +242,9 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                     </div>
                 </div>
 
-                {/* Filter Section - Consolidated on One Line */}
-                <div className="flex items-center gap-2 pb-4 relative z-50">
-                    {/* Primary Filters Dropdown - Fixed to prevent clipping */}
+                {/* Filter Section - Consolidated on One Line with Unified Scrolling on Mobile */}
+                <div className="flex items-center gap-2 pb-4 relative z-50 overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+                    {/* Primary Filters Dropdown */}
                     <div className="relative shrink-0">
                         <motion.button
                             whileHover={{ scale: 1.02 }}
@@ -252,7 +252,9 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                             onClick={() => setIsPrimaryFiltersOpen(!isPrimaryFiltersOpen)}
                             className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20`}
                         >
-                            <Filter size={16} /> {t('fast_filters')} <ChevronDown size={14} className={`transition-transform ${isPrimaryFiltersOpen ? 'rotate-180' : ''}`} />
+                            <Filter size={16} />
+                            <span className="hidden sm:inline">{t('fast_filters')}</span>
+                            <ChevronDown size={14} className={`transition-transform ${isPrimaryFiltersOpen ? 'rotate-180' : ''}`} />
                         </motion.button>
 
                         <AnimatePresence>
@@ -317,26 +319,24 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                         </AnimatePresence>
                     </div>
 
-                    {/* Category Filters - Scrollable Part */}
-                    <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide flex-1">
-                        {filterList.map(cat => {
-                            const activeColor = getCategoryColor(cat);
-                            const colorClass = cat === 'fruit' ? 'text-red-500' :
-                                cat === 'vegetables' ? 'text-green-500' :
-                                    cat === 'dairy' ? 'text-blue-400' :
-                                        cat === 'meat' ? 'text-orange-700' :
-                                            cat === 'eggs' ? 'text-yellow-500' :
-                                                cat === 'honey' ? 'text-amber-500' : 'text-white';
+                    {/* Category Filters - Now part of the same scrollable area */}
+                    {filterList.map(cat => {
+                        const activeColor = getCategoryColor(cat);
+                        const colorClass = cat === 'fruit' ? 'text-red-500' :
+                            cat === 'vegetables' ? 'text-green-500' :
+                                cat === 'dairy' ? 'text-blue-400' :
+                                    cat === 'meat' ? 'text-orange-700' :
+                                        cat === 'eggs' ? 'text-yellow-500' :
+                                            cat === 'honey' ? 'text-amber-500' : 'text-white';
 
-                            const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
-                            return (
-                                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass} shrink-0`}>
-                                    <span className={activeFilter === cat ? 'text-current' : colorClass}>{getFilterIcon(cat)}</span>
-                                    {t(`filter_${cat}`)}
-                                </motion.button>
-                            );
-                        })}
-                    </div>
+                        const activeClass = activeFilter === cat ? activeColor : `bg-white/10 backdrop-blur-md ${colorClass} border border-white/20 hover:bg-white/20`;
+                        return (
+                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={cat} onClick={() => setActiveFilter(cat as any)} className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-bold whitespace-nowrap shadow-sm flex items-center gap-2 transition-all active:scale-95 ${activeClass} shrink-0`}>
+                                <span className={activeFilter === cat ? 'text-current' : colorClass}>{getFilterIcon(cat)}</span>
+                                {t(`filter_${cat}`)}
+                            </motion.button>
+                        );
+                    })}
                 </div>
             </div>
             <div className="flex-1 overflow-hidden relative bg-white/5 backdrop-blur-xl rounded-apple shadow-2xl border border-white/10">

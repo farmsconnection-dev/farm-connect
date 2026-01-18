@@ -205,7 +205,7 @@ const App: React.FC = () => {
       setPendingRole('farmer');
 
       if (!userProfile.isLoggedIn) {
-        setIsAuthModalOpen(true); // Prompt login
+        // setIsAuthModalOpen(true); // Removed auto-trigger to prevent intrusive experience on mobile
         showToast(`Welkom ${name}! Log in om je profiel te claimen.`);
       }
     } else {
@@ -755,7 +755,7 @@ const App: React.FC = () => {
       <AnimatePresence>{toast && (<motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 100, opacity: 0 }} className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] bg-forest text-mint px-8 py-4 rounded-2xl shadow-2xl font-bold flex items-center gap-3 border-2 border-white/20"><CheckCircle size={24} />{toast}</motion.div>)}</AnimatePresence>
 
       {/* --- Persistent Header --- */}
-      <div className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex justify-between items-center z-[60] pointer-events-none">
+      <div className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex justify-between items-center z-[110] pointer-events-none">
         <div className="pointer-events-auto flex items-center h-full">
           {(view === 'landing' || view === 'register_farm') ? (
             <div className={`items-center gap-3 select-none pointer-events-none ${view === 'landing' ? 'hidden sm:flex' : 'flex'}`}>
@@ -790,7 +790,7 @@ const App: React.FC = () => {
                   Farm <span className="text-amber-500">Connect</span>
                 </h1>
               </div>
-              <span className="text-xs italic text-emerald-200 font-black uppercase tracking-widest ml-4 transition-all duration-300 transform self-center">
+              <span className="text-[10px] sm:text-xs italic text-emerald-200 font-black uppercase tracking-widest ml-1 sm:ml-4 transition-all duration-300 transform self-center">
                 {t('tagline')}
               </span>
             </motion.button>
