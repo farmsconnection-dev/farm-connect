@@ -616,6 +616,10 @@ const App: React.FC = () => {
   };
 
   const toggleFavorite = (id: string) => {
+    if (!userProfile.isLoggedIn) {
+      setIsLoginPromptOpen(true);
+      return;
+    }
     // Persistent favorites even for guests
     setFavorites(prev => {
       const next = new Set(prev);
@@ -838,8 +842,9 @@ const App: React.FC = () => {
               setUserProfile={setUserProfile}
               handleLogout={handleLogout}
               handleLogin={() => { setIsLoginPromptOpen(false); setIsAuthModalOpen(true); }}
-              setIsSeasonCalendarOpen={setIsSeasonCalendarOpen}
               setIsReferralModalOpen={setIsReferralModalOpen}
+              setIsSeasonCalendarOpen={setIsSeasonCalendarOpen}
+              setIsLoginPromptOpen={setIsLoginPromptOpen}
               t={t}
             />
           </>

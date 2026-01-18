@@ -22,6 +22,7 @@ interface SidebarProps {
     setUserProfile?: (profile: UserProfile) => void;
     handleLogout: () => void;
     handleLogin: () => void;
+    setIsLoginPromptOpen: (open: boolean) => void;
     setIsSeasonCalendarOpen: (open: boolean) => void;
     setIsReferralModalOpen: (open: boolean) => void;
     t: (key: string) => string;
@@ -29,7 +30,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({
     isOpen, onClose, view, setView, userType, userProfile, setUserProfile,
-    handleLogout, handleLogin, setIsSeasonCalendarOpen, setIsReferralModalOpen, t
+    handleLogout, handleLogin, setIsLoginPromptOpen, setIsSeasonCalendarOpen, setIsReferralModalOpen, t
 }) => {
     const [expandedItems, setExpandedItems] = React.useState<Set<string>>(new Set(['inventory_group']));
 
@@ -187,6 +188,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                             return next;
                                         });
                                     } else {
+                                        if (item.id === 'favorites' && !userProfile.isLoggedIn) {
+                                            setIsLoginPromptOpen(true);
+                                            onClose();
+                                            return;
+                                        }
+
                                         if (item.action) item.action();
                                         else setView(item.id as ViewState);
                                         onClose();
