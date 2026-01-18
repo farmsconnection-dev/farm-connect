@@ -445,6 +445,15 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                                 strokeWeight: 2,
                                                 scale: 10,
                                             }}
+                                            label={{
+                                                text: show24_7Only ? '🏧' : (activeFilter !== 'all' && activeFilter !== 'open' && activeFilter !== 'nearby')
+                                                    ? getFilterIcon(activeFilter)
+                                                    : getFilterIcon(primaryCategoryForMarker),
+                                                fontSize: '18px',
+                                                color: 'white',
+                                                fontWeight: 'bold',
+                                                fontFamily: 'Arial, sans-serif'
+                                            }}
                                         />
                                     );
                                 })}
