@@ -233,7 +233,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                         <div className={`p-1.5 rounded-lg ${activeFilter === 'nearby' ? 'bg-white/20' : 'bg-purple-500/20 text-purple-500'}`}>
                                             <Navigation size={14} />
                                         </div>
-                                        Dichtbij
+                                        {t('filter_nearby')}
                                     </motion.button>
 
                                     <motion.button
@@ -253,7 +253,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                                 <circle cx="12" cy="12" r="1" />
                                             </svg>
                                         </div>
-                                        24/7 Automaten
+                                        {t('filter_vending_machines')}
                                     </motion.button>
                                 </motion.div>
                             )}
