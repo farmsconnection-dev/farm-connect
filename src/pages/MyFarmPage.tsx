@@ -55,7 +55,11 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
     };
 
     const handleSaveSchedule = () => {
-        if (onUpdateFarm) onUpdateFarm(myFarm);
+        // Get the current farm state (myFarm might be stale)
+        const currentFarm = farms.find(f => f.id === myFarm.id);
+        if (onUpdateFarm && currentFarm) {
+            onUpdateFarm(currentFarm);
+        }
         setIsEditingSchedule(false);
         showToast(t('save'));
     };
