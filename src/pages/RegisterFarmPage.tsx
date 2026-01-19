@@ -127,7 +127,8 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authE
                     lat: formData.lat,
                     lng: formData.lng,
                     owner_email: sanitized.email || authEmail, // Use form email first
-                    products: []
+                    products: [],
+                    is_verified: false // New farms hidden until admin verifies
                 };
 
                 // Add optional fields if they have values
