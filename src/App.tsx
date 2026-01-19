@@ -147,15 +147,9 @@ const App: React.FC = () => {
 
 
   // Farms Data (Single Source of Truth)
+  // User farms load from Supabase on login
+  // Demo farms from INITIAL_FARMS for discovery
   const [farms, setFarms] = useState<Farm[]>(() => {
-    const saved = localStorage.getItem('saved_farms');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error("Failed to parse saved farms", e);
-      }
-    }
     return INITIAL_FARMS.map(f => ({
       ...f,
       referralCode: `FARM-${f.id.toUpperCase()}-X8`,
@@ -164,10 +158,9 @@ const App: React.FC = () => {
     }));
   });
 
-  // Persist farms to localStorage
-  useEffect(() => {
-    localStorage.setItem('saved_farms', JSON.stringify(farms));
-  }, [farms]);
+  // NOTE: Removed localStorage persistence for farms
+  // Base64 images cause QuotaExceededError
+  // Now using Supabase exclusively for farm data persistence
 
   const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null);
   const [favorites, setFavorites] = useState<Set<string>>(() => {
