@@ -32,7 +32,13 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64 = reader.result as string;
-                setFarms(prev => prev.map(f => f.id === myFarm.id ? { ...f, image: base64 } : f));
+                const updatedFarm = { ...myFarm, image: base64 };
+                setFarms(prev => prev.map(f => f.id === myFarm.id ? updatedFarm : f));
+                // Persist to database
+                if (onUpdateFarm) {
+                    onUpdateFarm(updatedFarm);
+                }
+                showToast('Profielfoto opgeslagen');
             };
             reader.readAsDataURL(file);
         }

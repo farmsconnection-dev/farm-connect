@@ -454,9 +454,11 @@ const App: React.FC = () => {
               const userFarms = await response.json();
               if (userFarms && userFarms.length > 0) {
                 setFarms(prev => {
-                  const existingIds = new Set(prev.map(f => f.id));
-                  const newFarms = userFarms.filter((f: any) => !existingIds.has(f.id));
-                  return [...newFarms, ...prev];
+                  // Remove any demo farms with same IDs as user farms
+                  const userFarmIds = new Set(userFarms.map((f: any) => f.id));
+                  const filteredPrev = prev.filter(f => !userFarmIds.has(f.id));
+                  // Add user farms at the beginning
+                  return [...userFarms, ...filteredPrev];
                 });
                 setUserType('farmer');
                 setIsFarmerVerified(userFarms[0].is_verified !== false);
