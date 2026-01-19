@@ -35,6 +35,7 @@ export interface Farm {
   products: Product[];
   address: string;
   phone?: string;
+  phone_visible?: boolean; // Privacy setting for phone number
   telefoonnummer?: string; // New field for automaat
   distance?: number;
   schedule?: DaySchedule[];
