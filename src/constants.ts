@@ -1665,7 +1665,7 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "broccoli": broccoli,
   "pompoen": pumpkin,
   "uien": "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?auto=format&fit=crop&q=80&w=400",
-  "witloof": "https://images.unsplash.com/photo-1628151241199-6f3453303867?auto=format&fit=crop&q=80&w=400",
+  "witloof": "/images/witloof.png",
   "spruitjes": "https://images.unsplash.com/photo-1438118907704-7718ee9a191a?auto=format&fit=crop&q=80&w=400",
   "asperges": "https://images.unsplash.com/photo-1515471209610-dae1c92d8777?auto=format&fit=crop&q=80&w=400",
   "spinazie": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=400",
@@ -1705,5 +1705,25 @@ export const SMART_IMAGE_MAP: Record<string, string> = {
   "snijbiet": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=400",
   "knolselderij": celeriac,
   "bramen": blackberries,
-  "blauwbessen": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&q=80&w=400"
+  "blauwbessen": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&q=80&w=400",
+
+  // Synonyms - map alternative names to same images
+  "wortels": carrots, // synonym for wortelen
+  "wortel": carrots,
+  "ui": "https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?auto=format&fit=crop&q=80&w=400", // synonym for uien
+  "aardappel": potatoes, // synonym for aardappelen
+  "appel": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&q=80&w=400", // synonym for appels
+  "peer": pears, // synonym for peren
+  "tomaat": tomatoes, // synonym for tomaten
+  "aardbei": aardbeien, // synonym for aardbeien
+  "kers": "https://images.unsplash.com/photo-1528821128474-27f963b062bf?auto=format&fit=crop&q=80&w=400", // synonym for kersen
+  "spruit": "https://images.unsplash.com/photo-1438118907704-7718ee9a191a?auto=format&fit=crop&q=80&w=400", // synonym for spruitjes
+  "spruitje": "https://images.unsplash.com/photo-1438118907704-7718ee9a191a?auto=format&fit=crop&q=80&w=400",
+  "asperge": "https://images.unsplash.com/photo-1515471209610-dae1c92d8777?auto=format&fit=crop&q=80&w=400", // synonym for asperges
+  "biet": "https://images.unsplash.com/photo-1603048297172-c92544798d5e?auto=format&fit=crop&q=80&w=400", // synonym for bieten
+  "framboos": "https://images.unsplash.com/photo-1577069861033-55d04cec4ef5?auto=format&fit=crop&q=80&w=400", // synonym for frambozen
+  "bes": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&q=80&w=400", // synonym for bessen
+  "druif": "https://images.unsplash.com/photo-1537640538965-1756e9a43a29?auto=format&fit=crop&q=80&w=400", // synonym for druiven
+  "boon": "https://images.unsplash.com/photo-1566842600175-97dca489844f?auto=format&fit=crop&q=80&w=400", // synonym for bonen
+  "braam": blackberries // synonym for bramen
 };
