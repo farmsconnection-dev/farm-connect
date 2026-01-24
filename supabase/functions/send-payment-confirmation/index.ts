@@ -1,17 +1,20 @@
 // Supabase Edge Function: send-payment-confirmation
-// Sends confirmation email after successful payment
+// Sends confirmation email after successful payment via Brevo SMTP
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { SmtpClient } from "https://deno.land/x/smtp@v0.7.0/mod.ts";
 
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const BREVO_SMTP_SERVER = "smtp-relay.brevo.com";
+const BREVO_SMTP_PORT = 587;
+const BREVO_LOGIN = Deno.env.get("BREVO_LOGIN") || "";
+const BREVO_PASSWORD = Deno.env.get("BREVO_PASSWORD") || "";
 
 interface EmailRequest {
-    to: string;
-    name: string;
-    locationType: "boerderij" | "automaat";
-    farmName: string;
-    amount: string;
-    invoiceUrl?: string;
+  to: string;
+  name: string;
+  locationType: "boerderij" | "automaat";
+  farmName: string;
+  amount: string;
 }
 
 const confirmationEmailHtml = (name: string, locationType: string, farmName: string, amount: string) => `
@@ -96,57 +99,57 @@ const confirmationEmailHtml = (name: string, locationType: string, farmName: str
 `;
 
 serve(async (req) => {
-    // Handle CORS
-    if (req.method === "OPTIONS") {
-        return new Response("ok", {
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "POST",
-                "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-            },
-        });
+  // Handle CORS
+  if (req.method === "OPTIONS") {
+    return new Response("ok", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST",
+        "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+      },
+    });
+  }
+
+  try {
+    const { to, name, locationType, farmName, amount }: EmailRequest = await req.json();
+
+    if (!BREVO_LOGIN || !BREVO_PASSWORD) {
+      throw new Error("Brevo SMTP credentials are not configured");
     }
 
-    try {
-        const { to, name, locationType, farmName, amount }: EmailRequest = await req.json();
+    const client = new SmtpClient();
 
-        if (!RESEND_API_KEY) {
-            throw new Error("RESEND_API_KEY is not configured");
-        }
+    await client.connectTLS({
+      hostname: BREVO_SMTP_SERVER,
+      port: BREVO_SMTP_PORT,
+      username: BREVO_LOGIN,
+      password: BREVO_PASSWORD,
+    });
 
-        const res = await fetch("https://api.resend.com/emails", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${RESEND_API_KEY}`,
-            },
-            body: JSON.stringify({
-                from: "FarmConnect <noreply@farmconnect.be>",
-                to: [to],
-                subject: "Hoera! Uw locatie staat nu live op FarmConnect 🚜",
-                html: confirmationEmailHtml(name, locationType, farmName, amount),
-            }),
-        });
+    await client.send({
+      from: "FarmConnect <noreply@farmconnect.be>",
+      to: to,
+      subject: "Hoera! Uw locatie staat nu live op FarmConnect 🚜",
+      content: "Je locatie staat nu live op FarmConnect!",
+      html: confirmationEmailHtml(name, locationType, farmName, amount),
+    });
 
-        const data = await res.json();
+    await client.close();
 
-        if (!res.ok) {
-            throw new Error(data.message || "Failed to send email");
-        }
-
-        return new Response(JSON.stringify({ success: true, data }), {
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-        });
-    } catch (error) {
-        return new Response(JSON.stringify({ success: false, error: error.message }), {
-            status: 500,
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-        });
-    }
+    return new Response(JSON.stringify({ success: true }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+  } catch (error) {
+    console.error("Email error:", error);
+    return new Response(JSON.stringify({ success: false, error: error.message }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+  }
 });

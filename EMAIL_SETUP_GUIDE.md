@@ -1,6 +1,6 @@
-# FarmConnect Email Setup Guide
+# FarmConnect Email Setup Guide (Brevo SMTP)
 
-Deze handleiding beschrijft hoe je de email functionaliteit activeert voor FarmConnect.
+Deze handleiding beschrijft hoe je de email functionaliteit activeert voor FarmConnect met Brevo.
 
 ## 📧 Overzicht
 
@@ -11,17 +11,16 @@ FarmConnect verstuurt automatisch emails bij:
 ## 🛠️ Vereisten
 
 - Supabase project (al geconfigureerd)
-- Resend account (gratis tier: 3000 emails/maand)
+- Brevo account (gratis tier: 300 emails/dag)
 - Supabase CLI (voor deployment)
 
-## Stap 1: Resend Account Aanmaken
+## Stap 1: Brevo SMTP Gegevens
 
-1. Ga naar [resend.com](https://resend.com) en maak een gratis account
-2. Verifieer je domein `farmconnect.be` in Resend:
-   - Ga naar **Domains** → **Add Domain**
-   - Voeg `farmconnect.be` toe
-   - Voeg de DNS records toe die Resend geeft (SPF, DKIM, DMARC)
-3. Kopieer je **API Key** vanuit Settings → API Keys
+Je Brevo SMTP gegevens:
+- **SMTP Server:** `smtp-relay.brevo.com`
+- **Port:** `587`
+- **Login:** Je Brevo e-mailadres
+- **Password:** Je SMTP Master Password (uit Brevo dashboard)
 
 ## Stap 2: Supabase CLI Installeren
 
@@ -50,8 +49,9 @@ Je project ref vind je in Supabase Dashboard → Settings → General → Refere
 ## Stap 4: Secrets Toevoegen
 
 ```bash
-# Voeg de Resend API key toe als secret
-supabase secrets set RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxx
+# Voeg de Brevo credentials toe als secrets
+supabase secrets set BREVO_LOGIN=jouw-email@example.com
+supabase secrets set BREVO_PASSWORD=xsmtpsib-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 ## Stap 5: Edge Functions Deployen
@@ -86,7 +86,7 @@ Je kunt de functies testen via de Supabase Dashboard:
 
 De email service wordt automatisch aangeroepen wanneer:
 
-### Bij Registratie (in AddFarmModal.tsx of registratie flow):
+### Bij Registratie:
 ```typescript
 import { emailService } from '../utils/emailService';
 
@@ -100,7 +100,7 @@ await emailService.sendWelcomeEmail({
 });
 ```
 
-### Na Betaling (webhook of payment success):
+### Na Betaling:
 ```typescript
 await emailService.sendPaymentConfirmation({
   to: userEmail,
@@ -111,33 +111,35 @@ await emailService.sendPaymentConfirmation({
 });
 ```
 
-## 🔒 DNS Records voor farmconnect.be
+## 🔒 Domein Verificatie in Brevo
 
-Voeg deze records toe aan je domein voor email deliverability:
+Voor betere deliverability, verifieer je domein in Brevo:
 
-| Type | Name | Value |
-|------|------|-------|
-| TXT | @ | `v=spf1 include:resend.com ~all` |
-| CNAME | resend._domainkey | (gegeven door Resend) |
-| TXT | _dmarc | `v=DMARC1; p=none;` |
+1. Ga naar **Senders & IP** → **Domains**
+2. Voeg `farmconnect.be` toe
+3. Voeg de DNS records toe die Brevo geeft:
+   - SPF record
+   - DKIM record
+   - DMARC record (optioneel maar aanbevolen)
 
-## 💡 Tips
+## 💡 Brevo Limieten (Gratis Plan)
 
-- Test altijd eerst met je eigen email
-- Check de spam folder als emails niet aankomen
-- Monitor de Edge Functions logs in Supabase Dashboard
-- Resend biedt gratis 3000 emails/maand
+- **300 emails per dag**
+- Onbeperkte contacten
+- Email tracking & analytics
 
 ## 🚨 Troubleshooting
 
 ### Email komt niet aan
 1. Check of de Edge Function succesvol is gedeployed
 2. Controleer de logs in Supabase Dashboard → Edge Functions → Logs
-3. Verifieer dat je domein correct is geconfigureerd in Resend
+3. Verifieer dat je domein correct is geconfigureerd in Brevo
+4. Check je spam folder
 
-### CORS Error
-- De Edge Functions hebben al CORS headers, maar check of je Supabase URL correct is in de frontend.
+### Connection Error
+- Zorg dat port 587 wordt gebruikt (niet 465)
+- Controleer of je SMTP credentials correct zijn
 
 ### Rate Limiting
-- Resend gratis tier: max 100 emails/dag
+- Brevo gratis tier: max 300 emails/dag
 - Upgrade naar betaalde plan voor meer volume
