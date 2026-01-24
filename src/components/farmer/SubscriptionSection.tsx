@@ -25,7 +25,7 @@ export const SubscriptionSection: React.FC<SubscriptionSectionProps> = ({ farm, 
     }, [farm.subscription, farm.extra_automaten]);
 
     const BASE_PRICE_MONTHLY = 10;
-    const BASE_PRICE_ANNUAL = 80;
+    const BASE_PRICE_ANNUAL = 100;
     const EXTRA_MACHINE_PRICE_MONTHLY = 3;
     const EXTRA_MACHINE_PRICE_ANNUAL = 24; // 2 * 12
 
@@ -105,7 +105,7 @@ export const SubscriptionSection: React.FC<SubscriptionSectionProps> = ({ farm, 
                                             onClick={() => setBillingCycle('annual')}
                                             className={`relative z-10 px-6 py-1.5 text-xs font-bold transition-colors w-32 flex items-center justify-center gap-1 ${billingCycle === 'annual' ? 'text-emerald-700' : 'text-slate-400'}`}
                                         >
-                                            Jaarlijks <span className="text-[9px] text-amber-500 px-1 bg-amber-100 rounded-full">-33%</span>
+                                            Jaarlijks <span className="text-[9px] text-amber-500 px-1 bg-amber-100 rounded-full">-17%</span>
                                         </button>
                                     </div>
                                 </div>
@@ -139,10 +139,10 @@ export const SubscriptionSection: React.FC<SubscriptionSectionProps> = ({ farm, 
                                         <div className="flex justify-between items-start mb-4">
                                             <div>
                                                 <h3 className="text-lg font-black text-slate-800">Jaarabonnement</h3>
-                                                <p className="text-xs text-slate-500 font-bold">Bespaar €40 per jaar</p>
+                                                <p className="text-xs text-slate-500 font-bold">Bespaar €20 per jaar</p>
                                             </div>
                                             <div className="text-right">
-                                                <span className="text-3xl font-black text-emerald-600">€80</span>
+                                                <span className="text-3xl font-black text-emerald-600">€100</span>
                                                 <span className="text-xs text-slate-400 font-bold">/jaar</span>
                                             </div>
                                         </div>
