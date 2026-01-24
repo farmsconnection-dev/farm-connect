@@ -680,8 +680,10 @@ const App: React.FC = () => {
   };
 
   // --- Add Farm Logic ---
-  const handleRegisterFarm = (name: string, address: string, referralCode: string, isAnnual: boolean) => {
+  const handleRegisterFarm = (name: string, address: string, referralCode: string, isAnnual: boolean, packageType?: string) => {
     if (!name) return showToast("Naam is verplicht");
+
+    const isSoloAutomaat = packageType?.toLowerCase().includes('solo automaat');
 
     if (isAnnual && referralCode) {
       const referrer = farms.find(f => f.referralCode?.toLowerCase() === referralCode.toLowerCase() && f.subscription === 'annual');
@@ -709,12 +711,14 @@ const App: React.FC = () => {
       schedule: [],
       referralCode: `FARM-${Date.now().toString().slice(-4)}-X8`,
       referralBalance: 0,
-      subscription: isAnnual ? 'annual' : 'monthly'
+      subscription: isAnnual ? 'annual' : 'monthly',
+      packageType: packageType || 'Boerderij Pakket',
+      isSoloAutomaat: isSoloAutomaat
     };
 
     setFarms(prev => [newFarm, ...prev]);
     setIsAddFarmOpen(false);
-    showToast("Nieuwe boerderij toegevoegd!");
+    showToast(isSoloAutomaat ? "Nieuwe automaat toegevoegd!" : "Nieuwe boerderij toegevoegd!");
   };
 
   // --- AI Logic ---

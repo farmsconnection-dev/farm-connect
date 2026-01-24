@@ -56,6 +56,8 @@ export interface Farm {
   is_verified?: boolean; // Admin verification
   extra_automaten?: number;
   owner_id?: string;
+  packageType?: string; // 'Boerderij Pakket' or 'Solo Automaat'
+  isSoloAutomaat?: boolean; // True if this is a solo automaat without farm profile
 }
 
 export interface UserProfile {
