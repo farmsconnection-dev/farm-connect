@@ -608,14 +608,6 @@ const App: React.FC = () => {
     setIsMenuOpen(false);
   };
 
-  const handleContinueAsGuest = () => {
-    sessionStorage.setItem('guest_mode', 'true');
-    setUserType('discoverer');
-    setView('discover');
-    setIsAuthModalOpen(false);
-    showToast('🚜 Je bent nu als gast bezig.');
-  };
-
   const handleLogout = async () => {
     console.log("🚪 Logging out / Returning to start...");
 
@@ -1059,7 +1051,6 @@ const App: React.FC = () => {
           }}
           t={t}
           showToast={showToast}
-          onContinueAsGuest={handleContinueAsGuest}
         />
       )}</AnimatePresence>
 
