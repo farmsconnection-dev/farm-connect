@@ -93,7 +93,7 @@ export const AddFarmModal: React.FC<AddFarmModalProps> = ({ isOpen, onClose, onA
                         >
                             <div className="absolute top-0 right-0 bg-amber-500 text-[7px] font-black px-1.5 py-0.5 text-black">-20%</div>
                             <p className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1">Jaarlijks</p>
-                            <p className="font-black text-sm">€100.00</p>
+                            <p className="font-black text-sm">€96.00</p>
                             <p className="text-[7px] text-yellow-300 font-black mt-2">COMING SOON</p>
                         </div>
                     </div>

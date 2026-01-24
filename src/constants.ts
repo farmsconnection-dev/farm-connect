@@ -146,7 +146,7 @@ export const DICTIONARY: TranslationDictionary = {
   phone: { nl: "Telefoonnummer", fr: "Téléphone", en: "Phone Number", de: "Telefonnummer" },
   btn_register_farm: { nl: "+ Nieuwe Boerderij Registreren", fr: "+ Enregistrer une nouvelle ferme", en: "+ Register New Farm", de: "+ Neuen Bauernhof registrieren" },
   faq_costs_q: { nl: "Wat zijn de kosten?", fr: "Quels sont les coûts ?", en: "What are the costs?", de: "Was sind die Kosten?" },
-  faq_costs_a: { nl: "Registratie is gratis. Een premium abonnement kost €10/maand of €100/jaar. Hierbij is 1 boerderij en 1 automaat inbegrepen.", fr: "L'inscription est gratuite. Abonnement premium: 10 €/mois ou 100 €/an (1 ferme + 1 distributeur inclus).", en: "Registration is free. Premium subscription: €10/month or €100/year (1 farm + 1 machine included).", de: "Die Registrierung ist kostenlos. Premium-Abonnement: 10 €/Monat oder 100 €/Jahr (1 Hof + 1 Automat inklusive)." },
+  faq_costs_a: { nl: "Registratie is gratis. Een premium abonnement kost €10/maand of €96/jaar (€8/maand). Hierbij is 1 boerderij en 1 automaat inbegrepen.", fr: "L'inscription est gratuite. Abonnement premium: 10 €/mois ou 96 €/an (8 €/mois) (1 ferme + 1 distributeur inclus).", en: "Registration is free. Premium subscription: €10/month or €96/year (€8/month) (1 farm + 1 machine included).", de: "Die Registrierung ist kostenlos. Premium-Abonnement: 10 €/Monat oder 96 €/Jahr (8 €/Monat) (1 Hof + 1 Automat inklusive)." },
   faq_privacy_q: { nl: "Hoe zit het met mijn privacy?", fr: "Et ma vie privée ?", en: "What about my privacy?", de: "Was ist mit meiner Privatsphäre?" },
   faq_privacy_a: { nl: "Wij verkopen nooit uw data aan derden. Al uw gegevens worden beveiligd opgeslagen volgens de GDPR-richtlijnen.", fr: "Nous ne vendons jamais vos données. Conformité RGPD.", en: "We never sell your data. GDPR compliant.", de: "Wir verkaufen Ihre Daten niemals. DSGVO-konform." },
   faq_switch_q: { nl: "Kan ik tussen accounts wisselen?", fr: "Puis-je changer de compte ?", en: "Can I switch accounts?", de: "Kann ich das Konto wechseln?" },
@@ -210,10 +210,10 @@ export const DICTIONARY: TranslationDictionary = {
     de: "Was sind die Vorteile eines Jahresabonnements?"
   },
   faq_annual_a: {
-    nl: "Je betaalt slechts €100 ipv €120 (Bespaar €20), je krijgt voorrang in de zoekresultaten en je kunt onbeperkt verdienen met het referral-systeem.",
-    fr: "Vous ne payez que 100 € au lieu de 120 € (Économisez 20 €), vous obtenez la priorité dans les résultats et vous pouvez gagner de manière illimitée avec le système de parrainage.",
-    en: "You pay only €100 instead of €120 (Save €20), get priority in search results, and can earn unlimitedly with the referral system.",
-    de: "Sie zahlen nur 100 € statt 120 € (Sparen Sie 20 €), erhalten Priorität in den Suchergebnissen und können unbegrenzt mit dem Empfehlungssystem verdienen."
+    nl: "Je betaalt slechts €96 ipv €120 (Bespaar €24), je krijgt voorrang in de zoekresultaten en je kunt onbeperkt verdienen met het referral-systeem.",
+    fr: "Vous ne payez que 96 € au lieu de 120 € (Économisez 24 €), vous obtenez la priorité dans les résultats et vous pouvez gagner de manière illimitée avec le système de parrainage.",
+    en: "You pay only €96 instead of €120 (Save €24), get priority in search results, and can earn unlimitedly with the referral system.",
+    de: "Sie zahlen nur 96 € statt 120 € (Sparen Sie 24 €), erhalten Priorität in den Suchergebnissen und können unbegrenzt mit dem Empfehlungssystem verdienen."
   },
   faq_payments_q: {
     nl: "Hoe rekenen klanten af?",

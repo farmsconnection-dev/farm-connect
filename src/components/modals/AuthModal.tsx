@@ -205,7 +205,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
                             className="w-full bg-blue-500 text-white py-5 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-3 hover:bg-blue-600 transition-colors"
                         >
                             <UserPlus size={20} />
-                            Ik wil een nieuwe boerderij registreren
+                            Ik wil een nieuwe boerderij of automaat registreren
                         </motion.button>
                     </div>
                 ) : !showEmailLogin ? (
