@@ -65,7 +65,8 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
     };
 
     const handleDeleteFarm = async () => {
-        if (!window.confirm("Weet je zeker dat je je boerderij wilt verwijderen? Dit kan niet ongedaan worden gemaakt.")) {
+        const typeLabel = myFarm.isSoloAutomaat ? 'automaat' : 'boerderij';
+        if (!window.confirm(`Weet je zeker dat je je ${typeLabel} wilt verwijderen? Dit kan niet ongedaan worden gemaakt.`)) {
             return;
         }
 
@@ -77,13 +78,13 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
                 // Fallback for demo mode or RLS issues:
                 setFarms(prev => prev.filter(f => f.id !== myFarm.id));
                 setView('landing');
-                showToast("Boerderij verwijderd (lokaal)");
+                showToast(`${typeLabel.charAt(0).toUpperCase() + typeLabel.slice(1)} verwijderd (lokaal)`);
                 return;
             }
 
             setFarms(prev => prev.filter(f => f.id !== myFarm.id));
             setView('landing');
-            showToast("Boerderij succesvol verwijderd");
+            showToast(`${typeLabel.charAt(0).toUpperCase() + typeLabel.slice(1)} succesvol verwijderd`);
         } catch (err) {
             console.error(err);
             showToast("Er ging iets mis.");
@@ -100,7 +101,7 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
             <div className="mb-8 flex items-center gap-4">
                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => setView('farmer')} className="p-3 bg-white/20 backdrop-blur-md rounded-2xl shadow-sm text-white hover:bg-white/30 transition-all border border-white/20"><ArrowLeft size={24} /></motion.button>
                 <div>
-                    <h1 className="text-3xl font-black text-white tracking-tight drop-shadow-md">Mijn Boerderij</h1>
+                    <h1 className="text-3xl font-black text-white tracking-tight drop-shadow-md">{myFarm.isSoloAutomaat ? 'Mijn Automaat' : 'Mijn Boerderij'}</h1>
                     <p className="text-emerald-100/60 font-bold uppercase tracking-widest text-[10px]">Beheer je profiel & uren</p>
                 </div>
             </div>
@@ -133,7 +134,7 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
                     </div>
 
                     <div>
-                        <label className="text-[10px] font-black text-slate-400 uppercase ml-1 mb-1 block">Naam Boerderij</label>
+                        <label className="text-[10px] font-black text-slate-400 uppercase ml-1 mb-1 block">{myFarm.isSoloAutomaat ? 'Naam Automaat' : 'Naam Boerderij'}</label>
                         <input
                             type="text"
                             disabled={!isEditingFarm}
@@ -275,7 +276,7 @@ export const MyFarmPage: React.FC<MyFarmPageProps> = ({ t, setView, farms, setFa
 
                 <button onClick={handleDeleteFarm} className="mt-8 flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-red-300 hover:text-red-500 hover:bg-red-50 font-bold transition-all text-[10px] uppercase tracking-widest">
                     <Trash2 size={14} />
-                    Verwijder mijn boerderij
+                    {myFarm.isSoloAutomaat ? 'Verwijder mijn automaat' : 'Verwijder mijn boerderij'}
                 </button>
             </div>
         </motion.div>
