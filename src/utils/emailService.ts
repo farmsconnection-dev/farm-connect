@@ -1,5 +1,4 @@
-// Email Service - Calls Supabase Edge Functions to send emails
-import { supabase } from '../lib/supabase';
+// Email Service - Calls Vercel Serverless Functions to send emails via Brevo SMTP
 
 interface WelcomeEmailData {
     to: string;
@@ -17,19 +16,27 @@ interface PaymentConfirmationData {
     amount: string;
 }
 
+const API_BASE = typeof window !== 'undefined' ? window.location.origin : '';
+
 export const emailService = {
     /**
      * Send welcome email after farm/automaat registration
      */
     async sendWelcomeEmail(data: WelcomeEmailData): Promise<{ success: boolean; error?: string }> {
         try {
-            const { data: response, error } = await supabase.functions.invoke('send-welcome-email', {
-                body: data,
+            const response = await fetch(`${API_BASE}/api/send-welcome-email`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
             });
 
-            if (error) {
-                console.error('Error sending welcome email:', error);
-                return { success: false, error: error.message };
+            const result = await response.json();
+
+            if (!response.ok) {
+                console.error('Error sending welcome email:', result.error);
+                return { success: false, error: result.error };
             }
 
             return { success: true };
@@ -44,13 +51,19 @@ export const emailService = {
      */
     async sendPaymentConfirmation(data: PaymentConfirmationData): Promise<{ success: boolean; error?: string }> {
         try {
-            const { data: response, error } = await supabase.functions.invoke('send-payment-confirmation', {
-                body: data,
+            const response = await fetch(`${API_BASE}/api/send-payment-confirmation`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
             });
 
-            if (error) {
-                console.error('Error sending payment confirmation:', error);
-                return { success: false, error: error.message };
+            const result = await response.json();
+
+            if (!response.ok) {
+                console.error('Error sending payment confirmation:', result.error);
+                return { success: false, error: result.error };
             }
 
             return { success: true };

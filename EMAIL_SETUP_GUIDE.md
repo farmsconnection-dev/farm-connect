@@ -1,6 +1,6 @@
-# FarmConnect Email Setup Guide (Brevo SMTP)
+# FarmConnect Email Setup Guide (Brevo SMTP via Vercel)
 
-Deze handleiding beschrijft hoe je de email functionaliteit activeert voor FarmConnect met Brevo.
+Deze handleiding beschrijft hoe je de email functionaliteit activeert voor FarmConnect met Brevo en Vercel Serverless Functions.
 
 ## 📧 Overzicht
 
@@ -8,83 +8,66 @@ FarmConnect verstuurt automatisch emails bij:
 1. **Welkomstmail** - Na registratie van een boerderij/automaat
 2. **Bevestigingsmail** - Na succesvolle betaling
 
+## ✅ Voordelen van deze aanpak
+- **Geen extra CLI tools nodig** - Werkt direct met Vercel
+- **Automatische deployment** - Push naar GitHub en het werkt
+- **Gratis** - Brevo gratis plan: 300 emails/dag
+
 ## 🛠️ Vereisten
 
-- Supabase project (al geconfigureerd)
+- Vercel project (al geconfigureerd via GitHub)
 - Brevo account (gratis tier: 300 emails/dag)
-- Supabase CLI (voor deployment)
 
-## Stap 1: Brevo SMTP Gegevens
+## Stap 1: Brevo SMTP Gegevens Verzamelen
 
-Je Brevo SMTP gegevens:
+Je Brevo SMTP gegevens (uit Brevo Dashboard → SMTP & API → SMTP):
 - **SMTP Server:** `smtp-relay.brevo.com`
 - **Port:** `587`
 - **Login:** Je Brevo e-mailadres
-- **Password:** Je SMTP Master Password (uit Brevo dashboard)
+- **Password:** Je SMTP Master Password
 
-## Stap 2: Supabase CLI Installeren
+## Stap 2: Environment Variables Toevoegen in Vercel
 
-```bash
-# Windows (PowerShell als Administrator)
-npm install -g supabase
+1. Ga naar [vercel.com/dashboard](https://vercel.com/dashboard)
+2. Klik op je **FarmConnect** project
+3. Ga naar **Settings** → **Environment Variables**
+4. Voeg deze twee variabelen toe:
 
-# Of via Scoop
-scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
-scoop install supabase
-```
+| Name | Value |
+|------|-------|
+| `BREVO_LOGIN` | jouw-email@voorbeeld.be |
+| `BREVO_PASSWORD` | xsmtpsib-xxxxxxxxxxxxxxx |
 
-## Stap 3: Supabase Project Linken
+5. Klik op **Save**
 
-```bash
-# Login bij Supabase
-supabase login
+## Stap 3: Redeploy
 
-# Link je project (vervang PROJECT_REF met je project ID)
-cd c:\Users\Gebruiker\Downloads\farm-connect-toolkit-4_01-14;10
-supabase link --project-ref YOUR_PROJECT_REF
-```
+Na het toevoegen van de environment variables:
+1. Ga naar **Deployments** tab
+2. Klik op de 3 puntjes naast de laatste deployment
+3. Klik op **Redeploy**
 
-Je project ref vind je in Supabase Dashboard → Settings → General → Reference ID
+Of push een nieuwe commit naar GitHub - dit triggert automatisch een deployment.
 
-## Stap 4: Secrets Toevoegen
+## Stap 4: Testen
 
-```bash
-# Voeg de Brevo credentials toe als secrets
-supabase secrets set BREVO_LOGIN=jouw-email@example.com
-supabase secrets set BREVO_PASSWORD=xsmtpsib-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-## Stap 5: Edge Functions Deployen
+Je kunt de API testen met curl of Postman:
 
 ```bash
-# Deploy de welkomst email functie
-supabase functions deploy send-welcome-email
-
-# Deploy de betalingsbevestiging functie
-supabase functions deploy send-payment-confirmation
-```
-
-## Stap 6: Testen
-
-Je kunt de functies testen via de Supabase Dashboard:
-
-1. Ga naar **Edge Functions** in je Supabase project
-2. Klik op `send-welcome-email`
-3. Klik op **Invoke** en gebruik deze test payload:
-
-```json
-{
-  "to": "test@example.com",
-  "name": "Jan",
-  "locationType": "boerderij",
-  "packageType": "Boerderij Pakket - Jaarlijks",
-  "farmName": "De Groene Weide"
-}
+curl -X POST https://farmconnect.be/api/send-welcome-email \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "test@example.com",
+    "name": "Jan",
+    "locationType": "boerderij",
+    "packageType": "Boerderij Pakket - Jaarlijks",
+    "farmName": "De Groene Weide"
+  }'
 ```
 
 ## 📝 Integratie in de App
 
-De email service wordt automatisch aangeroepen wanneer:
+De email service is al geconfigureerd. Gebruik het zo:
 
 ### Bij Registratie:
 ```typescript
@@ -111,16 +94,27 @@ await emailService.sendPaymentConfirmation({
 });
 ```
 
-## 🔒 Domein Verificatie in Brevo
+## 🔒 Domein Verificatie in Brevo (Aanbevolen)
 
-Voor betere deliverability, verifieer je domein in Brevo:
+Voor betere email deliverability, verifieer je domein in Brevo:
 
 1. Ga naar **Senders & IP** → **Domains**
 2. Voeg `farmconnect.be` toe
 3. Voeg de DNS records toe die Brevo geeft:
    - SPF record
    - DKIM record
-   - DMARC record (optioneel maar aanbevolen)
+   - DMARC record (optioneel)
+
+## 📁 Bestandsstructuur
+
+```
+api/
+├── send-welcome-email.ts      # Vercel Serverless Function
+└── send-payment-confirmation.ts
+src/
+└── utils/
+    └── emailService.ts        # Frontend email service
+```
 
 ## 💡 Brevo Limieten (Gratis Plan)
 
@@ -131,14 +125,14 @@ Voor betere deliverability, verifieer je domein in Brevo:
 ## 🚨 Troubleshooting
 
 ### Email komt niet aan
-1. Check of de Edge Function succesvol is gedeployed
-2. Controleer de logs in Supabase Dashboard → Edge Functions → Logs
-3. Verifieer dat je domein correct is geconfigureerd in Brevo
-4. Check je spam folder
+1. Check of de environment variables correct zijn in Vercel
+2. Bekijk de Function Logs in Vercel Dashboard
+3. Check je spam folder
+4. Verifieer je domein in Brevo
 
-### Connection Error
-- Zorg dat port 587 wordt gebruikt (niet 465)
-- Controleer of je SMTP credentials correct zijn
+### 500 Error
+- Check of BREVO_LOGIN en BREVO_PASSWORD zijn ingesteld in Vercel
+- Bekijk de logs: Vercel Dashboard → Functions → Logs
 
 ### Rate Limiting
 - Brevo gratis tier: max 300 emails/dag
