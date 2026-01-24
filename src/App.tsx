@@ -901,6 +901,7 @@ const App: React.FC = () => {
               setIsSeasonCalendarOpen={setIsSeasonCalendarOpen}
               setIsLoginPromptOpen={setIsLoginPromptOpen}
               t={t}
+              farms={farms}
             />
           </>
         )}
@@ -993,6 +994,7 @@ const App: React.FC = () => {
             onUpdateFarm={handleUpdateFarm}
             showToast={showToast}
             userProfile={userProfile}
+            onAddAutomaat={() => setIsAddFarmOpen(true)}
           />
         )}
         {view === 'my_farm' && (

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Box, MapPin, Save, ToggleLeft, ToggleRight, Check } from 'lucide-react';
+import { ArrowLeft, Box, MapPin, Save, ToggleLeft, ToggleRight, Check, Phone, Plus } from 'lucide-react';
 import { Farm, ViewState } from '../types';
 
 interface VendingPageProps {
@@ -12,15 +12,17 @@ interface VendingPageProps {
     onUpdateFarm?: (farm: Farm) => void;
     showToast: (msg: string) => void;
     userProfile: { id?: string };
+    onAddAutomaat?: () => void;
 }
 
-export const VendingPage: React.FC<VendingPageProps> = ({ t, setView, farms, setFarms, onUpdateFarm, showToast, userProfile }) => {
+export const VendingPage: React.FC<VendingPageProps> = ({ t, setView, farms, setFarms, onUpdateFarm, showToast, userProfile, onAddAutomaat }) => {
     // Select correct farm by owner ID
     const myFarm = farms.find(f => f.owner_id === userProfile.id);
 
     // Local state for edits
     const [isEditing, setIsEditing] = useState(false);
     const [address, setAddress] = useState(myFarm?.automaat_adres || myFarm?.address || '');
+    const [phone, setPhone] = useState(myFarm?.telefoonnummer || myFarm?.phone || '');
     const [isActive, setIsActive] = useState(!!myFarm?.heeft_automaat);
 
     const handleSave = () => {
@@ -29,7 +31,8 @@ export const VendingPage: React.FC<VendingPageProps> = ({ t, setView, farms, set
         const updatedFarm = {
             ...myFarm,
             heeft_automaat: isActive,
-            automaat_adres: address
+            automaat_adres: address,
+            telefoonnummer: phone
         };
 
         if (onUpdateFarm) {
@@ -70,6 +73,19 @@ export const VendingPage: React.FC<VendingPageProps> = ({ t, setView, farms, set
                 </div>
             </div>
 
+            {/* Add Automaat Button */}
+            {onAddAutomaat && (
+                <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={onAddAutomaat}
+                    className="mb-6 w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3 shadow-xl border-b-4 border-orange-600 active:border-b-0 active:translate-y-1 transition-all"
+                >
+                    <Plus size={22} />
+                    Extra Automaat Toevoegen
+                </motion.button>
+            )}
+
             <div className="bg-white/80 backdrop-blur-xl p-8 rounded-apple shadow-xl border border-white/20 mb-8">
                 <div className="flex justify-between items-center mb-6">
                     <h3 className="text-xl font-bold text-forest flex items-center gap-2"><Box size={24} className="text-mint" /> {t('vending_settings')}</h3>
@@ -84,6 +100,7 @@ export const VendingPage: React.FC<VendingPageProps> = ({ t, setView, farms, set
                 </div>
 
                 <div className="space-y-4">
+                    {/* Location field */}
                     <div className="space-y-2">
                         <label className="text-[10px] font-black text-slate-400 uppercase ml-2">{t('vending_location_label')}</label>
                         <div className="relative">
@@ -97,6 +114,22 @@ export const VendingPage: React.FC<VendingPageProps> = ({ t, setView, farms, set
                             />
                         </div>
                         <p className="text-[10px] text-slate-400 italic ml-2">{t('vending_location_hint')}</p>
+                    </div>
+
+                    {/* Phone number field */}
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Telefoonnummer (voor klanten)</label>
+                        <div className="relative">
+                            <Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
+                            <input
+                                type="tel"
+                                value={phone}
+                                onChange={(e) => { setPhone(e.target.value); setIsEditing(true); }}
+                                className="w-full bg-slate-50 pl-12 pr-4 py-3 rounded-2xl outline-none transition-all font-bold text-slate-700 focus:ring-2 focus:ring-forest/10"
+                                placeholder="+32 470 12 34 56"
+                            />
+                        </div>
+                        <p className="text-[10px] text-slate-400 italic ml-2">Optioneel - Klanten kunnen je bereiken bij problemen</p>
                     </div>
                 </div>
 

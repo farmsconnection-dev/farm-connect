@@ -2,7 +2,7 @@
 import React, { useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { X, HelpCircle, TrendingUp, Box, Heart, Users, Compass, Calendar, Leaf, LogIn, LogOut, User, ShieldCheck, ArrowLeftCircle, Store, Tractor, Edit, ChevronDown, ChevronRight } from 'lucide-react';
-import { UserType, UserProfile, ViewState } from '../../types';
+import { UserType, UserProfile, ViewState, Farm } from '../../types';
 
 interface MenuItem {
     id: string;
@@ -26,13 +26,18 @@ interface SidebarProps {
     setIsSeasonCalendarOpen: (open: boolean) => void;
     setIsReferralModalOpen: (open: boolean) => void;
     t: (key: string) => string;
+    farms?: Farm[];
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
     isOpen, onClose, view, setView, userType, userProfile, setUserProfile,
-    handleLogout, handleLogin, setIsLoginPromptOpen, setIsSeasonCalendarOpen, setIsReferralModalOpen, t
+    handleLogout, handleLogin, setIsLoginPromptOpen, setIsSeasonCalendarOpen, setIsReferralModalOpen, t, farms
 }) => {
     const [expandedItems, setExpandedItems] = React.useState<Set<string>>(new Set(['inventory_group']));
+
+    // Find user's farm to check if it's a solo automaat
+    const myFarm = farms?.find(f => f.owner_id === userProfile.id);
+    const isSoloAutomaat = myFarm?.isSoloAutomaat;
 
     // File upload logic for profile picture
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -78,17 +83,27 @@ export const Sidebar: React.FC<SidebarProps> = ({
         }
 
         if (userType === 'farmer') {
+            // Build sub-items dynamically based on type
+            const inventorySubItems = isSoloAutomaat
+                ? [
+                    // Solo Automaat users don't see "Mijn Boerderij"
+                    { id: 'vending', label: 'Mijn Automaat', icon: <Store size={18} /> },
+                    { id: 'inventory', label: 'Mijn Producten', icon: <Box size={18} /> },
+                ]
+                : [
+                    // Full farm users see all options
+                    { id: 'my_farm', label: 'Mijn Boerderij', icon: <Tractor size={18} /> },
+                    { id: 'vending', label: 'Mijn Automaten', icon: <Store size={18} /> },
+                    { id: 'inventory', label: 'Mijn Producten', icon: <Box size={18} /> },
+                ];
+
             const farmerItems = [
                 { id: 'farmer', label: 'Dashboard', icon: <TrendingUp size={20} /> },
                 {
                     id: 'inventory_group',
                     label: t('menu_inventory'),
                     icon: <Box size={20} />,
-                    subItems: [
-                        { id: 'my_farm', label: 'Mijn Boerderij', icon: <Tractor size={18} /> },
-                        { id: 'vending', label: 'Mijn Automaten', icon: <Store size={18} /> },
-                        { id: 'inventory', label: 'Mijn Producten', icon: <Box size={18} /> },
-                    ]
+                    subItems: inventorySubItems
                 },
                 { id: 'favorites', label: t('menu_favorites'), icon: <Heart size={20} /> },
 
