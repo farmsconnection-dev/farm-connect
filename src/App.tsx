@@ -18,6 +18,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { DICTIONARY, INITIAL_FARMS, SMART_IMAGE_MAP, FALLBACK_PRODUCT_IMAGE, SEASONAL_DATA, MONTHS } from './constants';
 import { Language, UserType, ViewState, Farm, Product, UserProfile, ProductCategory, DaySchedule, AiHarvestAdvice } from './types';
 import { supabase } from './lib/supabase';
+import { emailService } from './utils/emailService';
 
 // --- COMPONENTS ---
 import { Sidebar } from './components/layout/Sidebar';
@@ -719,6 +720,23 @@ const App: React.FC = () => {
     setFarms(prev => [newFarm, ...prev]);
     setIsAddFarmOpen(false);
     showToast(isSoloAutomaat ? "Nieuwe automaat toegevoegd!" : "Nieuwe boerderij toegevoegd!");
+
+    // Send welcome email (async, don't block UI)
+    if (user?.email) {
+      emailService.sendWelcomeEmail({
+        to: user.email,
+        name: user.name || 'Ondernemer',
+        locationType: isSoloAutomaat ? 'automaat' : 'boerderij',
+        packageType: packageType || 'Boerderij Pakket',
+        farmName: name
+      }).then(result => {
+        if (result.success) {
+          console.log('Welcome email sent successfully');
+        } else {
+          console.error('Failed to send welcome email:', result.error);
+        }
+      });
+    }
   };
 
   // --- AI Logic ---
