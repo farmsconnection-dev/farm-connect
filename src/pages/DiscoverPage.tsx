@@ -24,11 +24,12 @@ interface DiscoverPageProps {
     lang: string;
 }
 
-const mapContainerStyle = { width: '100%', height: '100%' };
+const mapContainerStyle = { width: '100%', height: '100%', minHeight: '100%' };
 const defaultCenter = { lat: 50.8503, lng: 4.3517 }; // Brussel Centraal
 const googleMapsOptions = {
     disableDefaultUI: true,
     zoomControl: true,
+    mapId: "DEMO_MAP_ID", // Required for modern vector maps
     styles: [
         { featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] },
         { featureType: "transit", elementType: "labels", stylers: [{ visibility: "off" }] } // Simplified map style
@@ -432,27 +433,35 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                         markerColor = getColorForCategory(primaryCategoryForMarker);
                                     }
 
+                                    const isDairy = primaryCategoryForMarker === 'dairy';
+
                                     return (
                                         <MarkerF
                                             key={`${farm.id}-${activeFilter}`}
                                             position={{ lat: farm.lat, lng: farm.lng }}
                                             onClick={() => setSelectedFarm(farm)}
-                                            icon={{
+                                            icon={isDairy ? {
                                                 path: google.maps.SymbolPath.CIRCLE,
                                                 fillColor: markerColor,
                                                 fillOpacity: 1,
                                                 strokeColor: '#ffffff',
                                                 strokeWeight: 2,
-                                                scale: 10,
+                                                scale: 14, // Slightly larger for visibility
+                                            } : {
+                                                path: google.maps.SymbolPath.CIRCLE,
+                                                fillColor: 'transparent',
+                                                fillOpacity: 0,
+                                                strokeWeight: 0,
+                                                scale: 0, // Effectively hides the circle but keeps the label
                                             }}
                                             label={{
                                                 text: show24_7Only ? '🏧' : (activeFilter !== 'all' && activeFilter !== 'open' && activeFilter !== 'nearby')
                                                     ? getFilterIcon(activeFilter)
                                                     : getFilterIcon(primaryCategoryForMarker),
-                                                fontSize: '18px',
-                                                color: 'white',
+                                                fontSize: isDairy ? '18px' : '28px', // Larger emoji if no background
+                                                color: 'white', // Ignored for emojis usually, but good fallback
                                                 fontWeight: 'bold',
-                                                fontFamily: 'Arial, sans-serif'
+                                                className: isDairy ? '' : 'map-marker-emoji' // Class for potential CSS tweaks
                                             }}
                                         />
                                     );

@@ -41,9 +41,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
             localStorage.removeItem('fc_stay_logged_in');
         }
         try {
-            const redirectUrl = window.location.hostname === 'localhost'
-                ? 'http://localhost:3001'
-                : window.location.origin;
+            const redirectUrl = window.location.origin;
 
             console.log('🔄 Starting Google Login ->', redirectUrl);
             const { data, error } = await supabase.auth.signInWithOAuth({

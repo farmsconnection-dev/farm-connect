@@ -36,10 +36,10 @@ export const DICTIONARY: TranslationDictionary = {
     de: "Ich bin ein Entdecker"
   },
   btn_farmer: {
-    nl: "Ik ben een Boer",
-    fr: "Je suis un Agriculteur",
-    en: "I am a Farmer",
-    de: "Ich bin een Bauer"
+    nl: "Beheer mijn hoeve",
+    fr: "Gérer ma ferme",
+    en: "Manage my farm",
+    de: "Meinen Hof verwalten"
   },
   menu_discover: { nl: "Ontdekken", fr: "Découvrir", en: "Discover", de: "Entdecken" },
   menu_calendar: { nl: "Seizoenskalender", fr: "Calendrier de saison", en: "Seasonal Calendar", de: "Saisonkalender" },
@@ -353,6 +353,17 @@ export const DICTIONARY: TranslationDictionary = {
   vending_machine_other_placeholder: { nl: "Bijv. Langs de N60 of Kerkplein 5", fr: "Ex. Le long de la N60", en: "e.g. Along the highway or Main Square 5", de: "z.B. An der Hauptstraße" },
   submit_registration: { nl: "Registratie Versturen", fr: "Envoyer l'inscription", en: "Submit Registration", de: "Registrierung absenden" },
   cancel_logout: { nl: "Annuleren en uitloggen", fr: "Annuler et se déconnecter", en: "Cancel and logout", de: "Abbrechen und abmelden" },
+  registration_type_label: { nl: "TYPE REGISTRATIE", fr: "TYPE D'INSCRIPTION", en: "REGISTRATION TYPE", de: "REGISTRIERUNGSTYP" },
+  type_farm: { nl: "Boerderij", fr: "Ferme", en: "Farm", de: "Bauernhof" },
+  type_vending: { nl: "Solo Automaat", fr: "Distributeur Solo", en: "Solo Vending", de: "Solo-Automat" },
+  type_farm_desc: { nl: "Volledige boerderijpagina met 1 automaat inbegrepen", fr: "Page de ferme complète avec 1 distributeur inclus", en: "Full farm page with 1 machine included", de: "Vollständige Hofseite mit 1 Automaten inklusive" },
+  type_vending_desc: { nl: "Alleen automaat registreren, zonder boerderijprofiel", fr: "Enregistrer uniquement le distributeur", en: "Register machine only, without farm profile", de: "Nur Automaten registrieren, ohne Hofprofil" },
+  register_vending_title: { nl: "Registreer je Automaat", fr: "Enregistrez votre distributeur", en: "Register your Vending Machine", de: "Registrieren Sie Ihren Automaten" },
+  register_vending_subtitle: { nl: "Maak je automaat vindbaar", fr: "Rendez votre distributeur visible", en: "Make your machine discoverable", de: "Machen Sie Ihren Automaten auffindbaar" },
+  vending_name: { nl: "Naam Automaat", fr: "Nom du Distributeur", en: "Vending Machine Name", de: "Name des Automaten" },
+  vending_name_placeholder: { nl: "Aardappelautomaat De Bie", fr: "Distributeur de pommes de terre", en: "Potato Vending Machine", de: "Kartoffelautomat" },
+  vending_registration_label: { nl: "Automaat registratie", fr: "Inscription du distributeur", en: "Vending machine registration", de: "Automatenregistrierung" },
+  vending_registration_desc: { nl: "Zonder boerderijprofiel - Het adres hierboven is de locatie van je automaat", fr: "Sans profil de ferme - L'adresse ci-dessus est l'emplacement", en: "Without farm profile - The address above is the location", de: "Ohne Hofprofil - Die obige Adresse ist der Standort" },
   verification_title: { nl: "Aanvraag In Behandeling", fr: "Demande en cours", en: "Verification Pending", de: "Verifizierung läuft" },
   verification_desc: { nl: "Bedankt voor je registratie! Om de kwaliteit van Farm Connect te waarborgen, controleren wij handmatig of je daadwerkelijk een boerderij bent.", fr: "Merci pour votre inscription ! Nous vérifions manuellement chaque ferme.", en: "Thank you for registering! To ensure quality, we manually verify every farm profile.", de: "Vielen Dank für Ihre Registrierung! Um die Qualität zu sichern, verifizieren wir jeden Bauernhof manuell." },
   verification_next_steps: { nl: "Wat gebeurt er nu?", fr: "Quels sont les prochaines étapes ?", en: "What happens next?", de: "Was passiert als Nächstes?" },
@@ -1515,6 +1526,80 @@ export const INITIAL_FARMS: Farm[] = [
     paymentMethods: ['cash', 'payconiq'],
     lastStockUpdate: new Date().toISOString(),
     followerCount: 67
+  },
+  {
+    id: '26',
+    name: 'Rucher de la Citadelle',
+    address: 'Route Merveilleuse 15, 5000 Namur',
+    lat: 50.4557,
+    lng: 4.8679,
+    image: 'https://images.unsplash.com/photo-1587049352846-4a222e784acc?auto=format&fit=crop&q=80&w=800',
+    joinedDate: '2024-05-01',
+    schedule: MOCK_SCHEDULE_1,
+    products: [
+      { id: 'p221', name: 'Acacia Honing', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784acc?auto=format&fit=crop&q=80&w=400', price: '12.50', unit: '/pot 500g' },
+      { id: 'p222', name: 'Honingraat', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&q=80&w=400', price: '15.00', unit: '/stuk' },
+      { id: 'p223', name: 'Bijenwas', available: true, category: 'other', image: 'https://images.unsplash.com/photo-1602874801006-c2b2d4d0c6e7?auto=format&fit=crop&q=80&w=400', price: '5.00', unit: '/stuk' }
+    ],
+    paymentMethods: ['cash', 'payconiq'],
+    lastStockUpdate: new Date().toISOString(),
+    followerCount: 412
+  },
+  {
+    id: '27',
+    name: "La Noix d'Ardenne",
+    address: 'Chaussée d\'Arlon 45, 6600 Bastogne',
+    lat: 50.0004,
+    lng: 5.7153,
+    image: 'https://images.unsplash.com/photo-1549421298-b8ce15392d4f?auto=format&fit=crop&q=80&w=800',
+    joinedDate: '2024-09-10',
+    schedule: MOCK_SCHEDULE_2,
+    products: [
+      { id: 'p231', name: 'Verse Okkernoten', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1549421298-b8ce15392d4f?auto=format&fit=crop&q=80&w=400', price: '8.50', unit: '/kg' },
+      { id: 'p232', name: 'Notenolie', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1474979266404-74fc56104a63?auto=format&fit=crop&q=80&w=400', price: '14.00', unit: '/fles' },
+      { id: 'p233', name: 'Hazelnoten', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1522508930400-3486c42907be?auto=format&fit=crop&q=80&w=400', price: '12.00', unit: '/kg' }
+    ],
+    paymentMethods: ['cash'],
+    lastStockUpdate: new Date().toISOString(),
+    followerCount: 156
+  },
+  {
+    id: '28',
+    name: 'Ferme du Rocher',
+    address: 'Rue Saint-Jacques 22, 5500 Dinant',
+    lat: 50.2605,
+    lng: 4.9103,
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800',
+    joinedDate: '2024-04-15',
+    schedule: MOCK_SCHEDULE_1,
+    products: [
+      { id: 'p241', name: 'Bio Honing', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784acc?auto=format&fit=crop&q=80&w=400', price: '10.00', unit: '/pot' },
+      { id: 'p242', name: 'Walnoten', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1549421298-b8ce15392d4f?auto=format&fit=crop&q=80&w=400', price: '9.00', unit: '/kg' },
+      { id: 'p243', name: 'Kastanjes', available: true, category: 'nuts', image: 'https://images.unsplash.com/photo-1511216113906-8f57bb83e776?auto=format&fit=crop&q=80&w=400', price: '6.50', unit: '/kg' },
+      { id: 'p244', name: 'Geitenkaasjes', available: true, category: 'dairy', image: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&q=80&w=400', price: '5.50', unit: '/st' }
+    ],
+    paymentMethods: ['cash', 'payconiq'],
+    lastStockUpdate: new Date().toISOString(),
+    followerCount: 289
+  },
+  {
+    id: '29',
+    name: "L'Abeille Ardente",
+    address: 'Montagne de Bueren 10, 4000 Liège',
+    lat: 50.6477,
+    lng: 5.5768,
+    image: 'https://images.unsplash.com/photo-1471193945509-9adadd0974ce?auto=format&fit=crop&q=80&w=800',
+    joinedDate: '2024-06-20',
+    schedule: MOCK_SCHEDULE_1,
+    products: [
+      { id: 'p251', name: 'Stadshoning Luik', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784acc?auto=format&fit=crop&q=80&w=400', price: '14.00', unit: '/pot' },
+      { id: 'p252', name: 'Honingzeep', available: true, category: 'other', image: 'https://images.unsplash.com/photo-1602874801006-c2b2d4d0c6e7?auto=format&fit=crop&q=80&w=400', price: '6.50', unit: '/blok' },
+      { id: 'p253', name: 'Propolis', available: true, category: 'honey', image: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&q=80&w=400', price: '18.00', unit: '/flesje' }
+    ],
+    paymentMethods: ['cash', 'payconiq'],
+    lastStockUpdate: new Date().toISOString(),
+    heeft_automaat: true,
+    followerCount: 567
   }
 ];
 

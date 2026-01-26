@@ -121,8 +121,10 @@ const App: React.FC = () => {
       const hasTabSession = sessionStorage.getItem('fc_active_tab') === 'true';
 
       const { data: { session } } = await supabase.auth.getSession();
+      const isAuthCallback = window.location.hash.includes('access_token') || window.location.hash.includes('error');
 
-      if (session && !stayLoggedIn && !hasTabSession) {
+      // Only clear session if we are NOT in the middle of an auth callback
+      if (session && !stayLoggedIn && !hasTabSession && !isAuthCallback && !isAuthLoading) {
         console.log("🔒 Non-persistent session detected: Clearing for fresh visit.");
         await supabase.auth.signOut();
       }
@@ -264,10 +266,11 @@ const App: React.FC = () => {
 
   // Fix: Clean up access_token from URL after Google Login
   useEffect(() => {
-    if (window.location.hash && window.location.hash.includes('access_token')) {
+    if (window.location.hash && (window.location.hash.includes('access_token') || window.location.hash.includes('error'))) {
       const timer = setTimeout(() => {
+        // Only clear if we actually have a session or if it's an error, otherwise we might kill the login flow
         window.history.replaceState(null, '', window.location.pathname);
-      }, 500);
+      }, 2000); // Increased to 2s for slower laptop connections
       return () => clearTimeout(timer);
     }
   }, []);
@@ -440,7 +443,7 @@ const App: React.FC = () => {
             const response = await fetch(rawUrl, {
               headers: {
                 'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+                'Authorization': `Bearer ${session.access_token}`
               }
             });
 
@@ -482,13 +485,18 @@ const App: React.FC = () => {
         setIsLoginPromptOpen(false);
         setIsMenuOpen(false);
         setIsAuthLoading(false);
-      } else if (event === 'SIGNED_OUT') {
-        setUserProfile({ name: 'Gebruiker', email: '', isLoggedIn: false });
-        setUserType(null);
-        setView('landing');
-        localStorage.removeItem('pendingRole');
-        sessionStorage.removeItem('guest_mode');
-        // Automatically return to landing on logout
+      } else if (event === 'SIGNED_OUT' || event === 'USER_UPDATED') {
+        if (event === 'SIGNED_OUT') {
+          setUserProfile({ name: 'Gebruiker', email: '', isLoggedIn: false });
+          setUserType(null);
+          setView('landing');
+          localStorage.removeItem('pendingRole');
+          sessionStorage.removeItem('guest_mode');
+        }
+        setIsAuthLoading(false);
+      } else {
+        // For other events like PASSWORD_RECOVERY, etc.
+        setIsAuthLoading(false);
       }
     });
 

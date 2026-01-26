@@ -203,7 +203,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authE
             >
                 {/* Registration Type Switch */}
                 <div className="mb-6">
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 text-center">Type Registratie</p>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 text-center">{t('registration_type_label')}</p>
                     <div className="bg-slate-100 p-1 rounded-xl flex items-center relative">
                         <motion.div
                             className="absolute bg-emerald-500 shadow-lg rounded-lg h-[calc(100%-8px)] w-[calc(50%-4px)] top-1"
@@ -221,7 +221,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authE
                                 }`}
                         >
                             <Home size={18} />
-                            Boerderij
+                            {t('type_farm')}
                         </button>
                         <button
                             type="button"
@@ -233,13 +233,13 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authE
                                 }`}
                         >
                             <Store size={18} />
-                            Solo Automaat
+                            {t('type_vending')}
                         </button>
                     </div>
                     <p className="text-xs text-slate-400 text-center mt-2">
                         {registrationType === 'boerderij'
-                            ? 'Volledige boerderijpagina met 1 automaat inbegrepen'
-                            : 'Alleen automaat registreren, zonder boerderijprofiel'}
+                            ? t('type_farm_desc')
+                            : t('type_vending_desc')}
                     </p>
                 </div>
 
@@ -251,10 +251,10 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authE
                     </div>
                     <div>
                         <h1 className="text-2xl font-black text-slate-800">
-                            {registrationType === 'boerderij' ? 'Registreer je Boerderij' : 'Registreer je Automaat'}
+                            {registrationType === 'boerderij' ? t('register_farm_title') : t('register_vending_title')}
                         </h1>
                         <p className="text-slate-500 font-medium">
-                            {registrationType === 'boerderij' ? t('register_farm_subtitle') : 'Maak je automaat vindbaar'}
+                            {registrationType === 'boerderij' ? t('register_farm_subtitle') : t('register_vending_subtitle')}
                         </p>
                     </div>
                 </div>
@@ -263,7 +263,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authE
                     {/* Name Field - Dynamic label */}
                     <div>
                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">
-                            {registrationType === 'boerderij' ? t('farm_name') : 'Naam Automaat'}
+                            {registrationType === 'boerderij' ? t('farm_name') : t('vending_name')}
                         </label>
                         <div className="relative">
                             {registrationType === 'boerderij'
@@ -276,7 +276,7 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authE
                                 value={formData.name}
                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
                                 className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-emerald-500 focus:outline-none font-bold text-slate-700"
-                                placeholder={registrationType === 'boerderij' ? t('farm_name_placeholder') : 'Aardappelautomaat De Bie'}
+                                placeholder={registrationType === 'boerderij' ? t('farm_name_placeholder') : t('vending_name_placeholder')}
                             />
                         </div>
                     </div>
@@ -393,8 +393,8 @@ export const RegisterFarmPage: React.FC<RegisterFarmPageProps> = ({ email: authE
                                     <div className="w-2.5 h-2.5 bg-white rounded-sm" />
                                 </div>
                                 <div className="flex-1">
-                                    <p className="text-sm font-black text-slate-700">Automaat registratie</p>
-                                    <p className="text-xs text-slate-400 font-medium">Zonder boerderijprofiel - Het adres hierboven is de locatie van je automaat</p>
+                                    <p className="text-sm font-black text-slate-700">{t('vending_registration_label')}</p>
+                                    <p className="text-xs text-slate-400 font-medium">{t('vending_registration_desc')}</p>
                                 </div>
                             </div>
                         </div>
