@@ -9,9 +9,10 @@ interface LandingPageProps {
     handleRoleSelect: (role: 'discoverer' | 'farmer') => void;
     landingLogoError: boolean;
     setLandingLogoError: (error: boolean) => void;
+    onGuestLogin?: () => void;
 }
 
-export const LandingPage: React.FC<LandingPageProps> = ({ t, handleRoleSelect, landingLogoError, setLandingLogoError }) => {
+export const LandingPage: React.FC<LandingPageProps> = ({ t, handleRoleSelect, landingLogoError, setLandingLogoError, onGuestLogin }) => {
     return (
         <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="relative h-screen max-h-screen w-full flex flex-col items-center justify-center p-4 text-center overflow-hidden">
             <div className="absolute inset-0 z-0">
@@ -61,6 +62,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ t, handleRoleSelect, l
                         <Tractor size={22} className="group-hover:scale-110 transition-transform text-mint" />
                         {t('btn_farmer')}
                     </motion.button>
+
+                    {onGuestLogin && (
+                        <motion.button
+                            whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
+                            onClick={onGuestLogin}
+                            className="bg-black/30 backdrop-blur-md text-slate-200 py-3 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-sm transition-all flex items-center justify-center gap-2 border border-white/5 mt-1 hover:bg-black/40"
+                        >
+                            <Leaf size={14} className="text-emerald-400" />
+                            {t('guest_mode')}
+                        </motion.button>
+                    )}
                 </div>
             </div>
             <div className="absolute bottom-2 left-0 right-0 z-10 text-center opacity-40 flex flex-col items-center gap-0.5 pb-2">

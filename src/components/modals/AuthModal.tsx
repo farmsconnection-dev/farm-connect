@@ -13,9 +13,10 @@ interface AuthModalProps {
     onRegisterNewFarm: () => void;
     t: (key: string) => string;
     showToast: (msg: string) => void;
+    onGuestLogin?: () => void;
 }
 
-export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRole, handleLogin, onRegisterNewFarm, t, showToast }) => {
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRole, handleLogin, onRegisterNewFarm, t, showToast, onGuestLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showEmailLogin, setShowEmailLogin] = useState(false);
@@ -239,6 +240,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, pendingRo
                             >
                                 <UserPlus size={16} />
                                 Nieuw Account Maken
+                            </motion.button>
+                        )}
+
+                        {pendingRole === 'discoverer' && onGuestLogin && (
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={onGuestLogin}
+                                className="w-full bg-slate-100 text-slate-700 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-sm flex items-center justify-center gap-3 hover:bg-slate-200 transition-colors mt-2"
+                            >
+                                <span className="text-emerald-500">✨</span> {t('guest_mode')}
                             </motion.button>
                         )}
 

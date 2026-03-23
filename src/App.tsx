@@ -109,7 +109,7 @@ const App: React.FC = () => {
       const timer = setTimeout(() => {
         console.warn('⚠️ Auth loading timed out, forcing app open.');
         setIsAuthLoading(false);
-      }, 4000);
+      }, 10000);
       return () => clearTimeout(timer);
     }
   }, [isAuthLoading]);
@@ -324,15 +324,15 @@ const App: React.FC = () => {
 
   // Supabase Auth Listener - voor Google OAuth
 
-  const checkFarmerVerification = async (email: string, retries = 3) => {
-    console.log(`🔍 Checking farmer verification for: ${email} (Attempts left: ${retries})`);
+  const checkFarmerVerification = async (email: string, id: string, accessToken: string, retries = 3) => {
+    console.log(`🔍 Checking farmer verification for user ID: ${id} (Attempts left: ${retries})`);
     try {
       // Use raw fetch for better consistency during registration flow
-      const rawUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms?owner_email=eq.${encodeURIComponent(email)}&select=*`;
+      const rawUrl = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/farms?owner_id=eq.${encodeURIComponent(id)}&select=*`;
       const response = await fetch(rawUrl, {
         headers: {
           'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          'Authorization': `Bearer ${accessToken}`
         }
       });
 
@@ -602,11 +602,14 @@ const App: React.FC = () => {
 
 
 
-  const handleLogin = (email: string, name: string) => {
+  const handleLogin = async (email: string, name: string) => {
     sessionStorage.removeItem('guest_mode'); // Clear persisted preference
     setUserProfile({ name, email, photoUrl: 'https://picsum.photos/id/1005/100/100', isLoggedIn: true });
     if (pendingRole === 'farmer') {
-      checkFarmerVerification(email);
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        checkFarmerVerification(email, session.user.id, session.access_token);
+      }
     } else {
       setUserType('discoverer');
       setView('discover');
@@ -614,6 +617,13 @@ const App: React.FC = () => {
     setIsAuthModalOpen(false);
     setIsLoginPromptOpen(false);
     setIsMenuOpen(false);
+  };
+
+  const handleGuestLogin = () => {
+    sessionStorage.setItem('guest_mode', 'true');
+    setUserType('discoverer');
+    setView('discover');
+    setIsAuthModalOpen(false);
   };
 
   const handleLogout = async () => {
@@ -915,6 +925,7 @@ const App: React.FC = () => {
             handleRoleSelect={handleRoleSelect}
             landingLogoError={landingLogoError}
             setLandingLogoError={setLandingLogoError}
+            onGuestLogin={handleGuestLogin}
           />
         )}
         {view === 'discover' && (
@@ -1059,6 +1070,7 @@ const App: React.FC = () => {
           }}
           t={t}
           showToast={showToast}
+          onGuestLogin={handleGuestLogin}
         />
       )}</AnimatePresence>
 

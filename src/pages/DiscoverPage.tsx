@@ -433,8 +433,6 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                                         markerColor = getColorForCategory(primaryCategoryForMarker);
                                     }
 
-                                    const isDairy = primaryCategoryForMarker === 'dairy';
-
                                     return (
                                         <MarkerF
                                             key={`${farm.id}-${activeFilter}`}
